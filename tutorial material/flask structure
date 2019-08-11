@@ -1,0 +1,20 @@
+Root
+|-init.py //to tell flask that this directory contains a flask app
+|-run.py //python3 run.py to run the app, basically CMD commands written into a python file
+|
+|-jersey_bidder
+|       |-init.py //to import resources and initialize app 
+|       |-config.py //contains configuration eg database URI
+|       |-models.py //contains DB descriptions 
+|       |-requirements.txt //dependency requirements
+|
+|-templates
+|     |-layout.html //the basic layout for all html files, contains navigation bar etc
+|     |-various html files //extends the basic layout 
+|
+|-static 
+|
+|-user/main/others
+    |-routes.py //the UX logic
+    |-form.py //contains form classes for user submitted forms 
+    |-ultils.py //contains helper function
