@@ -10,15 +10,25 @@ class User(db.Model):
     roomNumber = db.Column(db.String(20))
     year = db.Column(db.Integer, nullable=False)
     points = db.Column(db.Integer, nullable=False)
-    gender = db.Column(db.String(5), nullable=False)
+    gender_id = db.Column(db.Integer, db.ForeignKey('gender.id'), nullable=False)
 
     email = db.Column(db.String(100), nullable=False)
     password = db.Column(db.String(200), nullable=False)
 
     #foreign key constraint
+    gender = db.relationship('Gender', back_populates="User")
     choice = db.relationship('Choice', backref='user', lazy=True)
     sports = db.relationship('Sport', secondary='userSports', lazy=True)
     jerseyNumber = db.relationship('JerseyNumber', backref='user', lazy=True)
+
+class Gender(db.Model):
+    __tablename__ = 'gender'
+    __tableargs__ = {'extend_existing': True}
+    id = db.Column(db.Integer, primary_key=True)
+    genderName = db.Column(db.String(10), nullable=False)
+
+    User = db.relationship('User')
+    JerseyNumber = db.relationship('JerseyNumber')
 
 
 class Choice(db.Model):
@@ -59,26 +69,16 @@ class JerseyNumber(db.Model):
     __tablename__ = 'jerseyNumber'
     __table_args__ = {'extend_existing': True}
     number = db.Column(db.Integer, primary_key=True, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     isTaken = db.Column(db.Boolean, default=False, nullable=False)
+
+    gender_id = db.Column(db.Integer, db.ForeignKey('gender.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     #relationship / foreign key constraint
     # one to many relationship (one number can have multiple users)
     users = db.relationship('User', lazy=True)
+    gender = db.relationship('Gender', back_populates="JerseyNumber")
 
-
-    
-#To do in documentation! initialize/changing databse models:
-"""
-1. python3 
-2. from jersey_bidder import create_app, db
-3. create an app: app = create_app()
-4. run:
-    with app.app_context():
-        db.create_all()
-5. this creates a new relation in the specified DB 
-6. quit() to leave the python3 interpreter
-"""
 
     
 
