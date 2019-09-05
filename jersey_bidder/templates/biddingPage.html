@@ -1,0 +1,97 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="w3-container w3-light-grey w3-center w3-opacity w3-padding-64">
+    <h4>
+        <br>You can choose your top 5 number choices here,
+        <br>Please choose discretely and avoid highly contested numbers.
+    </h4> 
+</div>
+
+<div class="w3-container w3-white w3-center w3-opacity w3-padding-64">
+        <form method ="POST" action="">
+                {{ form.hidden_tag() }} 
+                <fieldset class="form-grop">                     
+                    <div class="form-grop">
+                        {{ form.firstChoice.label(class="form-control-label") }}
+                        {% if form.firstChoice.errors %}
+                            {{ form.firstChoice(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.firstChoice.errors %}
+                                    <span> {{ error }} </span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.firstChoice(class="form-control form-control-lg") }}
+                        {% endif %}  
+                    </div>
+                </fieldset>
+
+                <fieldset class="form-grop">                      
+                        <div class="form-grop">
+                            {{ form.secondChoice.label(class="form-control-label") }}
+                            {% if form.secondChoice.errors %}
+                                {{ form.secondChoice(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.secondChoice.errors %}
+                                        <span> {{ error }} </span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.secondChoice(class="form-control form-control-lg") }}
+                            {% endif %}  
+                        </div>
+                </fieldset>
+
+                <fieldset class="form-grop">                 
+                        <div class="form-grop">
+                            {{ form.thirdChoice.label(class="form-control-label") }}
+                            {% if form.thirdChoice.errors %}
+                                {{ form.thirdChoice(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.thirdChoice.errors %}
+                                        <span> {{ error }} </span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.thirdChoice(class="form-control form-control-lg") }}
+                            {% endif %}  
+                        </div>
+                </fieldset>
+
+                <fieldset class="form-grop">              
+                        <div class="form-grop">
+                            {{ form.fourthChoice.label(class="form-control-label") }}
+                            {% if form.fourthChoice.errors %}
+                                {{ form.fourthChoice(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.fourthChoice.errors %}
+                                        <span> {{ error }} </span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.fourthChoice(class="form-control form-control-lg") }}
+                            {% endif %}  
+                        </div>
+                </fieldset>
+
+                <fieldset class="form-grop">                    
+                        <div class="form-grop">
+                            {{ form.fifthChoice.label(class="form-control-label") }}
+                            {% if form.fifthChoice.errors %}
+                                {{ form.fifthChoice(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.fifthChoice.errors %}
+                                        <span> {{ error }} </span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.fifthChoice(class="form-control form-control-lg") }}
+                            {% endif %}  
+                        </div>
+                </fieldset>
+                <div class="form-grop">
+                    <br>{{ form.submit(class="btn btn-outline-info")}}
+                </div>        
+            </form>
+</div>
+{% endblock content%}

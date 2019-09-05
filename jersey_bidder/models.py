@@ -3,7 +3,7 @@ from jersey_bidder import db
 from flask_login import UserMixin
 from datetime import datetime
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     __tablename__ = 'user'
     __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer, primary_key=True)   
@@ -65,7 +65,6 @@ class JerseyNumber(db.Model):
     #relationship / foreign key constraint
     # one to many relationship (one number can have multiple users)
     users = db.relationship('User', lazy=True)
-
 
     
 #To do in documentation! initialize/changing databse models:
