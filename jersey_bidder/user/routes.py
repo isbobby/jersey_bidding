@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, url_for, redirect, request, flash
 from flask_login import login_user, current_user, logout_user, login_required
-from jersey_bidder.models import  User, Choice
+from jersey_bidder.models import User, Choice
 
 user = Blueprint('users', __name__)
 
