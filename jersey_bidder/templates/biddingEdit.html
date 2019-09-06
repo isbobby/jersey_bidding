@@ -8,7 +8,7 @@
         <br>Second Choice: {{ currentChoice.secondChoice }},
         <br>Third Choice: {{ currentChoice.thirdChoice }},
         <br>Fourth Choice: {{ currentChoice.fourthChoice }},
-        <br>Fifth Choice: {{ currentChoice.fifthChoice }}
+        <br>Fifth Choice: {{ currentChoice.fifthChoice }}ç
     </h4> 
 </div>
 
@@ -17,7 +17,7 @@
                 {{ form.hidden_tag() }} 
                 <fieldset class="form-grop">                     
                     <div class="form-grop">
-                        {{ form.firstChoice.label(class="form-control-label") }}
+                        <span class="jb-font-20pts">{{ form.firstChoice.label(class="form-control-label") }}</span><br>
                         {% if form.firstChoice.errors %}
                             {{ form.firstChoice(class="form-control form-control-lg is-invalid") }}
                             <div class="invalid-feedback">
@@ -28,12 +28,9 @@
                         {% else %}
                             {{ form.firstChoice(class="form-control form-control-lg") }}
                         {% endif %}  
-                    </div>
-                </fieldset>
-
-                <fieldset class="form-grop">                      
+                    </div>                   
                         <div class="form-grop">
-                            {{ form.secondChoice.label(class="form-control-label") }}
+                            <span class="jb-font-20pts">{{ form.secondChoice.label(class="form-control-label") }}</span><br>
                             {% if form.secondChoice.errors %}
                                 {{ form.secondChoice(class="form-control form-control-lg is-invalid") }}
                                 <div class="invalid-feedback">
@@ -44,12 +41,9 @@
                             {% else %}
                                 {{ form.secondChoice(class="form-control form-control-lg") }}
                             {% endif %}  
-                        </div>
-                </fieldset>
-
-                <fieldset class="form-grop">                 
+                        </div>          
                         <div class="form-grop">
-                            {{ form.thirdChoice.label(class="form-control-label") }}
+                            <span class="jb-font-20pts">{{ form.thirdChoice.label(class="form-control-label") }}</span><br>
                             {% if form.thirdChoice.errors %}
                                 {{ form.thirdChoice(class="form-control form-control-lg is-invalid") }}
                                 <div class="invalid-feedback">
@@ -60,12 +54,9 @@
                             {% else %}
                                 {{ form.thirdChoice(class="form-control form-control-lg") }}
                             {% endif %}  
-                        </div>
-                </fieldset>
-
-                <fieldset class="form-grop">              
+                        </div>          
                         <div class="form-grop">
-                            {{ form.fourthChoice.label(class="form-control-label") }}
+                            <span class="jb-font-20pts">{{ form.fourthChoice.label(class="form-control-label") }}</span><br>
                             {% if form.fourthChoice.errors %}
                                 {{ form.fourthChoice(class="form-control form-control-lg is-invalid") }}
                                 <div class="invalid-feedback">
@@ -76,12 +67,9 @@
                             {% else %}
                                 {{ form.fourthChoice(class="form-control form-control-lg") }}
                             {% endif %}  
-                        </div>
-                </fieldset>
-
-                <fieldset class="form-grop">                    
+                        </div>               
                         <div class="form-grop">
-                            {{ form.fifthChoice.label(class="form-control-label") }}
+                            <span class="jb-font-20pts">{{ form.fifthChoice.label(class="form-control-label") }}</span><br>
                             {% if form.fifthChoice.errors %}
                                 {{ form.fifthChoice(class="form-control form-control-lg is-invalid") }}
                                 <div class="invalid-feedback">
@@ -95,7 +83,7 @@
                         </div>
                 </fieldset>
                 <div class="form-grop">
-                    <br>{{ form.submit(class="btn btn-outline-info")}}
+                    <br>{{ form.submit(class="w3-button")}}
                 </div>        
             </form>
 </div>

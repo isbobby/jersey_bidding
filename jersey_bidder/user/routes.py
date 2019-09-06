@@ -12,7 +12,7 @@ user = Blueprint('users', __name__)
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.roomNumber.data).first()
+        user = User.query.filter_by(roomNumber=form.roomNumber.data).first()
         #if user and bcrypt.check_password_hash(user.password, form.password.data):
         if form.password.data == user.password:
             login_user(user)
