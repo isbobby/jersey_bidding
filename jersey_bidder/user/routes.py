@@ -5,6 +5,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from jersey_bidder.models import  User, Choice
 from jersey_bidder.user.forms import LoginForm
 
+
 user = Blueprint('users', __name__)
 
 @user.route("/login", methods=['GET','POST']) 
