@@ -8,10 +8,10 @@
             <div class="content-section">
                     <form method ="POST" action="">
                         {{ form.hidden_tag() }} 
-                        <fieldset class="form-grop">  
-                            <br>                  
+                        <fieldset class="form-grop">
+                            <legend class = "border-bottom mb-4">Login</legend>                        
                             <div class="form-grop">
-                                {{ form.roomNumber.label(class="form-control-label") }}<br>
+                                {{ form.roomNumber.label(class="form-control-label") }}
                                 {% if form.roomNumber.errors %}
                                     {{ form.roomNumber(class="form-control form-control-lg is-invalid") }}
                                     <div class="invalid-feedback">
@@ -23,9 +23,8 @@
                                     {{ form.roomNumber(class="form-control form-control-lg") }}
                                 {% endif %}
                             </div>            
-                            <br>
                             <div class="form-grop">
-                                {{ form.password.label(class="form-control-label")}}<br>
+                                {{ form.password.label(class="form-control-label") }}
                                 {% if form.password.errors %}
                                     {{ form.password(class="form-control form-control-lg is-invalid") }}
                                     <div class="invalid-feedback">
@@ -37,10 +36,9 @@
                                     {{ form.password(class="form-control form-control-lg") }}
                                 {% endif %}
                             </div>
-                            <br>
                         </fieldset>    
-                        <div class="jb-font-20pts">
-                            <br>{{ form.submit(class="w3-button")}}
+                        <div class="form-grop">
+                            <br>{{ form.submit(class="btn btn-outline-info")}}
                         </div>        
                     </form>
                 </div>
