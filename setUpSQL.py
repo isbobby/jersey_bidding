@@ -4,7 +4,12 @@ from jersey_bidder.models import *
 def setUp(app):
     with app.app_context():
         # drop all tables first
-        db.drop_all()
+        Choice.__table__.drop(db.engine)
+        UserSports.__table__.drop(db.engine)
+        Sport.__table__.drop(db.engine)
+        User.__table__.drop(db.engine)
+        JerseyNumber.__table__.drop(db.engine)
+        Gender.__table__.drop(db.engine)
         db.create_all() 
 
         #add Gender
@@ -16,6 +21,7 @@ def setUp(app):
         db.session.add(mixed)
 
         # Add sports
+<<<<<<< HEAD
         frisbee = Sport(sportName = "Frisbee_Mixed", gender=mixed)
         Softball = Sport(sportName = "Softball_Mixed", gender=mixed)
         Takraw_Male  = Sport(sportName = "Takraw_Male", gender=male)
@@ -46,6 +52,38 @@ def setUp(app):
         Track_Female = Sport(sportName = "Track_Female", gender=female)
         Volleyball_Male = Sport(sportName = "Volleyball_Male", gender=male)
         Volleyball_Female = Sport(sportName = "Volleyball_Female", gender=female)
+=======
+        frisbee = Sport(sportName = "Frisbee_Mixed", Gender=mixed)
+        Softball = Sport(sportName = "Softball_Mixed", Gender=mixed)
+        Takraw_Male  = Sport(sportName = "Takraw_Male", Gender=male)
+        Netball_Female = Sport(sportName = "Netball_Female", Gender=female)
+        Tennis_Male = Sport(sportName = "Tennis_Male", Gender=male)
+        Tennis_Female = Sport(sportName = "Tennis_Female", Gender=female)
+        Floorball_Male = Sport(sportName = "Floorball_Male", Gender=male)
+        Floorball_Female = Sport(sportName = "Floorball_Female", Gender=female)
+        Squash_Male = Sport(sportName = "Squash_Male", Gender=male)
+        Squash_Female = Sport(sportName = "Squash_Female", Gender=female)
+        Badminton_Male = Sport(sportName = "Badminton_Male", Gender=male)
+        Badminton_Female = Sport(sportName = "Badminton_Female", Gender=female)
+        Soccer_Male = Sport(sportName = "Soccer_Male", Gender=male)
+        Soccer_Female = Sport(sportName = "Soccer_Female", Gender=female)
+        TableTennis_Male = Sport(sportName = "TableTennis_Male", Gender=male)
+        TableTennis_Female = Sport(sportName = "TableTennis_Female", Gender=female)
+        Handball_Male = Sport(sportName = "Handball_Male", Gender=male)
+        Handball_Female = Sport(sportName = "Handball_Female", Gender=female)
+        RoadRelay_Male = Sport(sportName = "RoadRelay_Male", Gender=male)
+        RoadRelay_Female = Sport(sportName = "RoadRelay_Female", Gender=female)
+        Basketball_Male = Sport(sportName = "Basketball_Male", Gender=male)
+        Basketball_Femal = Sport(sportName = "Basketball_Female", Gender=female)
+        Swim_Male = Sport(sportName = "Swim_Male", Gender=male)
+        Swim_Female = Sport(sportName = "Swim_Female", Gender=female)
+        TouchRugby_Male = Sport(sportName = "TouchRugby_Male", Gender=male)
+        TouchRugby_Female = Sport(sportName = "TouchRugby_Female", Gender=female)
+        Track_Male = Sport(sportName = "Track_Male", Gender=male)
+        Track_Female = Sport(sportName = "Track_Female", Gender=female)
+        Volleyball_Male = Sport(sportName = "Volleyball_Male", Gender=male)
+        Volleyball_Female = Sport(sportName = "Volleyball_Female", Gender=female)
+>>>>>>> 0433895f4e9915fb2b1f6157a9461774fbce6267
         db.session.add(frisbee)
         db.session.add(Softball)
         db.session.add(Takraw_Male)
