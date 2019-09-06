@@ -33,9 +33,9 @@ def loadMockData(app):
             currentPreference_id = 0
             if currentGender_id  == 1:
                 # is a male
-                currentPreference_id = random.radint(0, 99)
+                currentPreference_id = random.randint(1, 100)
             else :
-                currentPreference_id = random.radint(100, 199)
+                currentPreference_id = random.randint(101, 200)
 
             currentUser = User(roomNumber = currentRoomNumber, year = currentYear, points = currentPoints, 
                     email = currentEmail, password = currentPassword, gender_id = currentGender_id, preference_id=currentPreference_id)

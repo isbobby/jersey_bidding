@@ -23,8 +23,8 @@ class User(db.Model, UserMixin):
     gender = db.relationship('Gender', back_populates="User")
     choice = db.relationship('Choice', backref='user', lazy=True)
     sports = db.relationship('Sport', secondary='userSports', lazy=True)
-    jerseyNumber = db.relationship('JerseyNumber', backref='user', lazy=True)
-    preference = db.relationship('JerseyNumber', backref='user', lazy=True)
+    jerseyNumber = db.relationship('JerseyNumber', foreign_keys=[preference_id], backref='users', lazy=True)
+    preference = db.relationship('JerseyNumber', foreign_keys=[preference_id], backref='users_preference', lazy=True)
 
 
 class Gender(db.Model):
@@ -63,7 +63,7 @@ class Sport(db.Model):
 
     # relationships
     Users = db.relationship('User', secondary='userSports')
-    Gender = db.relationship('Gender', back_populates="Sport"
+    Gender = db.relationship('Gender', backref="Sport")
 
 # UserSports is a junction table between Sport and User
 class UserSports(db.Model):
@@ -87,9 +87,10 @@ class JerseyNumber(db.Model):
 
     #relationship / foreign key constraint
     # one to many relationship (one number can have multiple users)
-    users = db.relationship('User', back_populates="JerseyNumber", lazy=True)
+    # users = db.relationship('User', back_populates="jerseyNumber", lazy=True)
+    # user_preference = db.relationship('User', back_populates="preference", lazy=True)
     gender = db.relationship('Gender', back_populates="JerseyNumber")
-    preferences = db.relationship('User', lazy=True)
+
 
     
 
