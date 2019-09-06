@@ -7,7 +7,7 @@ from jersey_bidder.extensions import db, Bootstrap, admin, ModelView, login_mana
 login_manager.login_view = 'users.login'
 login_manager.login_message_category = 'info'
 
-from jersey_bidder.models import User, Choice, JerseyNumber
+from jersey_bidder.models import User, Choice, JerseyNumber, Gender, UserSports, Sport
 @login_manager.user_loader
 def user_loader(user_id):
     return User.query.get(user_id)
@@ -35,5 +35,8 @@ def create_app(config_class=Config):
     admin.add_view(ModelView(User, db.session))
     admin.add_view(ModelView(Choice, db.session))
     admin.add_view(ModelView(JerseyNumber, db.session))
+    admin.add_view(ModelView(Gender, db.session))
+    admin.add_view(ModelView(UserSports, db.session))
+    admin.add_view(ModelView(Sport, db.session))
 
     return app
