@@ -21,7 +21,7 @@ def loadMockData(app):
     with app.app_context():
         # MOCK DATA FOR TESTING
 
-        #assume 400 eusoffians
+        #mock 400 eusoffians
         for i in range(400):
             # create dummy user
             currentRoomNumber = integerToBlock(i % 5) + str(i)
@@ -30,10 +30,22 @@ def loadMockData(app):
             currentEmail = "dummyEmail" + str(i) + "@gmail.com"
             currentPassword = "dummyPassword" + str(i)
             currentGender_id = i % 2 + 1
+            currentPreference_id = 0
+            if currentGender_id  == 1:
+                # is a male
+                currentPreference_id = random.radint(0, 99)
+            else :
+                currentPreference_id = random.radint(100, 199)
 
             currentUser = User(roomNumber = currentRoomNumber, year = currentYear, points = currentPoints, 
-                    email = currentEmail, password = currentPassword, gender_id = currentGender_id)
+                    email = currentEmail, password = currentPassword, gender_id = currentGender_id, preference_id=currentPreference_id)
             db.session.add(currentUser)
+
+            # create sports
+            maleSport_id = [entries.id for entries in Sport.query.filter(Sport.gender_id == 1 or Sport.gender_id == 3)]
+            femaleSport_id = [entries.id for entries in Sport.query.filter(Sport.gender_id == 2 or Sport.gender_id == 3)]
+        
+        #mock their choices
 
         db.session.commit()
 
