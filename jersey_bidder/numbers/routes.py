@@ -16,17 +16,21 @@ def showNumber():
 
 @numbers.route("/preference/<int:jerseyNumber_id>", methods=['GET','POST']) 
 def showSingleNumber(jerseyNumber_id):
-    form = chopeNumberForm()
     number = JerseyNumber.query.get_or_404(jerseyNumber_id)
     interestedUsers = User.query.filter(User.preference_id == number.id).all()
-    
-    if form.validate_on_submit():
-        #indicate preference here: update DB on preference number
-        current_user.preference_id = number.id
-        db.session.commit()
-        return redirect(url_for('numbers.chopeNumber'))
 
-    return render_template('prefViewSingleNumber.html', title='Preference Page', number=number, interestedUsers = interestedUsers, form=form)
+    return render_template('prefViewSingleNumber.html', title='Preference Page', number=number, interestedUsers = interestedUsers)
+
+@numbers.route("/preference/chope/<int:jerseyNumber_id>", methods=['GET','POST']) 
+def chopeSingleNumber(jerseyNumber_id):
+    number = JerseyNumber.query.get_or_404(jerseyNumber_id)
+    oldNumber = JerseyNumber.query.get_or_404(current_user.preference_id)
+    newNumber = number = JerseyNumber.query.get_or_404(jerseyNumber_id)
+
+    current_user.preference_id = newNumber.id
+    db.session.commit()
+
+    return render_template('prefChopeNumber.html', title='Chope', oldNumber=oldNumber, newNumber=newNumber)
 
 @numbers.route("/bidding", methods=['GET','POST'])
 def bidNumber():
