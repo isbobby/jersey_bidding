@@ -26,7 +26,6 @@ class User(db.Model, UserMixin):
     jerseyNumber = db.relationship('JerseyNumber', foreign_keys=[preference_id], backref='users', lazy=True)
     preference = db.relationship('JerseyNumber', foreign_keys=[preference_id], backref='users_preference', lazy=True)
 
-
 class Gender(db.Model):
     __tablename__ = 'gender'
     __tableargs__ = {'extend_existing': True}
@@ -35,7 +34,6 @@ class Gender(db.Model):
 
     User = db.relationship('User')
     JerseyNumber = db.relationship('JerseyNumber')
-
 
 class Choice(db.Model):
     __tablename__ = 'choice'
@@ -90,8 +88,3 @@ class JerseyNumber(db.Model):
     # users = db.relationship('User', back_populates="jerseyNumber", lazy=True)
     # user_preference = db.relationship('User', back_populates="preference", lazy=True)
     gender = db.relationship('Gender', back_populates="JerseyNumber")
-
-
-    
-
-    

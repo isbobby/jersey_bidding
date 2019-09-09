@@ -14,42 +14,15 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(roomNumber=form.roomNumber.data).first()
         #if user and bcrypt.check_password_hash(user.password, form.password.data):
-        if form.password.data == user.password:
+        if user and form.password.data == user.password:
             login_user(user)
             next_page = request.args.get('next')
             return redirect(next_page) if next_page else redirect(url_for('main.home'))
         else:
-            flash('Login Unsuccessful, Please Check Roomnumber and Password', 'danger')
+            flash('Login Unsuccessful, Please Check room number and password', 'danger')
     return render_template('login.html', title='Login', form=form)
 
 @user.route("/logout")
 def logout():
     logout_user()
     return redirect(url_for('main.home'))
-
-#User
-#login 
-
-#main
-#static faq page
-
-#Jersey
-#submit preference 
-#view
-
-#faq -> login -> view -> submit (validate) -> view -> logout -> view
-
-#csv
-#excel work book
-
-#scripts
-#generate pw -> send email
-
-#load to DB
-
-#website
-#####separate login windows and limit login
-
-#publish result
-
-#scan db for jersey bidding 

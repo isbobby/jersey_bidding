@@ -1,51 +1,53 @@
 {% extends 'layout.html' %}
+
+
 {% block head %}
 <h1></h1>
 {% endblock head %}
 
 {% block content %}
-      <!-- Header -->
-      <header class="w3-container w3-light-grey w3-center" style="padding:128px 16px">
-        {% if current_user.is_authenticated %}
-        <h1 class="w3-margin w3-jumbo">Welcome!</h1>
-            <h3>Please read through the Bidding Rules below carefully before bidding, good luck!</h3>
-        </button>
-        {% else %}
-        <h1 class="w3-margin w3-jumbo">Jersey Bidding 19/20</h1>
-        <button class="w3-button w3-black w3-padding-large w3-large w3-margin-top">
-            <a href="{{ url_for('users.login') }}" >Login</a>
-        </button>
-        {% endif %}
-      </header>
-      
-      <!-- First Grid -->
-      <div class="w3-row-padding w3-padding-64 w3-container">
-        <div class="w3-content">
-          <div class="w3-twothird">
-            <h1></h1>
-            <h5 class="w3-padding-32"></h5>
-      
-            <p class="w3-text-grey"></p>
-          </div>
-      
-          <div class="w3-third w3-center">
-            <i class="fa fa-anchor w3-padding-64 w3-text-red"></i>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Second Grid -->
-      <div class="w3-row-padding w3-light-grey w3-padding-64 w3-container">
-        <div class="w3-content">
-          <div class="w3-third w3-center">
-            <i class="fa fa-coffee w3-padding-64 w3-text-red w3-margin-right"></i>
-          </div>
-          <div class="w3-twothird">
-            <h1></h1>
-            <h5 class="w3-padding-32"></h5>
-      
-            <p class="w3-text-grey"></p>
-          </div>
-        </div>
-      </div>
+<!-- Header -->
+<header class="w3-container w3-light-grey w3-center" style="padding:128px 16px">
+  {% if current_user.is_authenticated %}
+  <h1 class="w3-margin w3-jumbo">Welcome!</h1>
+  <h3>Please read through the Bidding Rules below carefully before bidding, good luck!</h3>
+  </button>
+  {% else %}
+  <h1 class="w3-margin w3-jumbo">Jersey Bidding 19/20</h1>
+  <button class="w3-button w3-black w3-padding-large w3-large w3-margin-top">
+    <a href="{{ url_for('users.login') }}">Login</a>
+  </button>
+  {% endif %}
+</header>
+
+<!-- First Grid -->
+<div class="w3-row-padding w3-padding-64 w3-container">
+  <div class="w3-content">
+    <div class="w3-twothird">
+      <h1></h1>
+      <h5 class="w3-padding-32"></h5>
+
+      <p class="w3-text-grey"></p>
+    </div>
+
+    <div class="w3-third w3-center">
+      <i class="fa fa-anchor w3-padding-64 w3-text-red"></i>
+    </div>
+  </div>
+</div>
+
+<!-- Second Grid -->
+<div class="w3-row-padding w3-light-grey w3-padding-64 w3-container">
+  <div class="w3-content">
+    <div class="w3-third w3-center">
+      <i class="fa fa-coffee w3-padding-64 w3-text-red w3-margin-right"></i>
+    </div>
+    <div class="w3-twothird">
+      <h1></h1>
+      <h5 class="w3-padding-32"></h5>
+
+      <p class="w3-text-grey"></p>
+    </div>
+  </div>
+</div>
 {% endblock content %}
