@@ -16,25 +16,15 @@ class User(db.Model, UserMixin):
 
     # Foreign key constraints (only can have one)
     gender_id = db.Column(db.Integer, db.ForeignKey('gender.id'), nullable=False)
-<<<<<<< HEAD
-    #preference_id = db.Column(db.Integer, db.ForeignKey('jerseyNumber.id'))
-=======
     preference_id = db.Column(db.Integer, db.ForeignKey('jerseyNumber.id'))
->>>>>>> 0433895f4e9915fb2b1f6157a9461774fbce6267
     jerseyNumber_id = db.Column(db.Integer, db.ForeignKey('jerseyNumber.id'))
 
     # Relationships
     gender = db.relationship('Gender', back_populates="User")
     choice = db.relationship('Choice', backref='user', lazy=True)
     sports = db.relationship('Sport', secondary='userSports', lazy=True)
-<<<<<<< HEAD
-    jerseyNumber = db.relationship('JerseyNumber', backref='user', lazy=True)
-    #preference = db.relationship('JerseyNumber', backref='user', lazy=True)
-=======
     jerseyNumber = db.relationship('JerseyNumber', foreign_keys=[preference_id], backref='users', lazy=True)
     preference = db.relationship('JerseyNumber', foreign_keys=[preference_id], backref='users_preference', lazy=True)
->>>>>>> 0433895f4e9915fb2b1f6157a9461774fbce6267
-
 
 class Gender(db.Model):
     __tablename__ = 'gender'
@@ -44,7 +34,6 @@ class Gender(db.Model):
 
     User = db.relationship('User')
     JerseyNumber = db.relationship('JerseyNumber')
-
 
 class Choice(db.Model):
     __tablename__ = 'choice'
@@ -96,17 +85,6 @@ class JerseyNumber(db.Model):
 
     #relationship / foreign key constraint
     # one to many relationship (one number can have multiple users)
-<<<<<<< HEAD
-    users = db.relationship('User', back_populates="jerseyNumber", lazy=True)
-    gender = db.relationship('Gender', back_populates="JerseyNumber")
-    #preferences = db.relationship('User', lazy=True)
-=======
     # users = db.relationship('User', back_populates="jerseyNumber", lazy=True)
     # user_preference = db.relationship('User', back_populates="preference", lazy=True)
     gender = db.relationship('Gender', back_populates="JerseyNumber")
-
-
-    
-
-    
->>>>>>> 0433895f4e9915fb2b1f6157a9461774fbce6267

@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="w3-container w3-light-grey w3-center w3-opacity w3-padding-32">
+    <h4>
+        <br>Chosen Number: {{ number.number }}
+    </h4>
+</div>
+
+<div class="w3-container w3-white w3-center w3-opacity w3-padding-16 jb-table-width-70 jb-margin-center">
+    <h3>
+        Users who are currently interested in this number.
+    </h3>
+    <table class="w3-table ">
+        <tr>
+            <th>Room Number</th>
+            <th>Year</th>
+            <th>Points</th>
+            <th>Sports</th>
+        </tr>
+
+        {% for user in interestedUsers %}
+        <tr>
+            <td>{{user.roomNumber}}</td>
+            <td>{{user.year}}</td>
+            <td>{{user.points}}</td>
+            <td>
+                {% for sport in user.sports %}
+                {{ sport }}
+                {% endfor %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<form method="POST" action="">
+<div class="w3-container w3-white w3-center w3-opacity">
+    <div class="form-grop">
+        <br>{{ form.submit(class="w3-button")}}
+    </div>
+</div>
+</form>
+{% endblock content %}

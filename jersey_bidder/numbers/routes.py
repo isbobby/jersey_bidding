@@ -4,30 +4,40 @@ from datetime import datetime
 
 #local
 from jersey_bidder.models import  User, Choice, JerseyNumber
-from jersey_bidder.numbers.forms import checkNumberForm, biddingForm
+from jersey_bidder.numbers.forms import biddingForm, chopeNumberForm
 from jersey_bidder import db
 
 numbers = Blueprint('numbers', __name__)
 
 @numbers.route("/preference", methods=['GET','POST']) 
 def showNumber():
-    form = checkNumberForm()
+    numbers = JerseyNumber.query.filter(JerseyNumber.gender_id == current_user.id)
+    return render_template('prefViewAll.html', title='Preference Page', numbers=numbers)
+
+@numbers.route("/preference/<int:jerseyNumber_id>", methods=['GET','POST']) 
+def showSingleNumber(jerseyNumber_id):
+    form = chopeNumberForm()
+    number = JerseyNumber.query.get_or_404(jerseyNumber_id)
+    interestedUsers = User.query.filter(User.preference_id == number.id).all()
+    
     if form.validate_on_submit():
-        number = JerseyNumber.query.get(form.number)
+        #indicate preference here: update DB on preference number
+        current_user.preference_id = number.id
+        db.session.commit()
         return redirect(url_for('numbers.chopeNumber'))
 
-    return render_template('showNumber.html', title='Preference Page')
+    return render_template('prefViewSingleNumber.html', title='Preference Page', number=number, interestedUsers = interestedUsers, form=form)
 
 @numbers.route("/bidding", methods=['GET','POST'])
 def bidNumber():
 
     #initialize form and populate choices
     form = biddingForm()
-    form.firstChoice.choices = [(entries.number,entries.number) for entries in JerseyNumber.query.filter(JerseyNumber.isTaken == False)]
-    form.secondChoice.choices = [(entries.number,entries.number) for entries in JerseyNumber.query.filter(JerseyNumber.isTaken == False)]
-    form.thirdChoice.choices = [(entries.number,entries.number) for entries in JerseyNumber.query.filter(JerseyNumber.isTaken == False)]
-    form.fourthChoice.choices = [(entries.number,entries.number) for entries in JerseyNumber.query.filter(JerseyNumber.isTaken == False)]
-    form.fifthChoice.choices = [(entries.number,entries.number) for entries in JerseyNumber.query.filter(JerseyNumber.isTaken == False)]
+    form.firstChoice.choices = [(entries.number,entries.number) for entries in JerseyNumber.query.filter(JerseyNumber.isTaken == False, JerseyNumber.gender_id == current_user.gender_id)]
+    form.secondChoice.choices = [(entries.number,entries.number) for entries in JerseyNumber.query.filter(JerseyNumber.isTaken == False, JerseyNumber.gender_id == current_user.gender_id)]
+    form.thirdChoice.choices = [(entries.number,entries.number) for entries in JerseyNumber.query.filter(JerseyNumber.isTaken == False, JerseyNumber.gender_id == current_user.gender_id)]
+    form.fourthChoice.choices = [(entries.number,entries.number) for entries in JerseyNumber.query.filter(JerseyNumber.isTaken == False, JerseyNumber.gender_id == current_user.gender_id)]
+    form.fifthChoice.choices = [(entries.number,entries.number) for entries in JerseyNumber.query.filter(JerseyNumber.isTaken == False, JerseyNumber.gender_id == current_user.gender_id)]
 
     #if current user has submitted a choice, redirect to editing page
     if current_user.choice:
@@ -53,28 +63,11 @@ def editNumber():
 
     #initialize form and populate choices
     form = biddingForm()
-<<<<<<< HEAD
-=======
-    form.firstChoice.choices = [(entries.number,entries.number) for entries in JerseyNumber.query.filter(JerseyNumber.isTaken == False)]
-    form.secondChoice.choices = [(entries.number,entries.number) for entries in JerseyNumber.query.filter(JerseyNumber.isTaken == False)]
-    form.thirdChoice.choices = [(entries.number,entries.number) for entries in JerseyNumber.query.filter(JerseyNumber.isTaken == False)]
-    form.fourthChoice.choices = [(entries.number,entries.number) for entries in JerseyNumber.query.filter(JerseyNumber.isTaken == False)]
-    form.fifthChoice.choices = [(entries.number,entries.number) for entries in JerseyNumber.query.filter(JerseyNumber.isTaken == False)]
->>>>>>> parent of 4dc4dae... adjusted UI, fixed login and jersey number display
-
-    if current_user.gender.genderName == "Male":
-        form.firstChoice.choices = [(entries.number,entries.number) for entries in JerseyNumber.query.filter(JerseyNumber.isTaken == False, JerseyNumber.gender==current_user.gender)]
-        form.secondChoice.choices = [(entries.number,entries.number) for entries in JerseyNumber.query.filter(JerseyNumber.isTaken == False, JerseyNumber.gender==current_user.gender)]
-        form.thirdChoice.choices = [(entries.number,entries.number) for entries in JerseyNumber.query.filter(JerseyNumber.isTaken == False, JerseyNumber.gender==current_user.gender)]
-        form.fourthChoice.choices = [(entries.number,entries.number) for entries in JerseyNumber.query.filter(JerseyNumber.isTaken == False, JerseyNumber.gender==current_user.gender)]
-        form.fifthChoice.choices = [(entries.number,entries.number) for entries in JerseyNumber.query.filter(JerseyNumber.isTaken == False, JerseyNumber.gender==current_user.gender)]
-    
-    else:
-        form.firstChoice.choices = [(entries.number,entries.number  - 100) for entries in JerseyNumber.query.filter(JerseyNumber.isTaken == False, JerseyNumber.gender==current_user.gender)]
-        form.secondChoice.choices = [(entries.number,entries.number  - 100) for entries in JerseyNumber.query.filter(JerseyNumber.isTaken == False, JerseyNumber.gender==current_user.gender)]
-        form.thirdChoice.choices = [(entries.number,entries.number  - 100) for entries in JerseyNumber.query.filter(JerseyNumber.isTaken == False, JerseyNumber.gender==current_user.gender)]
-        form.fourthChoice.choices = [(entries.number,entries.number  - 100) for entries in JerseyNumber.query.filter(JerseyNumber.isTaken == False, JerseyNumber.gender==current_user.gender)]
-        form.fifthChoice.choices = [(entries.number,entries.number  - 100) for entries in JerseyNumber.query.filter(JerseyNumber.isTaken == False, JerseyNumber.gender==current_user.gender)]
+    form.firstChoice.choices = [(entries.number,entries.number) for entries in JerseyNumber.query.filter(JerseyNumber.isTaken == False, JerseyNumber.gender_id == current_user.gender_id)]
+    form.secondChoice.choices = [(entries.number,entries.number) for entries in JerseyNumber.query.filter(JerseyNumber.isTaken == False, JerseyNumber.gender_id == current_user.gender_id)]
+    form.thirdChoice.choices = [(entries.number,entries.number) for entries in JerseyNumber.query.filter(JerseyNumber.isTaken == False, JerseyNumber.gender_id == current_user.gender_id)]
+    form.fourthChoice.choices = [(entries.number,entries.number) for entries in JerseyNumber.query.filter(JerseyNumber.isTaken == False, JerseyNumber.gender_id == current_user.gender_id)]
+    form.fifthChoice.choices = [(entries.number,entries.number) for entries in JerseyNumber.query.filter(JerseyNumber.isTaken == False, JerseyNumber.gender_id == current_user.gender_id)]
 
     #fetch current users' previous choice to display on the site
     rawChoice = Choice.query.filter(Choice.user_id==current_user.id).first()

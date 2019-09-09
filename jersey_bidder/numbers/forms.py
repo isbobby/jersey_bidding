@@ -4,8 +4,8 @@ from wtforms import IntegerField,SubmitField,SelectField
 from wtforms.validators import DataRequired, Email, Length, EqualTo, ValidationError
 from flask_login import current_user
 
-class checkNumberForm(FlaskForm):
-    number = IntegerField('Room Number', validators=[DataRequired()])
+class chopeNumberForm(FlaskForm):
+    submit = SubmitField('I want this number')
 
 class biddingForm(FlaskForm):
     firstChoice = SelectField('First Choice', validators=[DataRequired()], coerce=int)
