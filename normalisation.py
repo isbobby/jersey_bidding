@@ -46,6 +46,7 @@ mapping_headers = {
     "is_captain": "Are you Captain of a Sport",
     "representing_sports_ivp": "Have you represented NUS (SUNIG/IVP) in the following sports:",
     "sports_currently_in": "Sports you are currently in (after latest cut)",
+    "email": "Email Address"
 }
 
 sports = {"aquathlon", "badminton", "basketball", "biathlon", "cross country", "floorball", "frisbee", "handball", "lifesaving", "netball", "road relay", "sepak takraw", "soccer", "softball", "squash", "swimming", "table tennis", "tennis", "touch rugby", "track", "triathlon", "volleyball", "water polo"}

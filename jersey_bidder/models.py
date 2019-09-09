@@ -7,8 +7,8 @@ class User(db.Model, UserMixin):
     __tablename__ = 'user'
     __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer, primary_key=True)   
-    roomNumber = db.Column(db.String(20))
-    name = db.Column(db.String(50))
+    roomNumber = db.Column(db.String(20), nullable=False)
+    name = db.Column(db.String(50), nullable=False)
     year = db.Column(db.Integer, nullable=False)
     points = db.Column(db.Integer, nullable=False)
 
