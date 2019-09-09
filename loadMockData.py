@@ -24,6 +24,7 @@ def loadMockData(app):
         #mock 400 eusoffians
         for i in range(400):
             # create dummy user
+            currentName = "dummyUser_" + str(i)
             currentRoomNumber = integerToBlock(i % 5) + str(i)
             currentYear = (i % 4) + 1
             currentPoints = i
@@ -37,7 +38,7 @@ def loadMockData(app):
             else :
                 currentPreference_id = random.randint(101, 200)
 
-            currentUser = User(roomNumber = currentRoomNumber, year = currentYear, points = currentPoints, 
+            currentUser = User(name = currentName, roomNumber = currentRoomNumber, year = currentYear, points = currentPoints, 
                     email = currentEmail, password = currentPassword, gender_id = currentGender_id, preference_id=currentPreference_id)
 
             # create sports
