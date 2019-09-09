@@ -13,7 +13,8 @@ mapping_headers = {
     "is_captain": "Are you Captain of a Sport",
     "representing_sports_ivp": "Have you represented NUS (SUNIG/IVP) in the following sports:",
     "sports_currently_in": "Sports you are currently in (after latest cut)",
-    "total_points": "total_points"
+    "total_points": "total_points",
+    "email": "Email Address"
 }
 
 def loadRealData(app):
@@ -21,7 +22,7 @@ def loadRealData(app):
         df = pd.read_csv(PEOPLE_CSV, dtype=str).fillna('')
         for index, entry in df.iterrows():
 
-            # adding current user
+            # add current user
             currentName = entry[str(mapping_headers["name"])]
             currentRoomNumber = entry[str(mapping_headers["room_number"])]
             currentYear = int(entry[str(mapping_headers["year"])])
