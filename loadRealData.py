@@ -22,6 +22,7 @@ def loadRealData(app):
         for index, entry in df.iterrows():
 
             # adding current user
+            currentName = entry[str(mapping_headers["name"])]
             currentRoomNumber = entry[str(mapping_headers["room_number"])]
             currentYear = int(entry[str(mapping_headers["year"])])
             currentPoints = int(entry[str(mapping_headers["total_points"])])
@@ -33,7 +34,7 @@ def loadRealData(app):
                 currentGender_id = 2
             currentEmail = "dummyEmail" + str(index) + "@gmail.com"
             currentPassword = "dummyPassword" + str(index)
-            currentUser = User(roomNumber = currentRoomNumber, year = currentYear, points = currentPoints, 
+            currentUser = User(name = currentName, roomNumber = currentRoomNumber, year = currentYear, points = currentPoints, 
                         email = currentEmail, password = currentPassword, gender_id = currentGender_id)
             
             # add user sports
@@ -44,7 +45,7 @@ def loadRealData(app):
                 sport_ToAdd = Sport.query.filter((Sport.gender_id == 3) | (Sport.gender_id == currentGender_id)) \
                         .filter(Sport.sportName == currentUser_SportName).first()
                 currentUser.sports.append(sport_ToAdd)
-                
+
             db.session.add(currentUser)
 
         db.session.commit()
