@@ -39,13 +39,19 @@ def loadMockData(app):
 
             currentUser = User(roomNumber = currentRoomNumber, year = currentYear, points = currentPoints, 
                     email = currentEmail, password = currentPassword, gender_id = currentGender_id, preference_id=currentPreference_id)
-            db.session.add(currentUser)
 
             # create sports
-            maleSport_id = [entries.id for entries in Sport.query.filter(Sport.gender_id == 1 or Sport.gender_id == 3)]
-            femaleSport_id = [entries.id for entries in Sport.query.filter(Sport.gender_id == 2 or Sport.gender_id == 3)]
-        
-        #mock their choices
+            maleSports = Sport.query.filter((Sport.gender_id == 1) | (Sport.gender_id == 3)).all()
+            femaleSports = Sport.query.filter((Sport.gender_id == 2) or (Sport.gender_id == 3))
+            dummySportsToAdd = []
+            if currentUser.gender_id == 1:
+                dummySportsToAdd = random.sample(list(maleSports), k=2)
+            if currentUser.gender_id == 2:
+                dummySportsToAdd = random.sample(list(femaleSports), k=2)
+            for dummySport in dummySportsToAdd:
+                currentUser.sports.append(dummySport)
+
+            db.session.add(currentUser)
 
         db.session.commit()
 

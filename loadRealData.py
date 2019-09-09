@@ -3,6 +3,7 @@ PEOPLE_CSV = 'allocation/normalisation_output.csv'
 import pandas as pd;
 from jersey_bidder import create_app, db, models
 from jersey_bidder.models import *
+from sqlalchemy import or_
 
 mapping_headers = {
     "year": "Year of Study",
@@ -38,13 +39,12 @@ def loadRealData(app):
             # add user sports
             currentUserSportList = []
             currentUserSports = entry[str(mapping_headers["sports_currently_in"])].split(';')
-            availSports_FilteredByGender = Sport.query.filter(Sport.gender_id == 3, Sport.gender_id == currentGender_id)
             for currentUser_SportName in currentUserSports:
-                for predefinedSports in availSports_FilteredByGender:
-                    if predefinedSports.contains(currentUser_SportName):
-                        currentUserSportList.append(predefinedSports)
-
-            currentUser.sports = currentUserSportList
+                currentUser_SportName = currentUser_SportName.strip()
+                sport_ToAdd = Sport.query.filter((Sport.gender_id == 3) | (Sport.gender_id == currentGender_id)) \
+                        .filter(Sport.sportName == currentUser_SportName).first()
+                currentUser.sports.append(sport_ToAdd)
+                
             db.session.add(currentUser)
 
         db.session.commit()

@@ -81,10 +81,8 @@ class JerseyNumber(db.Model):
     number = db.Column(db.Integer, nullable=False)
     isTaken = db.Column(db.Boolean, default=False, nullable=False)
 
+    # foreign key constraint
     gender_id = db.Column(db.Integer, db.ForeignKey('gender.id'), nullable=False)
 
-    #relationship / foreign key constraint
-    # one to many relationship (one number can have multiple users)
-    # users = db.relationship('User', back_populates="jerseyNumber", lazy=True)
-    # user_preference = db.relationship('User', back_populates="preference", lazy=True)
+    #relationship
     gender = db.relationship('Gender', back_populates="JerseyNumber")
