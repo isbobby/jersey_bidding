@@ -9,7 +9,7 @@ def setUp(app):
         Sport.__table__.drop(db.engine)
         User.__table__.drop(db.engine)
         JerseyNumber.__table__.drop(db.engine)
-        Gender.__table__.drop(db.engine)
+        Gender.__table__.drop(db.engine) 
         db.create_all() 
 
         #add Gender

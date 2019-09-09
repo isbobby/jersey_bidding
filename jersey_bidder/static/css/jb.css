@@ -1,11 +1,10 @@
-.jb-button{  background-color: #4CAF50; /* Green */
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;}
-
-.jb-font-20pts {font-size: 20px;}
-.jb-font-32pts {font-size: 32px;}
+.grid-container {display: inline-grid;}
+.jb-font-size-60pts {font-size: 60px}
+.jb-grid-container {display:grid; grid-template-columns: auto auto auto auto auto auto auto auto auto auto; padding:10px;grid-gap:5px}    
+.jb-grid-item {font-size: 30px;text-align: center;} .jb-grid-item:hover {background-color:#FF6A00;}
+.jb-disable-link {text-decoration: none;}
+.jb-padding-left-32 { padding-left:32pts; }
+.jb-padding-right-32 { padding-right:32pts;}
+.jb-table-width-90 { width: 90%; }
+.jb-table-width-70 { width: 70%; }
+.jb-margin-center {margin: 0 auto;}

@@ -4,82 +4,82 @@
     <h4>
         <br>You can choose your top 5 number choices here,
         <br>Please choose discretely and avoid highly contested numbers.
-    </h4> 
+    </h4>
 </div>
 
-<div class="w3-container w3-white w3-center w3-opacity w3-padding-64">
-        <form method ="POST" action="">
-                {{ form.hidden_tag() }} 
-                <fieldset class="form-grop">                     
-                    <div class="form-grop">
-                        <span class="jb-font-20pts">{{ form.firstChoice.label(class="form-control-label") }}</span><br>
-                        {% if form.firstChoice.errors %}
-                            {{ form.firstChoice(class="form-control form-control-lg is-invalid") }}
-                            <div class="invalid-feedback">
-                                {% for error in form.firstChoice.errors %}
-                                    <span> {{ error }} </span>
-                                {% endfor %}
-                            </div>
-                        {% else %}
-                            {{ form.firstChoice(class="form-control form-control-lg") }}
-                        {% endif %}  
-                    </div>                   
-                        <div class="form-grop">
-                            <span class="jb-font-20pts">{{ form.secondChoice.label(class="form-control-label") }}</span><br>
-                            {% if form.secondChoice.errors %}
-                                {{ form.secondChoice(class="form-control form-control-lg is-invalid") }}
-                                <div class="invalid-feedback">
-                                    {% for error in form.secondChoice.errors %}
-                                        <span> {{ error }} </span>
-                                    {% endfor %}
-                                </div>
-                            {% else %}
-                                {{ form.secondChoice(class="form-control form-control-lg") }}
-                            {% endif %}  
-                        </div>          
-                        <div class="form-grop">
-                            <span class="jb-font-20pts">{{ form.thirdChoice.label(class="form-control-label") }}</span><br>
-                            {% if form.thirdChoice.errors %}
-                                {{ form.thirdChoice(class="form-control form-control-lg is-invalid") }}
-                                <div class="invalid-feedback">
-                                    {% for error in form.thirdChoice.errors %}
-                                        <span> {{ error }} </span>
-                                    {% endfor %}
-                                </div>
-                            {% else %}
-                                {{ form.thirdChoice(class="form-control form-control-lg") }}
-                            {% endif %}  
-                        </div>          
-                        <div class="form-grop">
-                            <span class="jb-font-20pts">{{ form.fourthChoice.label(class="form-control-label") }}</span><br>
-                            {% if form.fourthChoice.errors %}
-                                {{ form.fourthChoice(class="form-control form-control-lg is-invalid") }}
-                                <div class="invalid-feedback">
-                                    {% for error in form.fourthChoice.errors %}
-                                        <span> {{ error }} </span>
-                                    {% endfor %}
-                                </div>
-                            {% else %}
-                                {{ form.fourthChoice(class="form-control form-control-lg") }}
-                            {% endif %}  
-                        </div>               
-                        <div class="form-grop">
-                            <span class="jb-font-20pts">{{ form.fifthChoice.label(class="form-control-label") }}</span><br>
-                            {% if form.fifthChoice.errors %}
-                                {{ form.fifthChoice(class="form-control form-control-lg is-invalid") }}
-                                <div class="invalid-feedback">
-                                    {% for error in form.fifthChoice.errors %}
-                                        <span> {{ error }} </span>
-                                    {% endfor %}
-                                </div>
-                            {% else %}
-                                {{ form.fifthChoice(class="form-control form-control-lg") }}
-                            {% endif %}  
-                        </div>
-                </fieldset>
-                <div class="form-grop">
-                    <br>{{ form.submit(class="w3-button")}}
-                </div>        
-            </form>
+<div class="w3-container w3-white w3-center w3-opacity">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-grop">
+            <div class="form-grop">
+                <br>{{ form.firstChoice.label(class="form-control-label") }}<br>
+                {% if form.firstChoice.errors %}
+                {{ form.firstChoice(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.firstChoice.errors %}
+                    <span> {{ error }} </span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.firstChoice(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-grop">
+                <br>{{ form.secondChoice.label(class="form-control-label") }}<br>
+                {% if form.secondChoice.errors %}
+                {{ form.secondChoice(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.secondChoice.errors %}
+                    <span> {{ error }} </span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.secondChoice(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-grop">
+                <br>{{ form.thirdChoice.label(class="form-control-label") }}<br>
+                {% if form.thirdChoice.errors %}
+                {{ form.thirdChoice(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.thirdChoice.errors %}
+                    <span> {{ error }} </span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.thirdChoice(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-grop">
+                <br>{{ form.fourthChoice.label(class="form-control-label") }}<br>
+                {% if form.fourthChoice.errors %}
+                {{ form.fourthChoice(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.fourthChoice.errors %}
+                    <span> {{ error }} </span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.fourthChoice(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-grop">
+                <br>{{ form.fifthChoice.label(class="form-control-label") }}<br>
+                {% if form.fifthChoice.errors %}
+                {{ form.fifthChoice(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.fifthChoice.errors %}
+                    <span> {{ error }} </span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.fifthChoice(class="form-control form-control-lg") }}
+                {% endif %}
+            </div><br>
+        </fieldset>
+        <div class="form-grop">
+            <br>{{ form.submit(class="w3-button")}}
+        </div>
+    </form>
 </div>
 {% endblock content%}

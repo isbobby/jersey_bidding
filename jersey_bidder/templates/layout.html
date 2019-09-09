@@ -44,15 +44,16 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 </div>
 
 <!-- Flash message block -->
-<div class ="container">
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
-          {% for category,message in messages %}
-            <div class="{{ category }}">{{ message }}</div>
+      <div class ="w3-container w3-center w3-orange">
+        <br><br><br>
+          <span class="jb-font-size-60pts">{% for category,message in messages %}</span>
+            <div class="{{ category }}">{{ message }}</div><br>
           {% endfor %}
+      </div>
       {% endif %}
     {% endwith %}
-    </div>
 
     {% block content %}
     {% endblock content %}
