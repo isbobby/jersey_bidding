@@ -2,7 +2,7 @@
 {% block content %}
 <div class="w3-container w3-light-grey w3-center w3-opacity w3-padding-32">
     <h4>
-        <br>Chosen Number: {{ number.number }}
+        <br>Chosen Number: {{ number.number }} 
     </h4>
 </div>
 
@@ -12,7 +12,7 @@
     </h3>
     <table class="w3-table ">
         <tr>
-            <th>Room Number</th>
+            <th>Name</th>
             <th>Year</th>
             <th>Points</th>
             <th>Sports</th>
@@ -20,13 +20,13 @@
 
         {% for user in interestedUsers %}
         <tr>
-            <td>{{user.roomNumber}}</td>
+            <td>{{user.name}}</td>
             <td>{{user.year}}</td>
             <td>{{user.points}}</td>
             <td>
                 {% if user.sports %}
                 {% for sport in user.sports %}
-                {{ sport.sportName }}  
+                {{ sport.sportName }}
                 {% endfor %}
                 {% else %}
                 -
@@ -38,8 +38,9 @@
 </div>
 
 <form method="POST" action="">
-<div class="w3-container w3-white w3-center w3-opacity">
-    <a href="{{url_for('numbers.chopeSingleNumber', jerseyNumber_id=number.id)}}" class="w3-button">Chope this number!</a>
-</div>
+    <div class="w3-container w3-white w3-center w3-opacity">
+        <a href="{{url_for('numbers.chopeSingleNumber', jerseyNumber_id=number.id)}}" class="w3-button">Chope this
+            number!</a>
+    </div>
 </form>
 {% endblock content %}

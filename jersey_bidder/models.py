@@ -3,10 +3,11 @@ from jersey_bidder import db
 from flask_login import UserMixin
 from datetime import datetime
 
+
 class User(db.Model, UserMixin):
     __tablename__ = 'user'
     __table_args__ = {'extend_existing': True}
-    id = db.Column(db.Integer, primary_key=True)   
+    id = db.Column(db.Integer, primary_key=True)
     roomNumber = db.Column(db.String(20), nullable=False)
     name = db.Column(db.String(50), nullable=False)
     year = db.Column(db.Integer, nullable=False)
@@ -16,7 +17,8 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(200), nullable=False)
 
     # Foreign key constraints (only can have one)
-    gender_id = db.Column(db.Integer, db.ForeignKey('gender.id'), nullable=False)
+    gender_id = db.Column(db.Integer, db.ForeignKey(
+        'gender.id'), nullable=False)
     preference_id = db.Column(db.Integer, db.ForeignKey('jerseyNumber.id'))
     jerseyNumber_id = db.Column(db.Integer, db.ForeignKey('jerseyNumber.id'))
 
@@ -24,8 +26,11 @@ class User(db.Model, UserMixin):
     gender = db.relationship('Gender', back_populates="User")
     choice = db.relationship('Choice', backref='user', lazy=True)
     sports = db.relationship('Sport', secondary='userSports', lazy=True)
-    jerseyNumber = db.relationship('JerseyNumber', foreign_keys=[preference_id], backref='users', lazy=True)
-    preference = db.relationship('JerseyNumber', foreign_keys=[preference_id], backref='users_preference', lazy=True)
+    jerseyNumber = db.relationship('JerseyNumber', foreign_keys=[
+                                   preference_id], backref='users', lazy=True)
+    preference = db.relationship('JerseyNumber', foreign_keys=[
+                                 preference_id], backref='users_preference', lazy=True)
+
 
 class Gender(db.Model):
     __tablename__ = 'gender'
@@ -36,9 +41,10 @@ class Gender(db.Model):
     User = db.relationship('User')
     JerseyNumber = db.relationship('JerseyNumber')
 
+
 class Choice(db.Model):
     __tablename__ = 'choice'
-    __table_args__ = {'extend_existing': True}     
+    __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer, primary_key=True)
     submitDatetime = db.Column(db.DateTime, nullable=False)
     firstChoice = db.Column(db.Integer, nullable=False)
@@ -47,9 +53,10 @@ class Choice(db.Model):
     fourthChoice = db.Column(db.Integer, nullable=False)
     fifthChoice = db.Column(db.Integer, nullable=False)
 
-    #foreign key constraint
+    # foreign key constraint
     # roomNumber = db.Column(db.String(20), db.ForeignKey('user.roomNumber'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
 
 class Sport(db.Model):
     __tablename__ = 'sport'
@@ -57,14 +64,17 @@ class Sport(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     sportName = db.Column(db.String(100), nullable=False)
 
-    #foreign key constraints
-    gender_id = db.Column(db.Integer, db.ForeignKey('gender.id'), nullable=False)
+    # foreign key constraints
+    gender_id = db.Column(db.Integer, db.ForeignKey(
+        'gender.id'), nullable=False)
 
     # relationships
     Users = db.relationship('User', secondary='userSports')
     Gender = db.relationship('Gender', backref="Sport")
 
 # UserSports is a junction table between Sport and User
+
+
 class UserSports(db.Model):
     __tablename__ = 'userSports'
     __table_args__ = {'extend_existing': True}
@@ -75,6 +85,8 @@ class UserSports(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 # male 0-99 female 100-199 (100 bias for female)
+
+
 class JerseyNumber(db.Model):
     __tablename__ = 'jerseyNumber'
     __table_args__ = {'extend_existing': True}
@@ -83,7 +95,8 @@ class JerseyNumber(db.Model):
     isTaken = db.Column(db.Boolean, default=False, nullable=False)
 
     # foreign key constraint
-    gender_id = db.Column(db.Integer, db.ForeignKey('gender.id'), nullable=False)
+    gender_id = db.Column(db.Integer, db.ForeignKey(
+        'gender.id'), nullable=False)
 
-    #relationship
+    # relationship
     gender = db.relationship('Gender', back_populates="JerseyNumber")
