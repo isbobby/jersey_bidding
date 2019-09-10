@@ -49,6 +49,7 @@ mapping_headers = {
     "email": "Email Address"
 }
 
+# list includes IVP / external sports
 sports = {"aquathlon", "badminton", "basketball", "biathlon", "cross country", "floorball", "frisbee", "handball", "lifesaving", "netball", "road relay", "sepak takraw", "soccer", "softball", "squash", "swimming", "table tennis", "tennis", "touch rugby", "track", "triathlon", "volleyball", "water polo"}
 
 

@@ -2,10 +2,11 @@ from flask import Blueprint, render_template, url_for, redirect, request, flash
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import datetime
 
-# local
-from jersey_bidder.models import User, Choice, JerseyNumber
-from jersey_bidder.numbers.forms import biddingForm, chopeNumberForm
+#local
+from jersey_bidder.models import  User, Choice, JerseyNumber
+from jersey_bidder.numbers.forms import biddingForm, chopeNumberForm, allocateForm
 from jersey_bidder import db
+from jersey_bidder.numbers.utils import allocateByYear
 
 numbers = Blueprint('numbers', __name__)
 
@@ -107,3 +108,15 @@ def editNumber():
         return render_template('biddingSuccess.html', successMessage=successMessage)
 
     return render_template('biddingEdit.html', title='Bidding', form=form, currentChoice=currentChoice)
+
+@numbers.route("/admin/allocate", methods=['GET','POST'])
+def adminAllocate():
+    form = allocateForm()
+    form.yearToAllocate.choices = [(1,1),(2,2),(3,3),(4,4)]
+
+    if form.validate_on_submit():
+        allocateByYear(form.yearToAllocate.data)
+        successMessage = "successfully allocated year " + str(form.yearToAllocate.data) + " students"
+        return render_template('biddingSuccess.html', successMessage=successMessage)
+
+    return render_template('allocatePage.html', form=form)

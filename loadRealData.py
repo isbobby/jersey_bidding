@@ -1,6 +1,7 @@
 PEOPLE_CSV = 'allocation/normalisation_output.csv'
 
 import pandas as pd;
+from utils import randomStringDigits;
 from jersey_bidder import create_app, db, models
 from jersey_bidder.models import *
 from sqlalchemy import or_
@@ -18,6 +19,7 @@ mapping_headers = {
 }
 
 def loadRealData(app):
+    """loads user data to database from normalisation_output.csv """
     with app.app_context():
         df = pd.read_csv(PEOPLE_CSV, dtype=str).fillna('')
         for index, entry in df.iterrows():
@@ -33,8 +35,8 @@ def loadRealData(app):
                 currentGender_id = 1
             elif (currentGenderName == "female"):
                 currentGender_id = 2
-            currentEmail = "dummyEmail" + str(index) + "@gmail.com"
-            currentPassword = "dummyPassword" + str(index)
+            currentEmail = entry[str(mapping_headers["email"])]
+            currentPassword = randomStringDigits()
             currentUser = User(name = currentName, roomNumber = currentRoomNumber, year = currentYear, points = currentPoints, 
                         email = currentEmail, password = currentPassword, gender_id = currentGender_id)
             
