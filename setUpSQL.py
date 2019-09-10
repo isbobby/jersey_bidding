@@ -4,9 +4,9 @@ from jersey_bidder.models import *
 def setUp(app):
     with app.app_context():
         # drop all tables first
-        Choice.__table__.drop(db.engine)
         UserSports.__table__.drop(db.engine)
         Sport.__table__.drop(db.engine)
+        Choice.__table__.drop(db.engine)
         User.__table__.drop(db.engine)
         JerseyNumber.__table__.drop(db.engine)
         Gender.__table__.drop(db.engine) 

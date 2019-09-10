@@ -4,8 +4,9 @@ from datetime import datetime
 
 #local
 from jersey_bidder.models import  User, Choice, JerseyNumber
-from jersey_bidder.numbers.forms import biddingForm, chopeNumberForm
+from jersey_bidder.numbers.forms import biddingForm, chopeNumberForm, allocateForm
 from jersey_bidder import db
+from jersey_bidder.numbers.utils import allocateByYear
 
 numbers = Blueprint('numbers', __name__)
 
@@ -78,11 +79,11 @@ def editNumber():
     currentChoice= {'key':'value'}
 
     if current_user.gender.genderName == "Female":
-        currentChoice['firstChoice'] = rawChoice.firstChoice - 100
-        currentChoice['secondChoice'] = rawChoice.secondChoice - 100
-        currentChoice['thirdChoice'] = rawChoice.thirdChoice - 100
-        currentChoice['fourthChoice'] = rawChoice.fourthChoice - 100
-        currentChoice['fifthChoice'] = rawChoice.fifthChoice - 100
+        currentChoice['firstChoice'] = rawChoice.firstChoice
+        currentChoice['secondChoice'] = rawChoice.secondChoice
+        currentChoice['thirdChoice'] = rawChoice.thirdChoice
+        currentChoice['fourthChoice'] = rawChoice.fourthChoice
+        currentChoice['fifthChoice'] = rawChoice.fifthChoice
 
     else:
         currentChoice = rawChoice
@@ -103,3 +104,15 @@ def editNumber():
         return render_template('biddingSuccess.html', successMessage=successMessage)
     
     return render_template('biddingEdit.html', title='Bidding', form=form, currentChoice=currentChoice)
+
+@numbers.route("/admin/allocate", methods=['GET','POST'])
+def adminAllocate():
+    form = allocateForm()
+    form.yearToAllocate.choices = [(1,1),(2,2),(3,3),(4,4)]
+
+    if form.validate_on_submit():
+        allocateByYear(form.yearToAllocate.data)
+        successMessage = "successfully allocated year " + str(form.yearToAllocate.data) + " students"
+        return render_template('biddingSuccess.html', successMessage=successMessage)
+
+    return render_template('allocatePage.html', form=form)

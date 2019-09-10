@@ -15,3 +15,6 @@ class biddingForm(FlaskForm):
     fifthChoice = SelectField('Fifth Choice', validators=[DataRequired()], coerce=int)
     submit = SubmitField('Submit my choices')
 
+class allocateForm(FlaskForm):
+    yearToAllocate = SelectField('Year To Allocate', validators=[DataRequired()], coerce=int)
+    submit = SubmitField('Allocate!')

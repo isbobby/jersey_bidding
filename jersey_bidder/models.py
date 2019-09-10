@@ -19,21 +19,23 @@ class User(db.Model, UserMixin):
     gender_id = db.Column(db.Integer, db.ForeignKey('gender.id'), nullable=False)
     preference_id = db.Column(db.Integer, db.ForeignKey('jerseyNumber.id'))
     jerseyNumber_id = db.Column(db.Integer, db.ForeignKey('jerseyNumber.id'))
+    # choice_id = db.Column(db.Integer, db.ForeignKey('choice.id'))
 
     # Relationships
     gender = db.relationship('Gender', back_populates="User")
-    choice = db.relationship('Choice', backref='user', lazy=True)
+    choice = db.relationship('Choice', back_populates='user', uselist=False, lazy=True)
     sports = db.relationship('Sport', secondary='userSports', lazy=True)
-    jerseyNumber = db.relationship('JerseyNumber', foreign_keys=[preference_id], backref='users', lazy=True)
+    jerseyNumber = db.relationship('JerseyNumber', foreign_keys=[jerseyNumber_id], backref='users', lazy=True)
     preference = db.relationship('JerseyNumber', foreign_keys=[preference_id], backref='users_preference', lazy=True)
 
 class Gender(db.Model):
     __tablename__ = 'gender'
-    __tableargs__ = {'extend_existing': True}
+    __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer, primary_key=True)
     genderName = db.Column(db.String(10), nullable=False)
 
-    User = db.relationship('User')
+    # Relationships
+    User = db.relationship('User', back_populates="gender", lazy=True)
     JerseyNumber = db.relationship('JerseyNumber')
 
 class Choice(db.Model):
@@ -47,9 +49,9 @@ class Choice(db.Model):
     fourthChoice = db.Column(db.Integer, nullable=False)
     fifthChoice = db.Column(db.Integer, nullable=False)
 
-    #foreign key constraint
-    # roomNumber = db.Column(db.String(20), db.ForeignKey('user.roomNumber'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    user = db.relationship('User', back_populates='choice', lazy=True)
 
 class Sport(db.Model):
     __tablename__ = 'sport'
