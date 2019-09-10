@@ -2,17 +2,12 @@
 {% block content %}
 <div class="w3-container w3-light-green w3-center w3-opacity w3-padding-64">
     <br>
-    {% if oldNumber %}
-        <h4>
-            Your prefrence has been updated from {{oldNumber.number}} to {{newNumber.number}}
-        </h4>
-    {% else %}
-        <h4>
-            Your prefrence number has been registered.
-        </h4>
-    {% endif %}
     <h4>
-        <br><a href="{{ url_for('numbers.showSingleNumber', jerseyNumber_id=newNumber.id)}}">Go back to prefence page.</a>
+        Your prefrence number has been registered.
+    </h4>
+    <h4>
+        <br><a href="{{ url_for('numbers.showSingleNumber', jerseyNumber_id=newNumber.id)}}">Go back to prefence
+            page.</a>
     </h4>
 </div>
 {% endblock content %}
