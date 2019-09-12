@@ -54,6 +54,10 @@ def validateChoiceAvailable(desiredNumber, user):
 def allocateUserChoices(user, allocationMethod):
     userChoice = Choice.query.filter(Choice.user_id == user.id).first()
 
+    if userChoice == None:
+        # user did not input any choice, just return True and skip
+        return True
+
     firstChoice = userChoice.firstChoice
     secondChoice = userChoice.secondChoice
     thirdChoice = userChoice.thirdChoice
@@ -85,23 +89,28 @@ def allocateSamePointUsers(userList, allocationMethod):
     random.shuffle(userList)
     for user in userList:
         result = allocateUserChoices(user, allocationMethod)
+        if result == False:
+            # if any of the user was not succesfully
+            db.session.rollback() 
+            return result
+    db.session.commit()
+    return True
 
 def allocateUniqueNumberToUser(number, user):
     desiredJerseyNumber = JerseyNumber.query.filter((JerseyNumber.gender == user.gender) & (JerseyNumber.number == number)).first()
     desiredJerseyNumber.users.append(user)
     desiredJerseyNumber.isTaken = True
     user.jerseyNumber = desiredJerseyNumber
-    db.session.commit()
 
 
 def allocateNonUniqueNumberToUser(number, user):
     desiredJerseyNumber = JerseyNumber.query.filter((JerseyNumber.gender == user.gender) & (JerseyNumber.number == number)).first()
     desiredJerseyNumber.users.append(user)
     user.jerseyNumber = desiredJerseyNumber
-    db.session.commit()
 
 # only freshie and year 2 will not have unique number
 def allocateByYear(currentYear):
+    """allocates users by year, and returns list of users with conflict is any"""
     allocationMethod = allocateUniqueNumberToUser
     if (currentYear == 1 or currentYear == 2):
         allocationMethod = allocateNonUniqueNumberToUser
@@ -117,10 +126,14 @@ def allocateByYear(currentYear):
         if (currentUser.points == currentPoint):
             tempUserList.append(currentUser)
         else:
-            allocateSamePointUsers(tempUserList, allocationMethod)
+            allocationResult = allocateSamePointUsers(tempUserList, allocationMethod)
+            if allocationResult == False:
+                return tempUserList
             currentPoint = currentUser.points
             tempUserList = [currentUser]
 
     if tempUserList:
         # tempUserList is not empty, allocate them
-        allocateSamePointUsers(tempUserList, allocationMethod)
+        allocationResult = allocateSamePointUsers(tempUserList, allocationMethod)
+        if allocationResult == False:
+            return tempUserList

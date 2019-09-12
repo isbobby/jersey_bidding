@@ -115,8 +115,15 @@ def adminAllocate():
     form.yearToAllocate.choices = [(1,1),(2,2),(3,3),(4,4)]
 
     if form.validate_on_submit():
-        allocateByYear(form.yearToAllocate.data)
+        failedAllocateUsers = allocateByYear(form.yearToAllocate.data)
+        if failedAllocateUsers != None:
+            overallStats = {}
+            totalUserInYear = User.query.filter(User.year == form.yearToAllocate.data).count()
+            totalAllocatedUserInYear = User.query.filter((User.year == form.yearToAllocate.data) & (User.jerseyNumber_id != None)).count()
+            overallStats.update({'totalUserInYear' : totalUserInYear})
+            overallStats.update({'totalAllocatedUserInYear' : totalAllocatedUserInYear})
+            return render_template('allocateFailure.html', failedUsers=failedAllocateUsers, overallStats = overallStats)
         successMessage = "successfully allocated year " + str(form.yearToAllocate.data) + " students"
-        return render_template('biddingSuccess.html', successMessage=successMessage)
+        return render_template('allocateSuccess.html', successMessage=successMessage)
 
     return render_template('allocatePage.html', form=form)

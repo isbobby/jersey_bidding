@@ -53,5 +53,14 @@ def loadRealData(app):
 
         db.session.commit()
 
+        # alter below code to your own testing for choices
+        # for i in range(6):
+        #     currentDatetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        #     currentChoice = Choice(submitDatetime = currentDatetime, firstChoice = 1, secondChoice = 2, thirdChoice = 3, fourthChoice = 4, fifthChoice = 5,
+        #         user_id = i + 1)
+        #     db.session.add(currentChoice)
+        # db.session.commit()
+
+
 if __name__ == "__main__":
     loadRealData(create_app())
