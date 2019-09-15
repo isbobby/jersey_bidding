@@ -6,7 +6,7 @@ from datetime import datetime
 from jersey_bidder.models import User, Choice, JerseyNumber
 from jersey_bidder.useradmin.forms import allocateForm
 from jersey_bidder import db
-from jersey_bidder.useradmin.utils import allocateByYear, generateMaleList, generateFemaleList
+from jersey_bidder.useradmin.utils import allocateByYear, generateMaleList, generateFemaleList, splitMaleAndFemale
 
 useradmin = Blueprint('useradmin', __name__)
 
@@ -34,7 +34,11 @@ def adminAllocate():
             overallStats.update(
                 {'totalAllocatedUserInYear': totalAllocatedUserInYear})
 
-            return render_template('allocateFailure.html', failedUsers=failedAllocateUsers, overallStats=overallStats)
+            maleAndFemaleTuple = splitMaleAndFemale(failedAllocateUsers)
+            failedMaleList = maleAndFemaleTuple[0]
+            failedFemaleList = maleAndFemaleTuple[1]
+
+            return render_template('allocateFailure.html', failedMales=failedMaleList, failedFemales=failedFemaleList, overallStats=overallStats)
 
         successMessage = "successfully allocated year " + \
             str(form.yearToAllocate.data) + " students"

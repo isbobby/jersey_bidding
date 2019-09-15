@@ -3,6 +3,13 @@ from jersey_bidder import db
 from flask_login import UserMixin
 from datetime import datetime
 
+class Admin(db.Model):
+    __tablename__ = 'admin'
+    __table_args__ = {'extend_existing': True}
+    id = db.Column(db.Integer, primary_key=True)
+
+    adminLoginID = db.Column(db.String(100), nullable=False)
+    password = db.Column(db.String(100), nullable=False)
 
 class User(db.Model, UserMixin):
     __tablename__ = 'user'
