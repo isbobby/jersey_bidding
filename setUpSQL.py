@@ -12,6 +12,9 @@ def setUp(app):
         Gender.__table__.drop(db.engine) 
         db.create_all() 
 
+        baseAdmin = Admin(adminLoginID = "admin", password = "password")
+        db.session.add(baseAdmin)
+
         #add Gender
         male = Gender(genderName = "Male")
         female = Gender(genderName = "Female")
