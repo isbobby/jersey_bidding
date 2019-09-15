@@ -27,8 +27,7 @@ def getOppositeGenderID(user):
         return 1
 
 def validateNumberTaken(desiredNumber):
-    desiredJersey = JerseyNumber.query.filter((JerseyNumber.gender_id == user.gender_id) & (
-            JerseyNumber.number == desiredNumber)).first()
+    desiredJersey = JerseyNumber.query.filter(JerseyNumber.number == desiredNumber).first()
     return desiredJersey.isTaken
 
 def validateSportClash(desiredNumber, user):
