@@ -10,9 +10,11 @@ from jersey_bidder.useradmin.utils import allocateByYear, generateMaleList, gene
 
 useradmin = Blueprint('useradmin', __name__)
 
+
 @useradmin.route("/useradmin/home", methods=['GET', 'POST'])
 def adminHome():
     return render_template('adminHome.html')
+
 
 @useradmin.route("/useradmin/allocate", methods=['GET', 'POST'])
 def adminAllocate():
@@ -63,20 +65,30 @@ def fullResultFemale():
 
 @useradmin.route("/useradmin/checkresult/malebyyear/<int:year_id>", methods=['GET', 'POST'])
 def showMaleByYear(year_id):
-    usersByYear = User.query.filter((User.year==year_id) & (User.gender_id==1)).all()
+    usersByYear = User.query.filter(
+        (User.year == year_id) & (User.gender_id == 1)).all()
     return render_template('showMaleResultByYear.html', usersByYear=usersByYear, year_id=year_id)
+
 
 @useradmin.route("/useradmin/checkresult/femalebyyear/<int:year_id>", methods=['GET', 'POST'])
 def showFemaleByYear(year_id):
-    usersByYear = User.query.filter((User.year==year_id) & (User.gender_id==2)).all()
+    usersByYear = User.query.filter(
+        (User.year == year_id) & (User.gender_id == 2)).all()
     return render_template('showFemaleResultByYear.html', usersByYear=usersByYear, year_id=year_id)
+
 
 @useradmin.route("/useradmin/checkresult/fullmalelist", methods=['GET', 'POST'])
 def getAllMaleUsers():
-    users = User.query.filter(User.gender_id==1).all()
+    users = User.query.filter(User.gender_id == 1).all()
     return render_template('fullNameListMale.html', users=users)
+
 
 @useradmin.route("/useradmin/checkresult/fullfemalelist", methods=['GET', 'POST'])
 def getAllFemaleUsers():
-    users = User.query.filter(User.gender_id==2).all()
+    users = User.query.filter(User.gender_id == 2).all()
+    return render_template('fullNameListFemale.html', users=users)
+
+@useradmin.route("/useradmin/adminassign/<int:user_id>", methods=['GET', 'POST'])
+def adminAssign():
+    user = User.query.get_or_404(user_id)
     return render_template('fullNameListFemale.html', users=users)
