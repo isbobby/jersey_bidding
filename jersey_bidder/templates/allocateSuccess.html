@@ -1,13 +1,24 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class="w3-container w3-light-green w3-center w3-opacity w3-padding-64">
-    <h4>
-<<<<<<< HEAD
-        <br>{{ successMessage }}
-        <br>You can edit your choices <a href="{{ url_for('numbers.bidNumber')}}">here.</a>
-=======
-        <br>{{ failedUsers }}
->>>>>>> 37781d820c72fb4bdbfa53bd22507ee1ecf41c7f
-    </h4>
+    <br><h4>No conflicts detected.</h4>
+</div>
+<div class="w3-container w3-light-grey w3-center w3-opacity w3-padding-64">
+    <table class="w3-table jb-margin-center jb-table-width-70">
+        <tr>
+            <th>Number</th>
+            <th>Name</th>
+            <th>Year</th>
+            <th>roomNumber</th>
+        </tr>
+        {% for user in allUsersInYear %}
+        <tr>
+            <td>{{ user.jerseyNumber_id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.year}}</td>
+            <td>{{ user.roomNumber }}</td>
+        </tr>
+        {% endfor %}
+    </table>
 </div>
 {% endblock content %}

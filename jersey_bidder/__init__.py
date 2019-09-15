@@ -27,9 +27,12 @@ def create_app(config_class=Config):
     from jersey_bidder.main.routes import main
     from jersey_bidder.user.routes import user
     from jersey_bidder.numbers.routes import numbers
+    from jersey_bidder.useradmin.routes import useradmin
+
     app.register_blueprint(main)
     app.register_blueprint(user)
     app.register_blueprint(numbers)
+    app.register_blueprint(useradmin)
 
     #initialize admin view pages so we can view things in the admin interface
     admin.add_view(ModelView(User, db.session))
