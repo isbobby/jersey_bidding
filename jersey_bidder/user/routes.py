@@ -23,10 +23,12 @@ def login():
     return render_template('login.html', title='Login', form=form)
 
 @user.route("/logout")
+@login_required
 def logout():
     logout_user()
     return redirect(url_for('main.home'))
 
 @user.route("/checkresult")
+@login_required
 def checkresult():
     return render_template("checkResult.html")

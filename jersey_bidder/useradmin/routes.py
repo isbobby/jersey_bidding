@@ -12,11 +12,13 @@ useradmin = Blueprint('useradmin', __name__)
 
 
 @useradmin.route("/useradmin/home", methods=['GET', 'POST'])
+@login_required
 def adminHome():
     return render_template('adminHome.html')
 
 
 @useradmin.route("/useradmin/allocate", methods=['GET', 'POST'])
+@login_required
 def adminAllocate():
     form = allocateForm()
     form.yearToAllocate.choices = [(1, 1), (2, 2), (3, 3), (4, 4)]
@@ -53,17 +55,20 @@ def adminAllocate():
 
 
 @useradmin.route("/useradmin/checkresult/male", methods=['GET', 'POST'])
+@login_required
 def fullResultMale():
     list = generateMaleList()
     return render_template('fullResultMale.html', list=list)
 
 
 @useradmin.route("/useradmin/checkresult/female", methods=['GET', 'POST'])
+@login_required
 def fullResultFemale():
     list = generateFemaleList()
     return render_template('fullResultFemale.html', list=list)
 
 @useradmin.route("/useradmin/checkresult/malebyyear/<int:year_id>", methods=['GET', 'POST'])
+@login_required
 def showMaleByYear(year_id):
     usersByYear = User.query.filter(
         (User.year == year_id) & (User.gender_id == 1)).all()
@@ -71,6 +76,7 @@ def showMaleByYear(year_id):
 
 
 @useradmin.route("/useradmin/checkresult/femalebyyear/<int:year_id>", methods=['GET', 'POST'])
+@login_required
 def showFemaleByYear(year_id):
     usersByYear = User.query.filter(
         (User.year == year_id) & (User.gender_id == 2)).all()
@@ -78,23 +84,29 @@ def showFemaleByYear(year_id):
 
 
 @useradmin.route("/useradmin/checkresult/fullmalelist", methods=['GET', 'POST'])
+@login_required
 def getAllMaleUsers():
     users = User.query.filter(User.gender_id == 1).all()
     return render_template('fullNameListMale.html', users=users)
 
 
 @useradmin.route("/useradmin/checkresult/fullfemalelist", methods=['GET', 'POST'])
+@login_required
 def getAllFemaleUsers():
     users = User.query.filter(User.gender_id == 2).all()
     return render_template('fullNameListFemale.html', users=users)
 
-@useradmin.route("/useradmin/adminassign/<int:user_id>", methods=['GET', 'POST'])
-def adminAssign():
-    user = User.query.get_or_404(user_id)
-    return render_template('fullNameListFemale.html', users=users)
+@useradmin.route("/useradmin/checkresult/conflict/male", methods=['GET', 'POST'])
+@login_required
+def getConflictMale():
+    conflictUsers = User.query.filter((User.gender_id == 2) & (User.jerseyNumber_id==None)).all()
+    
+    return render_template('fullNameListFemale.html', conflictUsers=conflictUsers)
 
-@useradmin.route("/useradmin/checkresult/availJersey", methods=['GET', 'POST'])
-def viewAvailNumbers():
-    weiboon = User.query.get(4)
-    listOfAvailNumbers = availNumbers(weiboon)
-    return render_template('availNumbers.html', availNumbers=listOfAvailNumbers)
+@useradmin.route("/useradmin/adminassign/<int:user_id>", methods=['GET', 'POST'])
+@login_required
+def adminAssign(user_id):
+    user = User.query.filter_by(user_id=user_id).first()
+    listOfAvailNumbers = availNumbers(user)
+    return render_template('availNumbers.html', user=user, listOfAvailNumbers=listOfAvailNumbers)
+

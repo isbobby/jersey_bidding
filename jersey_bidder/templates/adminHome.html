@@ -38,9 +38,11 @@
     <a href="{{url_for('useradmin.showFemaleByYear', year_id=4)}}"
         class="w3-bar-item w3-button w3-hide-small w3-padding-large">Year 4 Female User</a>
     <a href="{{ url_for('useradmin.getAllFemaleUsers')}}"
-        class="w3-bar-item w3-button w3-hide-small w3-padding-large">All
-        Female User</a>
+        class="w3-bar-item w3-button w3-hide-small w3-padding-large">All Female User</a>
 </div>
-
+<div class="w3-bar w3-white w3-card w3-centered w3-large w3-padding-32">
+    <a href="{{url_for('useradmin.showFemaleByYear', year_id=1)}}"
+        class="w3-bar-item w3-button w3-hide-small w3-padding-large">Show Conflict and Assign Manually</a>
+</div>
 
 {% endblock content %}
