@@ -3,7 +3,7 @@ from jersey_bidder import db
 from flask_login import UserMixin
 from datetime import datetime
 
-class Admin(db.Model):
+class Admin(db.Model, UserMixin):
     __tablename__ = 'admin'
     __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer, primary_key=True)

@@ -5,6 +5,7 @@ from flask_bootstrap import Bootstrap
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from flask_login import LoginManager,login_user, UserMixin
+from flask_user import roles_required
 
 #initialize db, SQLAlchemy is a convenient python extension to help manage database
 db = SQLAlchemy()
