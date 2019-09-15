@@ -32,7 +32,7 @@ def validateNumberTaken(desiredNumber, gender_id):
         JerseyNumber.number == desiredNumber)).first()
     return desiredJersey.isTaken
 
-def validateSportClash(desiredNumber, user):
+def validateSportClashWithNumber(desiredNumber, user):
     """check whether the user has clash with any users holding the current jerseyNumber"""
     desiredJersey = JerseyNumber.query.filter((JerseyNumber.gender_id == user.gender_id) & (
         JerseyNumber.number == desiredNumber)).first()
@@ -44,6 +44,28 @@ def validateSportClash(desiredNumber, user):
         oppositeGenderID = getOppositeGenderID(user)
         desiredJerseyOppositeGender = JerseyNumber.query.filter(
             (JerseyNumber.gender_id == oppositeGenderID) & (JerseyNumber.number == desiredNumber)).first()
+        for otherUser in desiredJerseyOppositeGender.users:
+            hasClashingSport = UserSportClash(user, otherUser)
+            if hasClashingSport:
+                return False
+
+    for otherUser in UsersWithDesiredNumber:
+        hasClashingSport = UserSportClash(user, otherUser)
+        if hasClashingSport:
+            return False
+
+    # desired number not taken AND no conflicts
+    return True
+
+def validateSportClashWithJersey(desiredJersey, user):
+    """check whether the user has clash with any users holding the current jerseyNumber"""
+    UsersWithDesiredNumber = desiredJersey.users
+
+    if UserPlayMixedSport(user):
+        # check clash with opposite gender users
+        oppositeGenderID = getOppositeGenderID(user)
+        desiredJerseyOppositeGender = JerseyNumber.query.filter(
+            (JerseyNumber.gender_id == oppositeGenderID) & (JerseyNumber.number == desiredJersey.number)).first()
         for otherUser in desiredJerseyOppositeGender.users:
             hasClashingSport = UserSportClash(user, otherUser)
             if hasClashingSport:
@@ -234,3 +256,16 @@ def generateFemaleList():
             entry['roomNumber'] = '-'
             modifiedDict[number.number] = entry
     return(modifiedDict)
+
+def availNumbers(user):
+    """pass in a user object and return a list of jerseyNumbers available"""
+    finalAvailList = []
+
+    notTakenJerseyNumbers = JerseyNumber.query.filter((JerseyNumber.gender_id == user.gender_id) & (JerseyNumber.isTaken == False)).all()
+    for jersey in notTakenJerseyNumbers:
+        jerseyAvail = validateSportClashWithJersey(jersey, user)
+        if (jerseyAvail):
+            finalAvailList.append(jersey)
+    
+    return finalAvailList
+
