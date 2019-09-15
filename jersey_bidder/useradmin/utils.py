@@ -26,11 +26,14 @@ def getOppositeGenderID(user):
     elif userGenderID == 2:
         return 1
 
-def validateNumberTaken(desiredNumber):
-    desiredJersey = JerseyNumber.query.filter(JerseyNumber.number == desiredNumber).first()
+def validateNumberTaken(desiredNumber, gender_id):
+    """check if this jerseyNumber is taken, input gender_id 1 for male and 2 for female, returns boolean"""
+    desiredJersey = JerseyNumber.query.filter((JerseyNumber.gender_id == gender_id) & (
+        JerseyNumber.number == desiredNumber)).first()
     return desiredJersey.isTaken
 
 def validateSportClash(desiredNumber, user):
+    """check whether the user has clash with any users holding the current jerseyNumber"""
     desiredJersey = JerseyNumber.query.filter((JerseyNumber.gender_id == user.gender_id) & (
         JerseyNumber.number == desiredNumber)).first()
 
