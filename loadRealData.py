@@ -61,6 +61,5 @@ def loadRealData(app):
             db.session.add(currentChoice)
         db.session.commit()
 
-
 if __name__ == "__main__":
     loadRealData(create_app())

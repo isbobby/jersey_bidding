@@ -56,3 +56,23 @@ def fullResultMale():
 def fullResultFemale():
     list = generateFemaleList()
     return render_template('fullResultFemale.html', list=list)
+
+@useradmin.route("/useradmin/checkresult/malebyyear/<int:year_id>", methods=['GET', 'POST'])
+def showMaleByYear(year_id):
+    usersByYear = User.query.filter((User.year==year_id) & (User.gender_id==1)).all()
+    return render_template('showMaleResultByYear.html', usersByYear=usersByYear, year_id=year_id)
+
+@useradmin.route("/useradmin/checkresult/femalebyyear/<int:year_id>", methods=['GET', 'POST'])
+def showFemaleByYear(year_id):
+    usersByYear = User.query.filter((User.year==year_id) & (User.gender_id==2)).all()
+    return render_template('showFemaleResultByYear.html', usersByYear=usersByYear, year_id=year_id)
+
+@useradmin.route("/useradmin/checkresult/fullmalelist", methods=['GET', 'POST'])
+def getAllMaleUsers():
+    users = User.query.filter(User.gender_id==1).all()
+    return render_template('fullNameListMale.html', users=users)
+
+@useradmin.route("/useradmin/checkresult/fullfemalelist", methods=['GET', 'POST'])
+def getAllFemaleUsers():
+    users = User.query.filter(User.gender_id==2).all()
+    return render_template('fullNameListFemale.html', users=users)
