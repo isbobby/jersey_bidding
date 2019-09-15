@@ -6,7 +6,7 @@ from datetime import datetime
 from jersey_bidder.models import User, Choice, JerseyNumber
 from jersey_bidder.useradmin.forms import allocateForm
 from jersey_bidder import db
-from jersey_bidder.useradmin.utils import allocateByYear, generateMaleList, generateFemaleList, splitMaleAndFemale
+from jersey_bidder.useradmin.utils import allocateByYear, generateMaleList, generateFemaleList, splitMaleAndFemale, availNumbers
 
 useradmin = Blueprint('useradmin', __name__)
 
@@ -92,3 +92,9 @@ def getAllFemaleUsers():
 def adminAssign():
     user = User.query.get_or_404(user_id)
     return render_template('fullNameListFemale.html', users=users)
+
+@useradmin.route("/useradmin/checkresult/availJersey", methods=['GET', 'POST'])
+def viewAvailNumbers():
+    weiboon = User.query.get(4)
+    listOfAvailNumbers = availNumbers(weiboon)
+    return render_template('availNumbers.html', availNumbers=listOfAvailNumbers)
