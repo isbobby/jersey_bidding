@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="w3-container w3-orange w3-center w3-opacity w3-padding-64">
+    <br><br>
+    <h4>Following is the list of all availible numbers left for {{user.name}} </h4>
+</div>
+<div class="w3-container w3-white w3-center w3-opacity w3-padding-16 jb-table-width-70 jb-margin-center">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <div class="form-grop">
+            <br>{{ form.assign.label(class="form-control-label") }}<br>
+            {% if form.assign.errors %}
+            {{ form.assign(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+                {% for error in form.assign.errors %}
+                <span> {{ error }} </span>
+                {% endfor %}
+            </div>
+            {% else %}
+            {{ form.assign(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+        <div class="form-grop">
+            <br>{{ form.submit(class="w3-button")}}
+        </div>
+    </form>
+</div>
+{% endblock content %}

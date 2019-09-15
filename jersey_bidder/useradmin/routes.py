@@ -4,9 +4,9 @@ from datetime import datetime
 
 # local
 from jersey_bidder.models import User, Choice, JerseyNumber
-from jersey_bidder.useradmin.forms import allocateForm
+from jersey_bidder.useradmin.forms import allocateForm, assignNumberForm
 from jersey_bidder import db
-from jersey_bidder.useradmin.utils import allocateByYear, generateMaleList, generateFemaleList, splitMaleAndFemale, availNumbers
+from jersey_bidder.useradmin.utils import allocateByYear, generateMaleList, generateFemaleList, splitMaleAndFemale, availNumbers, allocateNonUniqueNumberToUser, allocateUniqueNumberToUser
 
 useradmin = Blueprint('useradmin', __name__)
 
@@ -67,6 +67,7 @@ def fullResultFemale():
     list = generateFemaleList()
     return render_template('fullResultFemale.html', list=list)
 
+
 @useradmin.route("/useradmin/checkresult/malebyyear/<int:year_id>", methods=['GET', 'POST'])
 @login_required
 def showMaleByYear(year_id):
@@ -96,17 +97,43 @@ def getAllFemaleUsers():
     users = User.query.filter(User.gender_id == 2).all()
     return render_template('fullNameListFemale.html', users=users)
 
+
 @useradmin.route("/useradmin/checkresult/conflict/male", methods=['GET', 'POST'])
 @login_required
 def getConflictMale():
-    conflictUsers = User.query.filter((User.gender_id == 2) & (User.jerseyNumber_id==None)).all()
-    
-    return render_template('fullNameListFemale.html', conflictUsers=conflictUsers)
+    conflictUsers = User.query.filter(
+        (User.gender_id == 1) & (User.jerseyNumber_id == None)).all()
+
+    return render_template('maleConflictUser.html', conflictUsers=conflictUsers)
+
+
+@useradmin.route("/useradmin/checkresult/conflict/female", methods=['GET', 'POST'])
+@login_required
+def getConflictFemale():
+    conflictUsers = User.query.filter(
+        (User.gender_id == 2) & (User.jerseyNumber_id == None)).all()
+
+    return render_template('femaleConflictUser.html', conflictUsers=conflictUsers)
+
 
 @useradmin.route("/useradmin/adminassign/<int:user_id>", methods=['GET', 'POST'])
 @login_required
 def adminAssign(user_id):
-    user = User.query.filter_by(user_id=user_id).first()
+    user = User.query.filter(User.id == user_id).first()
     listOfAvailNumbers = availNumbers(user)
-    return render_template('availNumbers.html', user=user, listOfAvailNumbers=listOfAvailNumbers)
 
+    form = assignNumberForm()
+    form.assign.choices = [(entries.number, entries.number)
+                           for entries in listOfAvailNumbers]
+    number = form.assign.data
+
+    if form.validate_on_submit():
+        if user.year == 1 or user.year == 2:
+            allocateNonUniqueNumberToUser(number, user)
+        else:
+            allocateUniqueNumberToUser(number, user)
+
+        db.session.commit()
+        return render_template('adminAssignSuccess.html', user=user, number=number)
+
+    return render_template('allocateSingleUser.html', user=user, listOfAvailNumbers=listOfAvailNumbers, form=form)
