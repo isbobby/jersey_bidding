@@ -26,7 +26,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
           {% if current_user.is_authenticated %}
           <a href="{{ url_for('numbers.showNumber')}}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Indicate Preference</a>
           <a href="{{ url_for('numbers.bidNumber')}}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Bid for my Number</a>
-          <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Check Result</a>
+          <a href="{{ url_for('users.checkresult')}}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Check My Result</a>
           <a href="{{ url_for('users.logout')}}"class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Logout</a>
           {% endif %}
         </div>
@@ -37,7 +37,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
             {% if current_user.is_authenticated %}
             <a href="{{ url_for('numbers.showNumber')}}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Indicate Preference</a>
             <a href="{{ url_for('numbers.bidNumber')}}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Bid for my Number</a>
-            <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Check Result</a>
+            <a href="{{url_for('users.checkresult')}}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Check My Result</a>
             <a href="{{ url_for('users.logout')}}"class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Logout</a>
             {% endif %}
         </div>

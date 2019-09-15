@@ -1,23 +1,25 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="w3-container w3-light-grey w3-center w3-opacity w3-padding-64">
-    <h4>
+<div class="w3-container w3-white w3-center w3-opacity w3-padding-32">
+    <br><br>
+    <h3>
         ALLOCATE PAGE
-    </h4>
+    </h3>
 </div>
 
+<div class="w3-container w3-light-grey w3-center w3-opacity w3-padding-32">
 <form method="POST" action="">
     {{ form.hidden_tag() }}
-    <fieldset class="form-grop">
         <div class="form-grop">
-            <br>{{ form.yearToAllocate.label(class="form-control-label") }}<br>
+            <h4>{{ form.yearToAllocate.label(class="form-control-label") }}</h4>
+            <br>
             {{ form.yearToAllocate(class="form-control form-control-lg") }}
         </div>
-    </fieldset>
     <div class="form-grop">
-        <br>{{ form.submit(class="w3-button w3-border-sand")}}
+        <br>{{ form.submit(class="w3-button")}}
     </div>
 </form>
+</div>
 
 </div>
 {% endblock content%}

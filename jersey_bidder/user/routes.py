@@ -26,3 +26,7 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('main.home'))
+
+@user.route("/checkresult")
+def checkresult():
+    return render_template("checkResult.html")
