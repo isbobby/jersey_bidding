@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="w3-container w3-red w3-center w3-opacity w3-padding-64">
+    <h4>
+        <div>Allocation has failed for the following users: </div>
+        <br>
+        {% for user in failedUsers %}
+            <div>{{ user.name }}</div>
+        {% endfor %}
+    </h4>
+    <br>
+    <h4>Overall statistics: </h4>
+    <div>{{overallStats['totalAllocatedUserInYear']}} out of {{ overallStats['totalUserInYear']}} have been allocated </div>
+    <br>
+    <h4>Please deconflict the choices and run allocate again</h4>
+</div>
+{% endblock content %}
