@@ -3,22 +3,22 @@
 <div class="w3-row-padding w3-padding-64 w3-container">
     <div class="w3-content">
         <div class="w3-center w3-padding-64">
-            <h1>Login Using Room Number</h1>
+            <h1>Login Using User Name / Room Number</h1>
             <div class="content-section">
                 <form method="POST" action="">
                     {{ form.hidden_tag() }}
                     <fieldset class="form-grop">
                         <div class="form-grop">
-                            {{ form.roomNumber.label(class="form-control-label") }}<br>
-                            {% if form.roomNumber.errors %}
-                            {{ form.roomNumber(class="form-control form-control-lg is-invalid") }}
+                            {{ form.userName.label(class="form-control-label") }}<br>
+                            {% if form.userName.errors %}
+                            {{ form.userName(class="form-control form-control-lg is-invalid") }}
                             <div class="invalid-feedback">
-                                {% for error in form.roomNumber.errors %}
+                                {% for error in form.userName.errors %}
                                 <span> {{ error }} </span>
                                 {% endfor %}
                             </div>
                             {% else %}
-                            {{ form.roomNumber(class="form-control form-control-lg") }}
+                            {{ form.userName(class="form-control form-control-lg") }}
                             {% endif %}
                         </div><br>
                         <div class="form-grop">

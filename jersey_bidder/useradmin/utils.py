@@ -1,7 +1,19 @@
 from jersey_bidder.models import *
 from jersey_bidder import db
+from jersey_bidder.useradmin.CustomAllocationExceptions import AllocationError
 import random
 
+def getStatsForYear(year):
+    overallStats = {}
+
+    totalUserInYear = User.query.filter(User.year == year).count()
+
+    totalAllocatedUserInYear = User.query.filter((User.year == year) & (User.jerseyNumber_id != None)).count()
+
+    overallStats.update({'totalUserInYear': totalUserInYear})
+    overallStats.update({'totalAllocatedUserInYear': totalAllocatedUserInYear})
+
+    return overallStats
 
 def UserPlayMixedSport(user):
     mixedSports = Sport.query.filter(Sport.gender_id == 3).all()
@@ -183,7 +195,7 @@ def allocateNonUniqueNumberToUser(number, user):
 
 # only freshie and year 2 will not have unique number
 def allocateByYear(currentYear):
-    """allocates users by year, and returns list of users with conflict is any"""
+    """allocates users by year, and returns list of users with conflict if any"""
     allocationMethod = allocateUniqueNumberToUser
     if (currentYear == 1 or currentYear == 2):
         allocationMethod = allocateNonUniqueNumberToUser
@@ -193,6 +205,10 @@ def allocateByYear(currentYear):
 
     # will add all users who were failed to be allocated into this list be it no choice OR conflict 
     failedUserList = []
+
+    if not UsersFromCurrentYear:
+        # no users from current year
+        raise AllocationError("The current year: " + str(currentYear) + " does not contain any users in the database")
 
     UserIterator = iter(UsersFromCurrentYear)
     currentUser = next(UserIterator)

@@ -4,7 +4,6 @@ import pandas as pd;
 from utils import randomStringDigits;
 from jersey_bidder import create_app, db, models
 from jersey_bidder.models import *
-from sqlalchemy import or_
 
 mapping_headers = {
     "year": "Year of Study",
@@ -23,7 +22,6 @@ def loadRealData(app):
     with app.app_context():
         df = pd.read_csv(PEOPLE_CSV, dtype=str).fillna('')
         for index, entry in df.iterrows():
-
             # add current user
             currentName = entry[str(mapping_headers["name"])]
             currentRoomNumber = entry[str(mapping_headers["room_number"])]
@@ -37,8 +35,14 @@ def loadRealData(app):
                 currentGender_id = 2
             currentEmail = entry[str(mapping_headers["email"])]
             currentPassword = randomStringDigits()
-            currentUser = User(name = currentName, roomNumber = currentRoomNumber, year = currentYear, points = currentPoints, 
-                        email = currentEmail, password = currentPassword, gender_id = currentGender_id)
+
+            # create flaskUser First with Bidder Role
+            currentFlaskUser = FlaskUser(username=currentRoomNumber, password=currentPassword, email=currentEmail)
+            bidderRole = Role.query.filter(Role.name == "Bidder").first()
+            currentFlaskUser.roles.append(bidderRole)
+
+            currentUser = User(name = currentName, roomNumber = currentRoomNumber, year = currentYear, 
+                    points = currentPoints, gender_id = currentGender_id, flaskUser=currentFlaskUser)
             
             # add user sports
             currentUserSportList = []
@@ -53,13 +57,13 @@ def loadRealData(app):
 
         db.session.commit()
 
-        #alter below code to your own testing for choices
-        for i in range(6):
-            currentDatetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            currentChoice = Choice(submitDatetime = currentDatetime, firstChoice = 1, secondChoice = 2, thirdChoice = 3, fourthChoice = 4, fifthChoice = 5,
-                user_id = i + 1)
-            db.session.add(currentChoice)
-        db.session.commit()
+        # #alter below code to your own testing for choices
+        # for i in range(6):
+        #     currentDatetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        #     currentChoice = Choice(submitDatetime = currentDatetime, firstChoice = 1, secondChoice = 2, thirdChoice = 3, fourthChoice = 4, fifthChoice = 5,
+        #         user_id = i + 1)
+        #     db.session.add(currentChoice)
+        # db.session.commit()
 
 if __name__ == "__main__":
     loadRealData(create_app())
