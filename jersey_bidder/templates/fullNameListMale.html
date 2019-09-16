@@ -11,7 +11,8 @@
                 <th>Number</th>
                 <th>Name</th>
                 <th>Year</th>
-                <th>roomNumber</th>
+                <th>Room Number</th>
+                <th>Sports</th>
             </tr>
             {% for user in users %}
             <tr>
@@ -19,6 +20,11 @@
                 <td>{{ user.name }}</td>
                 <td>{{ user.year }}</td>
                 <td>{{ user.roomNumber }}</td>
+                <td>
+                    {% for sport in user.sports %}
+                    {{ sport.sportName }}
+                    {% endfor %}
+                </td>
             </tr>
             {% endfor %}
         </table>
