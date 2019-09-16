@@ -1,17 +1,9 @@
 from flask import current_app
 from jersey_bidder import db
-from flask_login import UserMixin
 from datetime import datetime
+from flask_user import roles_required, UserMixin
 
-class Admin(db.Model, UserMixin):
-    __tablename__ = 'admin'
-    __table_args__ = {'extend_existing': True}
-    id = db.Column(db.Integer, primary_key=True)
-
-    adminLoginID = db.Column(db.String(100), nullable=False)
-    password = db.Column(db.String(100), nullable=False)
-
-class User(db.Model, UserMixin):
+class User(db.Model):
     __tablename__ = 'user'
     __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer, primary_key=True)
@@ -20,22 +12,62 @@ class User(db.Model, UserMixin):
     year = db.Column(db.Integer, nullable=False)
     points = db.Column(db.Integer, nullable=False)
 
-    email = db.Column(db.String(100), nullable=False)
-    password = db.Column(db.String(200), nullable=False)
-
     # Foreign key constraints (only can have one)
-    gender_id = db.Column(db.Integer, db.ForeignKey(
-        'gender.id'), nullable=False)
+    flaskUser_id = db.Column(db.Integer, db.ForeignKey('flaskUser.id'), nullable=False)
+    gender_id = db.Column(db.Integer, db.ForeignKey('gender.id'), nullable=False)
     preference_id = db.Column(db.Integer, db.ForeignKey('jerseyNumber.id'))
     jerseyNumber_id = db.Column(db.Integer, db.ForeignKey('jerseyNumber.id'))
     # choice_id = db.Column(db.Integer, db.ForeignKey('choice.id'))
 
     # Relationships
+    flaskUser = db.relationship('FlaskUser', backref='users')
     gender = db.relationship('Gender', back_populates="User")
     choice = db.relationship('Choice', back_populates='user', uselist=False, lazy=True)
     sports = db.relationship('Sport', secondary='userSports', lazy=True)
     jerseyNumber = db.relationship('JerseyNumber', foreign_keys=[jerseyNumber_id], backref='users', lazy=True)
     preference = db.relationship('JerseyNumber', foreign_keys=[preference_id], backref='users_preference', lazy=True)
+
+class Admin(db.Model):
+    __tablename__ = 'admin'
+    __table_args__ = {'extend_existing': True}
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=False)
+
+    # foreign key constraints
+    flaskUser_id = db.Column(db.Integer, db.ForeignKey('flaskUser.id'), nullable=False)
+
+    # Relationships
+    flaskUser = db.relationship('FlaskUser', backref='admins')
+
+class FlaskUser(db.Model, UserMixin):
+    __tablename__ = 'flaskUser'
+    __table_args__ = {'extend_existing': True}
+    id = db.Column(db.Integer, primary_key=True)
+
+    email = db.Column(db.String(100), nullable=False)
+
+    # User authentication information
+    username = db.Column(db.String(50), nullable=False, unique=True)
+    password = db.Column(db.String(255), nullable=False, server_default='')
+
+    # Relationships
+    roles = db.relationship('Role', secondary='flaskUserRoles',
+            backref=db.backref('users', lazy='dynamic'))
+
+# Define the Role data model
+class Role(db.Model):
+    __tablename__ = 'role'
+    __table_args__ = {'extend_existing': True}
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(50), unique=True)
+
+# Define the UserRoles data model
+class FlaskUserRoles(db.Model):
+    __tablename__ = 'flaskUserRoles'
+    __table_args__ = {'extend_existing': True}
+    id = db.Column(db.Integer(), primary_key=True)
+    user_id = db.Column(db.Integer(), db.ForeignKey('flaskUser.id', ondelete='CASCADE'))
+    role_id = db.Column(db.Integer(), db.ForeignKey('role.id', ondelete='CASCADE'))
 
 class Gender(db.Model):
     __tablename__ = 'gender'

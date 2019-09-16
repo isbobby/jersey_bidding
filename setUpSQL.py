@@ -1,5 +1,6 @@
 from jersey_bidder import create_app, db
 from jersey_bidder.models import *
+from flask_user import login_required, SQLAlchemyAdapter, UserManager, UserMixin
 
 def setUp(app):
     with app.app_context():
@@ -10,10 +11,25 @@ def setUp(app):
         User.__table__.drop(db.engine)
         JerseyNumber.__table__.drop(db.engine)
         Gender.__table__.drop(db.engine) 
+        Admin.__table__.drop(db.engine)
+        FlaskUserRoles.__table__.drop(db.engine)
+        FlaskUser.__table__.drop(db.engine)
+        Role.__table__.drop(db.engine)
         db.create_all() 
 
-        baseAdmin = Admin(adminLoginID = "admin", password = "password")
-        db.session.add(baseAdmin)
+        db_adapter = SQLAlchemyAdapter(db, FlaskUser)
+        user_manager = UserManager(db_adapter, app)
+
+        admin = Role(name='Admin')
+        bidder = Role(name='Bidder')
+        db.session.add(admin)
+        db.session.add(bidder)
+
+        # Create Admin Account For Hackers
+        flaskUserHacker = FlaskUser(email='eusoffhacker@gmail.com', username='eusoffhacker', password='noshady')
+        flaskUserHacker.roles.append(admin)
+        hackerAdmin = Admin(name='The Master', flaskUser=flaskUserHacker)
+        db.session.add(hackerAdmin)
 
         #add Gender
         male = Gender(genderName = "Male")
