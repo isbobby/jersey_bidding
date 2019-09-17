@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, url_for, redirect, request, flash
+from flask import Blueprint, render_template, url_for, redirect, request, flash, make_response
 from flask_login import login_user, logout_user, login_required
 from flask_user import current_user, roles_required
 from datetime import datetime
@@ -10,6 +10,7 @@ from jersey_bidder import db
 from jersey_bidder.useradmin.utils import allocateByYear, generateMaleList, generateFemaleList, splitMaleAndFemale, \
         availNumbers, allocateNonUniqueNumberToUser, allocateUniqueNumberToUser, getStatsForYear
 from jersey_bidder.useradmin.CustomAllocationExceptions import AllocationError
+from jersey_bidder.useradmin.outputUtils import create_userpassword_csv
 
 
 useradmin = Blueprint('useradmin', __name__)
@@ -138,3 +139,20 @@ def adminAssign(user_id):
         return render_template('adminAssignSuccess.html', user=user, number=number)
 
     return render_template('allocateSingleUser.html', user=user, listOfAvailNumbers=listOfAvailNumbers, form=form)
+
+@useradmin.route("/useradmin/generatePasswordCSV", methods=['GET'])
+@roles_required('Admin')
+def getUserPassWordList():
+    data = User.query.order_by(User.roomNumber).all()
+    (file_basename, server_path, file_size) = create_userpassword_csv(data)
+
+
+    return 
+    # return_file = open(server_path+file_basename, 'r')
+    # response = make_response(return_file,200)
+    # response.headers['Content-Description'] = 'File Transfer'
+    # response.headers['Cache-Control'] = 'no-cache'
+    # response.headers['Content-Type'] = 'text/csv'
+    # response.headers['Content-Disposition'] = 'attachment; filename=%s' % file_basename
+    # response.headers['Content-Length'] = file_size
+    # return response
