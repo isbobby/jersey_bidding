@@ -17,9 +17,6 @@ def setUp(app):
         Role.__table__.drop(db.engine)
         db.create_all() 
 
-        db_adapter = SQLAlchemyAdapter(db, FlaskUser)
-        user_manager = UserManager(db_adapter, app)
-
         admin = Role(name='Admin')
         bidder = Role(name='Bidder')
         db.session.add(admin)
