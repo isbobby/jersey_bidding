@@ -3,11 +3,12 @@ import os
 from flask import Flask
 from jersey_bidder.config import Config
 from jersey_bidder.extensions import db, Bootstrap, admin, ModelView, login_manager
+from flask_user import login_required, UserManager, UserMixin, SQLAlchemyAdapter
 
 login_manager.login_view = 'users.login'
 login_manager.login_message_category = 'info'
 
-from jersey_bidder.models import User, Choice, JerseyNumber, Gender, UserSports, Sport
+from jersey_bidder.models import User, Choice, JerseyNumber, Gender, UserSports, Sport, FlaskUser
 @login_manager.user_loader
 def user_loader(user_id):
     return User.query.get(user_id)
@@ -20,7 +21,7 @@ def create_app(config_class=Config):
     db.init_app(app)
     admin.init_app(app)
     bootstrap = Bootstrap(app)
-    login_manager.init_app(app)
+    user_manager = UserManager(app, db, FlaskUser)
     
     
     #import the routes as classes and register these blueprints into the flask app
