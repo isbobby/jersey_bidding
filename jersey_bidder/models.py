@@ -53,6 +53,12 @@ class FlaskUser(db.Model, UserMixin):
     # Relationships
     roles = db.relationship('Role', secondary='flaskUserRoles',
             backref=db.backref('users', lazy='dynamic'))
+    
+    def is_admin(self):
+        for role in self.roles:
+            if role.name=='Admin':
+                return True
+        return False
 
 # Define the Role data model
 class Role(db.Model):
@@ -68,6 +74,8 @@ class FlaskUserRoles(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     user_id = db.Column(db.Integer(), db.ForeignKey('flaskUser.id', ondelete='CASCADE'))
     role_id = db.Column(db.Integer(), db.ForeignKey('role.id', ondelete='CASCADE'))
+
+
 
 class Gender(db.Model):
     __tablename__ = 'gender'

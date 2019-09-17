@@ -13,8 +13,5 @@ db = SQLAlchemy()
 #mongo: more description needed (bobby doesn't know what tf is mongo)
 mongo = PyMongo()
 
-#initialize admin: this gives us an admin interface to manage database entries
-admin = Admin()
-
 #initialize login manager
 login_manager = LoginManager()
