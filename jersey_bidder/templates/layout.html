@@ -45,15 +45,16 @@
       <a href="{{ url_for('main.home') }}"
         class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Home</a>
       {% if current_user.is_authenticated %}
+      {% if current_user.is_admin() %}
+      <a href="{{ url_for('useradmin.adminHome')}}"
+        class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Admin</a>
+      {% else %}
       <a href="{{ url_for('numbers.showNumber')}}"
         class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Indicate Preference</a>
       <a href="{{ url_for('numbers.bidNumber')}}"
         class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Bid</a>
       <a href="{{ url_for('users.checkresult')}}"
         class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Check Result</a>
-      {% if current_user.is_admin() %}
-      <a href="{{ url_for('useradmin.adminHome')}}"
-        class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Admin</a>
       {% endif %}
       <a href="{{ url_for('users.logout')}}"
         class="w3-bar-item  w3-button w3-hide-small w3-padding-large w3-hover-white">Logout</a>
