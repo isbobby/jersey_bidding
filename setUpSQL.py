@@ -4,7 +4,7 @@ from flask_user import login_required, SQLAlchemyAdapter, UserManager, UserMixin
 
 def setUp(app):
     with app.app_context():
-        # drop all tables first
+        #drop all tables first
         UserSports.__table__.drop(db.engine)
         Sport.__table__.drop(db.engine)
         Choice.__table__.drop(db.engine)
