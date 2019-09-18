@@ -1,3 +1,19 @@
+<<<<<<< HEAD
+,Years of IHG,Full Name,Room Number,Gender,Username,Password,Are you Captain of a Sport,Have you represented NUS (SUNIG/IVP) in the following sports:,Sports you are currently in (after latest cut),total_points,captain_points,sports_enrolled_in_points,sports_represented_points
+0,3,Eden,E413,Male,E413,password,Yes,Swimming,Frisbee; Basketball,4,1,2,1
+1,3,Fabian,D414,Male,D414,password,Yes,Swimming,Frisbee; Basketball,4,1,2,1
+2,3,Jeong,B412,Male,B412,password,Yes,Swimming,Frisbee; Basketball,4,1,2,1
+3,3,Lum Wei Boon,B414,Male,B414,password,Yes,Swimming,Frisbee; Basketball,4,1,2,1
+4,3,Susan,B210,Female,B210,password,Yes,Tennis,       Frisbee;                Basketball         ,4,1,2,1
+5,3,John,A412,Male,A412,password,Yes,Swimming,Frisbee; Basketball,4,1,2,1
+6,3,Benedict,A414,Male,A414,password,Yes,Floorball,Frisbee; Basketball,4,1,2,1
+7,4,Mary,C215,Female,C215,password,No,,Soccer,1,0,1,0
+8,4,Celine,A101,Female,A101,password,No,,Soccer,1,0,1,0
+9,4,Faith,A102,Female,A102,password,No,,Soccer,1,0,1,0
+10,4,Cass,A103,Female,A103,password,No,,Soccer,1,0,1,0
+11,4,Sharlene,A104,Female,A104,password,No,,Soccer,1,0,1,0
+12,4,Huilin,A105,Female,A105,password,No,,Soccer,1,0,1,0
+=======
 ,Year of Study,Full Name,Room Number,Gender,Email Address,Are you Captain of a Sport,Have you represented NUS (SUNIG/IVP) in the following sports:,Sports you are currently in (after latest cut),total_points,captain_points,sports_enrolled_in_points,sports_represented_points
 0,2,Eden,E413,Male,eden@gmail.com,Yes,Swimming,Frisbee; Basketball,4,1,2,1
 1,2,Fabian,D414,Male,fabian@gmail.com,Yes,Swimming,Frisbee; Basketball,4,1,2,1
@@ -7,3 +23,4 @@
 5,2,John,A412,Male,john@gmail.com,Yes,Swimming,Frisbee; Basketball,4,1,2,1
 6,3,Benedict,A414,Male,benedict@gmail.com,Yes,Floorball,Frisbee; Basketball,4,1,2,1
 7,4,Mary,C215,Female,Mary@gmail.com,No,,Soccer,1,0,1,0
+>>>>>>> master

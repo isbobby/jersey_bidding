@@ -1,5 +1,4 @@
 #this file imports extensions and initialize for __init__.py
-from flask_pymongo import PyMongo
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 from flask_admin import Admin
@@ -8,9 +7,6 @@ from flask_login import LoginManager,login_user, UserMixin
 
 #initialize db, SQLAlchemy is a convenient python extension to help manage database
 db = SQLAlchemy()
-
-#mongo: more description needed (bobby doesn't know what tf is mongo)
-mongo = PyMongo()
 
 #initialize login manager
 login_manager = LoginManager()
