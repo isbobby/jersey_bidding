@@ -5,16 +5,16 @@ from flask_user import login_required, SQLAlchemyAdapter, UserManager, UserMixin
 def setUp(app):
     with app.app_context():
         #drop all tables first
-        # UserSports.__table__.drop(db.engine)
-        # Sport.__table__.drop(db.engine)
-        # Choice.__table__.drop(db.engine)
-        # User.__table__.drop(db.engine)
-        # JerseyNumber.__table__.drop(db.engine)
-        # Gender.__table__.drop(db.engine) 
-        # Admin.__table__.drop(db.engine)
-        # FlaskUserRoles.__table__.drop(db.engine)
-        # FlaskUser.__table__.drop(db.engine)
-        # Role.__table__.drop(db.engine)
+        UserSports.__table__.drop(db.engine)
+        Sport.__table__.drop(db.engine)
+        Choice.__table__.drop(db.engine)
+        User.__table__.drop(db.engine)
+        JerseyNumber.__table__.drop(db.engine)
+        Gender.__table__.drop(db.engine) 
+        Admin.__table__.drop(db.engine)
+        FlaskUserRoles.__table__.drop(db.engine)
+        FlaskUser.__table__.drop(db.engine)
+        Role.__table__.drop(db.engine)
         db.create_all() 
 
         admin = Role(name='Admin')
