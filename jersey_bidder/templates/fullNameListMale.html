@@ -13,6 +13,8 @@
                 <th>Year</th>
                 <th>Room Number</th>
                 <th>Sports</th>
+                <th>Points</th>
+                <th>Choices</th>
             </tr>
             {% for user in users %}
             <tr>
@@ -24,6 +26,14 @@
                     {% for sport in user.sports %}
                     {{ sport.sportName }}
                     {% endfor %}
+                </td>
+                <td>{{ user.points }}</td>
+                <td>
+                    {{user.choice.firstChoice}}
+                    {{user.choice.secondChoice}}
+                    {{user.choice.thirdChoice}}
+                    {{user.choice.fourthChoice}}
+                    {{user.choice.fifthChoice}}
                 </td>
             </tr>
             {% endfor %}

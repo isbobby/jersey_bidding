@@ -13,6 +13,9 @@
             <th>Name</th>
             <th>roomNumber</th>
             <th>Year</th>
+            <th>Points</th>
+            <th>Sports</th>
+            <th>Choices</th>
             <th></th>
         </tr>
         {% for user in conflictUsers %}
@@ -20,6 +23,19 @@
             <td>{{ user.name }}</td>
             <td>{{ user.roomNumber }}</td>
             <td>{{ user.year }}</td>
+            <td>{{ user.points }}</td>
+            <td>
+                {% for sport in user.sports %}
+                {{ sport.sportName }}
+                {% endfor %}
+            </td>
+            <td>
+                {{ user.choice.firstChoice }}
+                {{ user.choice.secondChoice }}
+                {{ user.choice.thirdChoice }}
+                {{ user.choice.fourthChoice }}
+                {{ user.choice.fifthChoice }}
+            </td>
             <td classs="w3-button"><a href="{{url_for('useradmin.adminAssign', user_id=user.id)}}">Allocate</a></td>
         </tr>
         {% endfor %}
