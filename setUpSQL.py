@@ -22,11 +22,11 @@ def setUp(app):
         db.session.add(admin)
         db.session.add(bidder)
 
-        # Create Admin Account For Hackers
-        flaskUserHacker = FlaskUser(email='eusoffhacker@gmail.com', username='eusoffhacker', password='noshady')
-        flaskUserHacker.roles.append(admin)
-        hackerAdmin = Admin(name='The Master', flaskUser=flaskUserHacker)
-        db.session.add(hackerAdmin)
+        # # Create Admin Account For Hackers
+        # flaskUserHacker = FlaskUser(email='eusoffhacker@gmail.com', username='eusoffhacker', password='noshady')
+        # flaskUserHacker.roles.append(admin)
+        # hackerAdmin = Admin(name='The Master', flaskUser=flaskUserHacker)
+        # db.session.add(hackerAdmin)
 
         #add Gender
         male = Gender(genderName = "Male")
