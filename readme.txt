@@ -60,15 +60,9 @@ Us
 
 -remove check result (route)
 
--remove email (boon)
+-remove email (boon) // keep in place but nullable
 
 -show points n choices under admin page (tonight)
-
--rename excel year column to number of ihg (tonight)
-
--allocate by year correction
-
--0 to 3+ years (boon urgent)
 
 -EDIT UI
 -reminder for admin to reduce error (tonight b)

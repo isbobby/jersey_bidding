@@ -39,7 +39,7 @@ def levenshtein_distance(first_string, second_string):
 
 # The header that have to be set up if the form change
 mapping_headers = {
-    "year": "Year of Study",
+    "year": "Years of IHG",
     "name": "Full Name",
     "room_number": "Room Number",
     "gender": "Gender",

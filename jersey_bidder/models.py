@@ -44,7 +44,7 @@ class FlaskUser(db.Model, UserMixin):
     __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer, primary_key=True)
 
-    email = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), nullable=True)
 
     # User authentication information
     username = db.Column(db.String(50), nullable=False, unique=True)
@@ -74,7 +74,6 @@ class FlaskUserRoles(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     user_id = db.Column(db.Integer(), db.ForeignKey('flaskUser.id', ondelete='CASCADE'))
     role_id = db.Column(db.Integer(), db.ForeignKey('role.id', ondelete='CASCADE'))
-
 
 
 class Gender(db.Model):
