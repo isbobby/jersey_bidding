@@ -26,7 +26,7 @@ def adminHome():
 @roles_required('Admin')
 def adminAllocate():
     form = allocateForm()
-    form.yearToAllocate.choices = [(1, 1), (2, 2), (3, 3), (4, 4)]
+    form.yearToAllocate.choices = [(0, 0), (1, 1), (2, 2), (3, "3+")]
 
     if form.validate_on_submit():
         failedAllocateUsers = []

@@ -49,3 +49,41 @@ according to points and allocating a number base on user choice and the points t
     they have post-calculation
 
 
+
+SMC
+-Web page phrasing
+-Distribute password
+-fill up the template 
+
+Us
+-Close down temporarily at 9pm to deconflict (sun)
+
+-remove check result (route)
+
+-remove email (boon)
+
+-show points n choices under admin page (tonight)
+
+-rename excel year column to number of ihg (tonight)
+
+-allocate by year correction
+
+-0 to 3+ years (boon urgent)
+
+-EDIT UI
+-reminder for admin to reduce error (tonight b)
+
+-username loading and password (tonight)
+# tell them not to change the order
+1. generate username password
+2. give back pw file to smc 
+3. give smc input in the same order
+4. approve output.csv
+5. take back full input to setupsql
+6. format
+
+
+1. Take namelist from AMOS
+2. generate PW by hackers
+3. SMC Distribute password
+4. 

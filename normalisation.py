@@ -104,10 +104,10 @@ def calculate_points():
     representing_sports_column = representing_sports_column.str.strip()
 
     for iteration in range(len(is_captain_column)):
-        score = 0
+        score = 0 
         score += yes_no(is_captain_column[iteration])
         is_captain_score_list.insert(iteration, score)  # enter 0 or 1 in the is_captain_score Column
-
+        
         # counting points for all the sports currently involved in
         all_sports_currently_involved_in_score = calculate_points_subroutine(iteration, sports_column, sports)
         # adding the score for number of sports enrolled in the
