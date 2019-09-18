@@ -16,7 +16,7 @@ class biddingForm(FlaskForm):
                                DataRequired()], coerce=int)
     thirdChoice = SelectField('Third Choice', validators=[
                               DataRequired()], coerce=int)
-    fourthChoice = SelectField('Second Choice', validators=[
+    fourthChoice = SelectField('Fourth Choice', validators=[
                                DataRequired()], coerce=int)
     fifthChoice = SelectField('Fifth Choice', validators=[
                               DataRequired()], coerce=int)

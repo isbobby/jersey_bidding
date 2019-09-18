@@ -1,15 +1,16 @@
 {% extends "layout.html" %}
 {% block content %}
-{% if current_user.jerseyNumber_id %}
+{% if user.jerseyNumber_id %}
 <div class="w3-container w3-light-green w3-center w3-opacity w3-padding-64">
     <h4><br>
-        {{ current_user.jerseyNumber_id }}
+        Your assigned number is {{ user.jerseyNumber_id }}. 
+        <br>Contact SMC for support if necessary.
     </h4>
 </div>
 {% else %}
 <div class="w3-container w3-yellow w3-center w3-opacity w3-padding-64">
     <h4><br>
-        We are unable to allocate a number for you, please contact SMC for support.
+        We are still trying to allocate a number to you, please hold tight.
     </h4>
 </div>
 {% endif %}

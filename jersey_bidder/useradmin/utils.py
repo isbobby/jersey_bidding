@@ -3,7 +3,10 @@ from jersey_bidder import db
 from jersey_bidder.useradmin.CustomAllocationExceptions import AllocationError
 import random
 
-def getStatsForYear(year):
+def getHighestYear():
+    return db.session.query(db.func.max(User.year)).scalar()
+
+def getStatsForYearUnit(year):
     overallStats = {}
 
     totalUserInYear = User.query.filter(User.year == year).count()
@@ -12,6 +15,30 @@ def getStatsForYear(year):
 
     overallStats.update({'totalUserInYear': totalUserInYear})
     overallStats.update({'totalAllocatedUserInYear': totalAllocatedUserInYear})
+
+    return overallStats
+
+def getStatsForYear(year):
+    overallStats = {}
+    overallStats.update({'totalUserInYear': 0})
+    overallStats.update({'totalAllocatedUserInYear': 0})
+
+    if year == 3:
+        year = getHighestYear()
+
+    while year > 3:
+        currentYearStats = getStatsForYearUnit(year)
+        currentTotalUserInYear = overallStats['totalUserInYear'] + currentYearStats['totalUserInYear']
+        currentTotalAllocatedUserInYear = overallStats['totalAllocatedUserInYear'] + currentYearStats['totalAllocatedUserInYear']
+        overallStats.update({'totalUserInYear': currentTotalUserInYear})
+        overallStats.update({'totalAllocatedUserInYear': currentTotalAllocatedUserInYear})
+        year = year - 1
+
+    currentYearStats = getStatsForYearUnit(year)
+    currentTotalUserInYear = overallStats['totalUserInYear'] + currentYearStats['totalUserInYear']
+    currentTotalAllocatedUserInYear = overallStats['totalAllocatedUserInYear'] + currentYearStats['totalAllocatedUserInYear']
+    overallStats.update({'totalUserInYear': currentTotalUserInYear})
+    overallStats.update({'totalAllocatedUserInYear': currentTotalAllocatedUserInYear})
 
     return overallStats
 
@@ -155,6 +182,17 @@ def allocateUserChoices(user, allocationMethod):
     else:
         return False
 
+def splitMaleAndFemale(userList):
+    """splits the userList into male and female, male list at index 1 female index 2, return type is tuple"""
+    tempMaleList = []
+    tempFemaleList = []
+    for user in userList:
+        if user.gender_id == 1:
+            tempMaleList.append(user)
+        elif user.gender_id == 2:
+            tempFemaleList.append(user)
+        # by right should throw error here
+    return tempMaleList, tempFemaleList
 
 def allocateSamePointUsers(userList, allocationMethod, failedUserList):
     """shuffles the users randomly with the same points and allocates them accordingly"""
@@ -167,17 +205,6 @@ def allocateSamePointUsers(userList, allocationMethod, failedUserList):
     db.session.commit()
     return failedUserList
 
-def splitMaleAndFemale(userList):
-    """splits the userList into male and female, male list at index 1 female index 2, return type is tuple"""
-    tempMaleList = []
-    tempFemaleList = []
-    for user in userList:
-        if user.gender_id == 1:
-            tempMaleList.append(user)
-        elif user.gender_id == 2:
-            tempFemaleList.append(user)
-        # by right should throw error here
-    return tempMaleList, tempFemaleList
 
 def allocateUniqueNumberToUser(number, user):
     desiredJerseyNumber = JerseyNumber.query.filter(
@@ -200,18 +227,12 @@ def setTaken():
         jersey.isTaken = True
     db.session.commit()
 
-# only freshie and year 2 will not have unique number
-def allocateByYear(currentYear):
-    """allocates users by year, and returns list of users with conflict if any"""
-    allocationMethod = allocateUniqueNumberToUser
-    if (currentYear == 1 or currentYear == 2):
-        allocationMethod = allocateNonUniqueNumberToUser
-
-    UsersFromCurrentYear = User.query.filter(
-        (User.year == currentYear) & (User.jerseyNumber_id == None)).order_by(User.points.desc()).all()
-
-    # will add all users who were failed to be allocated into this list be it no choice OR conflict 
+def allocateYearUnit(currentYear):
+    """unit of allocate, does not check seniorty"""
+    # will add all users who were failed to be allocated into this list be it no choice OR conflict
     failedUserList = []
+
+    UsersFromCurrentYear = User.query.filter((User.year == currentYear) & (User.jerseyNumber_id == None)).order_by(User.points.desc()).all()
 
     if not UsersFromCurrentYear:
         # no users from current year
@@ -226,16 +247,35 @@ def allocateByYear(currentYear):
         if (currentUser.points == currentPoint):
             tempUserList.append(currentUser)
         else:
-            allocateSamePointUsers(tempUserList, allocationMethod, failedUserList)
+            allocateSamePointUsers(tempUserList, allocateNonUniqueNumberToUser, failedUserList)
             currentPoint = currentUser.points
             tempUserList = [currentUser]
 
     if tempUserList:
-        # tempUserList is not empty, allocate them
-        allocateSamePointUsers(tempUserList, allocationMethod, failedUserList)
+        allocateSamePointUsers(tempUserList, allocateNonUniqueNumberToUser, failedUserList)
 
-    # if (currentYear == 4 or currentYear == 3):
-    #     setTaken()
+    return failedUserList
+
+def allocateByYear(currentYear):
+    """checks currentYear and applies required allocations"""
+    # will add all users who were failed to be allocated into this list be it no choice OR conflict 
+    failedUserList = []
+
+    if currentYear >= 3:
+        currentYear = getHighestYear()
+
+        while currentYear > 3:
+            # allocate away all the higher years first and append into currentfailedUserList
+            failedUserList.extend(allocateYearUnit(currentYear))
+            setTaken()
+            currentYear = currentYear - 1
+
+    UsersFromCurrentYear = User.query.filter((User.year == currentYear) & (User.jerseyNumber_id == None)).order_by(User.points.desc()).all()
+
+    failedUserList.extend(allocateYearUnit(currentYear))
+
+    if currentYear == 3:
+        setTaken()
 
     return failedUserList
 
