@@ -5,6 +5,7 @@ from flask_user import current_user
 #local
 from jersey_bidder.models import  User, Choice, FlaskUser
 from jersey_bidder.user.forms import LoginForm
+from jersey_bidder.utils import getUser
 
 
 user = Blueprint('users', __name__)
@@ -32,4 +33,5 @@ def logout():
 @user.route("/checkresult")
 @login_required
 def checkresult():
-    return render_template("checkResult.html")
+    user = getUser(current_user)
+    return render_template("checkResult.html", user=user)

@@ -70,6 +70,8 @@ Us
 
 -0 to 3+ years (boon urgent)
 
+-allow for number sharing within the same sport 
+
 -EDIT UI
 -reminder for admin to reduce error (tonight b)
 
@@ -86,4 +88,7 @@ Us
 1. Take namelist from AMOS
 2. generate PW by hackers
 3. SMC Distribute password
-4. 
+4. Send SMC full input file (cannot change order, must put ; to separate sports)
+5. SMC send hacker full input file fully populated
+6. Hackers calculate point and send points for approval
+7. LOAD DATABASE 
