@@ -193,6 +193,13 @@ def allocateNonUniqueNumberToUser(number, user):
     desiredJerseyNumber.users.append(user)
     user.jerseyNumber = desiredJerseyNumber
 
+def setTaken():
+    """scan throug all jersey's and set whichever have users to be taken"""
+    jerseyWithUser = JerseyNumber.query.filter(JerseyNumber.users != None)
+    for jersey in jerseyWithUser:
+        jersey.isTaken = True
+    db.session.commit()
+
 # only freshie and year 2 will not have unique number
 def allocateByYear(currentYear):
     """allocates users by year, and returns list of users with conflict if any"""
@@ -226,6 +233,9 @@ def allocateByYear(currentYear):
     if tempUserList:
         # tempUserList is not empty, allocate them
         allocateSamePointUsers(tempUserList, allocationMethod, failedUserList)
+
+    # if (currentYear == 4 or currentYear == 3):
+    #     setTaken()
 
     return failedUserList
 
