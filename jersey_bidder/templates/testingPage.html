@@ -1,7 +1,6 @@
 
 {% block content %}
-{{ roles }}
-{% for role in roles %}
-{{ role.name }}
+{% for user in userlist %}
+{{ user.roles }}
 {% endfor %}
 {% endblock content%}

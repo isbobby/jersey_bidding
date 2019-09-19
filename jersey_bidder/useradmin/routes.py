@@ -4,9 +4,11 @@ from flask_user import current_user, roles_required
 from datetime import datetime
 
 # local
-from jersey_bidder.models import User, Choice, JerseyNumber
+from jersey_bidder.models import User, Choice, JerseyNumber, FlaskUser, Role
+
 from jersey_bidder.useradmin.forms import allocateForm, assignNumberForm
 from jersey_bidder import db
+from jersey_bidder.utils import getFlaskUser
 from jersey_bidder.useradmin.utils import allocateByYear, generateMaleList, generateFemaleList, splitMaleAndFemale, \
         availNumbers, allocateNonUniqueNumberToUser, allocateUniqueNumberToUser, getStatsForYear
 from jersey_bidder.useradmin.CustomAllocationExceptions import AllocationError
@@ -140,13 +142,45 @@ def adminAssign(user_id):
 
     return render_template('allocateSingleUser.html', user=user, listOfAvailNumbers=listOfAvailNumbers, form=form)
 
+@useradmin.route("/useradmin/deactivate", methods=['GET', 'POST'])
+def deactivateByYear():
+    #deactivate users by year
+    usersToDeactivate = User.query.filter(User.year==2).all()
+    userlist = []
+    bidderRole = Role.query.filter(Role.name == "Bidder").first()
+
+    for user in usersToDeactivate:
+        flaskUser = getFlaskUser(user)
+        userlist.append(flaskUser)
+        db.session.commit()
+    
+    for flaskUser in userlist:
+        print(flaskUser.roles)
+        print(bidderRole)
+        flaskUser.roles.remove(bidderRole)
+    
+    return render_template('testingPage.html', userlist=userlist)
+
+@useradmin.route("/useradmin/activate", methods=['GET', 'POST'])
+def activateByYear():
+    #deactivate users by year
+    usersToActivate = User.query.filter(User.year==2).all()
+    userlist = []
+    bidderRole = Role.query.filter(Role.name == "Bidder").first()
+
+    for user in usersToActivate:
+        flaskUser = getFlaskUser(user)
+        flaskUser.roles.append(bidderRole)
+        userlist.append(flaskUser)
+        db.session.commit()
+    
+    return render_template('testingPage.html', userlist=userlist)
+
 @useradmin.route("/useradmin/generatePasswordCSV", methods=['GET'])
 @roles_required('Admin')
 def getUserPassWordList():
     data = User.query.order_by(User.roomNumber).all()
     (file_basename, server_path, file_size) = create_userpassword_csv(data)
-
-
     return 
     # return_file = open(server_path+file_basename, 'r')
     # response = make_response(return_file,200)

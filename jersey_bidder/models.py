@@ -75,8 +75,6 @@ class FlaskUserRoles(db.Model):
     user_id = db.Column(db.Integer(), db.ForeignKey('flaskUser.id', ondelete='CASCADE'))
     role_id = db.Column(db.Integer(), db.ForeignKey('role.id', ondelete='CASCADE'))
 
-
-
 class Gender(db.Model):
     __tablename__ = 'gender'
     __table_args__ = {'extend_existing': True}

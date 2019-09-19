@@ -8,7 +8,7 @@ from flask_user import login_required, UserManager, UserMixin, SQLAlchemyAdapter
 login_manager.login_view = 'users.login'
 login_manager.login_message_category = 'info'
 
-from jersey_bidder.models import User, Choice, JerseyNumber, Gender, UserSports, Sport, FlaskUser, Role
+from jersey_bidder.models import User, Choice, JerseyNumber, Gender, UserSports, Sport, FlaskUser, Role, FlaskUserRoles
 @login_manager.user_loader
 def user_loader(user_id):
     return User.query.get(user_id)
@@ -45,6 +45,7 @@ def create_app(config_class=Config):
     admin.add_view(ModelView(Sport, db.session))
     admin.add_view(ModelView(FlaskUser, db.session))
     admin.add_view(ModelView(Role, db.session))
+    admin.add_view(ModelView(FlaskUserRoles, db.session))
 
 
     return app
