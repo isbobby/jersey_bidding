@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="w3-container w3-light-green w3-center w3-opacity w3-padding-64">
+    <h4>
+        <br>{{ successMessage }}<br>
+        <a href="{{url_for('useradmin.checkActiveUsers')}}">
+            Check Current Active Users Here</a>
+    </h4>
+</div>
+<div class="w3-container w3-light-grey w3-center w3-opacity w3-padding-32">
+    <h2>List of users affected</h2><br>
+    <table class="w3-table jb-table-width-70 jb-margin-center">
+        <tr>
+            <th>Name</th>
+            <th>Year</th>
+        </tr>
+        {% for user in rawUsers %}
+        <tr>
+            <td>{{ user.name }}</td>
+            <td>{{ user.year }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock content %}

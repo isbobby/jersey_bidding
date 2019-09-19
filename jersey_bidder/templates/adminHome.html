@@ -46,5 +46,26 @@
     <a href="{{url_for('useradmin.getConflictFemale', year_id=1)}}"
         class="w3-bar-item w3-button w3-hide-small w3-padding-large">Conflicts (Female)</a>
 </div>
-
+<div class="w3-bar w3-light-grey w3-card w3-centered w3-large w3-padding-32">
+    <a href="{{url_for('useradmin.deactivateByYear', year=1)}}"
+        class="w3-bar-item w3-button w3-hide-small w3-padding-large">Remove Year 1 Bidder</a>
+    <a href="{{url_for('useradmin.deactivateByYear', year=2)}}"
+        class="w3-bar-item w3-button w3-hide-small w3-padding-large">Remove Year 2 Bidder</a>
+    <a href="{{url_for('useradmin.deactivateByYear', year=3)}}"
+        class="w3-bar-item w3-button w3-hide-small w3-padding-large">Remove Year 3 Bidder</a>
+    <a href="{{url_for('useradmin.deactivateByYear', year=4)}}"
+        class="w3-bar-item w3-button w3-hide-small w3-padding-large">Remove Year 4 Bidder</a>
+    <a href="{{url_for('useradmin.checkActiveUsers')}}"
+        class="w3-bar-item w3-button w3-hide-small w3-padding-large">Check Current Active Users</a>
+</div>
+<div class="w3-bar w3-white w3-card w3-centered w3-large w3-padding-32">
+    <a href="{{url_for('useradmin.activateByYear', year=1)}}"
+        class="w3-bar-item w3-button w3-hide-small w3-padding-large">Activate Year 1 Bidder</a>
+    <a href="{{url_for('useradmin.activateByYear', year=2)}}"
+        class="w3-bar-item w3-button w3-hide-small w3-padding-large">Activate Year 2 Bidder</a>
+    <a href="{{url_for('useradmin.activateByYear', year=3)}}"
+        class="w3-bar-item w3-button w3-hide-small w3-padding-large">Activate Year 3 Bidder</a>
+    <a href="{{url_for('useradmin.activateByYear', year=4)}}"
+        class="w3-bar-item w3-button w3-hide-small w3-padding-large">Activate Year 4 Bidder</a>
+</div>
 {% endblock content %}

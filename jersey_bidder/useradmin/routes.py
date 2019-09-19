@@ -4,11 +4,11 @@ from flask_user import current_user, roles_required
 from datetime import datetime
 
 # local
-from jersey_bidder.models import User, Choice, JerseyNumber, FlaskUser, Role
+from jersey_bidder.models import User, Choice, JerseyNumber, FlaskUser, Role, FlaskUserRoles
 
 from jersey_bidder.useradmin.forms import allocateForm, assignNumberForm
 from jersey_bidder import db
-from jersey_bidder.utils import getFlaskUser
+from jersey_bidder.utils import getFlaskUser, getFlaskUserRole
 from jersey_bidder.useradmin.utils import allocateByYear, generateMaleList, generateFemaleList, splitMaleAndFemale, \
         availNumbers, allocateNonUniqueNumberToUser, allocateUniqueNumberToUser, getStatsForYear
 from jersey_bidder.useradmin.CustomAllocationExceptions import AllocationError
@@ -142,39 +142,58 @@ def adminAssign(user_id):
 
     return render_template('allocateSingleUser.html', user=user, listOfAvailNumbers=listOfAvailNumbers, form=form)
 
-@useradmin.route("/useradmin/deactivate", methods=['GET', 'POST'])
-def deactivateByYear():
+@useradmin.route("/useradmin/deactivate/<int:year>", methods=['GET', 'POST'])
+def deactivateByYear(year):
     #deactivate users by year
-    usersToDeactivate = User.query.filter(User.year==2).all()
+    rawUsers = User.query.filter(User.year==year).all()
     userlist = []
     bidderRole = Role.query.filter(Role.name == "Bidder").first()
 
-    for user in usersToDeactivate:
+    for user in rawUsers:
         flaskUser = getFlaskUser(user)
         userlist.append(flaskUser)
-        db.session.commit()
-    
     for flaskUser in userlist:
+        print(flaskUser.id)
         print(flaskUser.roles)
-        print(bidderRole)
-        flaskUser.roles.remove(bidderRole)
-    
-    return render_template('testingPage.html', userlist=userlist)
+        if bidderRole in flaskUser.roles:
+            flaskUser.roles.remove(bidderRole)
 
-@useradmin.route("/useradmin/activate", methods=['GET', 'POST'])
-def activateByYear():
+    db.session.commit()
+    
+    successMessage = "All year " + str(year) + " users have been deactivated. They can no longer submit bidding requests and edit their previous submissions." 
+    return render_template('adminChangeAuthByYear.html', rawUsers=rawUsers, userlist=userlist, successMessage=successMessage)
+
+@useradmin.route("/useradmin/activate/<int:year>", methods=['GET', 'POST'])
+def activateByYear(year):
     #deactivate users by year
-    usersToActivate = User.query.filter(User.year==2).all()
+    rawUsers = User.query.filter(User.year==year).all()
     userlist = []
     bidderRole = Role.query.filter(Role.name == "Bidder").first()
 
-    for user in usersToActivate:
+    for user in rawUsers:
         flaskUser = getFlaskUser(user)
-        flaskUser.roles.append(bidderRole)
+        if bidderRole not in flaskUser.roles:
+            flaskUser.roles.append(bidderRole)
         userlist.append(flaskUser)
-        db.session.commit()
+
+    db.session.commit() 
+
+    successMessage = "All year " + str(year) + " users have been activated. They can now submit bidding requests and edit their previous submissions." 
+    return render_template('adminChangeAuthByYear.html', rawUsers=rawUsers, userlist=userlist, successMessage=successMessage)
+
+@useradmin.route("/useradmin/showactive/all", methods=['GET'])
+@roles_required('Admin')
+def checkActiveUsers():
+    users = User.query.all()
+    activeUsers = []
+    bidderRole = Role.query.filter(Role.name == "Bidder").first()
+    for user in users:
+        flaskuser = getFlaskUser(user)
+        if bidderRole in flaskuser.roles:
+            activeUsers.append(user)
     
-    return render_template('testingPage.html', userlist=userlist)
+    return render_template('adminShowActiveUsers.html', activeUsers=activeUsers)
+
 
 @useradmin.route("/useradmin/generatePasswordCSV", methods=['GET'])
 @roles_required('Admin')

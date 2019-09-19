@@ -13,7 +13,6 @@ numbers = Blueprint('numbers', __name__)
 
 
 @numbers.route("/preference", methods=['GET', 'POST'])
-@roles_required('Bidder')
 def showNumber():
     currentUser = getUser(current_user)
     numbers = JerseyNumber.query.filter(
@@ -22,7 +21,6 @@ def showNumber():
 
 
 @numbers.route("/preference/<int:jerseyNumber_id>", methods=['GET', 'POST'])
-@roles_required('Bidder')
 def showSingleNumber(jerseyNumber_id):
     number = JerseyNumber.query.get_or_404(jerseyNumber_id)
     interestedUsers = User.query.filter(
@@ -31,7 +29,6 @@ def showSingleNumber(jerseyNumber_id):
 
 
 @numbers.route("/preference/chope/<int:jerseyNumber_id>", methods=['GET', 'POST'])
-@roles_required('Bidder')
 def chopeSingleNumber(jerseyNumber_id):
     number = JerseyNumber.query.get_or_404(jerseyNumber_id)
     newNumber = number = JerseyNumber.query.get_or_404(jerseyNumber_id)

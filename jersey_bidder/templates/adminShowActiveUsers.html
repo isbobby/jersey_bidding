@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="w3-container w3-light-grey w3-center w3-opacity w3-padding-64">
+    <h2>List of active users</h2><br>
+    <table class="w3-table jb-table-width-70 jb-margin-center">
+        <tr>
+            <th>Name</th>
+            <th>Year</th>
+        </tr>
+        {% for user in activeUsers %}
+        <tr>
+            <td>{{ user.name }}</td>
+            <td>{{ user.year }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+</div>
+{% endblock content %}
