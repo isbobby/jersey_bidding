@@ -39,7 +39,7 @@ def levenshtein_distance(first_string, second_string):
 
 # The header that have to be set up if the form change
 mapping_headers = {
-    "year": "Year of Study",
+    "year": "Years of IHG",
     "name": "Full Name",
     "room_number": "Room Number",
     "gender": "Gender",
@@ -88,7 +88,7 @@ def calculate_points_subroutine(iter, the_column, the_set):
 # calculates the final points .. takes into consideration .. the possible
 # since a player is a captain of atmost 1 team .. consider yes / no
 def calculate_points():
-    data_frame = pd.read_csv("SMC_input.csv")
+    data_frame = pd.read_csv("MockSMC_input.csv")
     is_captain_column = data_frame[str(mapping_headers["is_captain"])]
     is_captain_column = is_captain_column.str.lower()
     is_captain_column = is_captain_column.str.strip()

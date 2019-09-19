@@ -58,20 +58,6 @@ SMC
 Us
 -Close down temporarily at 9pm to deconflict (sun)
 
--remove check result (route)
-
--remove email (boon)
-
--show points n choices under admin page (tonight)
-
--rename excel year column to number of ihg (tonight)
-
--allocate by year correction
-
--0 to 3+ years (boon urgent)
-
--allow for number sharing within the same sport 
-
 -EDIT UI
 -reminder for admin to reduce error (tonight b)
 
