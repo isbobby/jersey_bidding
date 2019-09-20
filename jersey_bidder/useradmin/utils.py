@@ -118,18 +118,37 @@ def validateSportClashWithJersey(desiredJersey, user):
     # desired number not taken AND no conflicts
     return True
 
+def allocateUniqueNumberToUser(number, user):
+    desiredJerseyNumber = JerseyNumber.query.filter(
+        (JerseyNumber.gender == user.gender) & (JerseyNumber.number == number)).first()
+    desiredJerseyNumber.users.append(user)
+    desiredJerseyNumber.isTaken = True
+    user.jerseyNumber = desiredJerseyNumber
+
+
+def allocateNonUniqueNumberToUser(number, user):
+    desiredJerseyNumber = JerseyNumber.query.filter(
+        (JerseyNumber.gender == user.gender) & (JerseyNumber.number == number)).first()
+    desiredJerseyNumber.users.append(user)
+    user.jerseyNumber = desiredJerseyNumber
+
 def validateChoiceAvailable(desiredNumber, user):
     # check if isTaken
     desiredJersey = JerseyNumber.query.filter((JerseyNumber.gender_id == user.gender_id) & (
         JerseyNumber.number == desiredNumber)).first()
+
+    UsersWithDesiredNumber = desiredJersey.users
+
+    userWantUnique = user.wantUniqueNumber
+    if userWantUnique and UsersWithDesiredNumber:
+        return False
+    
     desiredNumberIsTaken = desiredJersey.isTaken
 
     if desiredNumberIsTaken:
         return False
 
     # check with the users of this number if there are conflicts
-    UsersWithDesiredNumber = desiredJersey.users
-
     if UserPlayMixedSport(user):
         # check clash with opposite gender users
         oppositeGenderID = getOppositeGenderID(user)
@@ -155,6 +174,9 @@ def allocateUserChoices(user, allocationMethod):
     if userChoice == None:
         # user did not input choice, return false
         return False
+
+    if user.wantUniqueNumber:
+        allocationMethod = allocateUniqueNumberToUser
 
     firstChoice = userChoice.firstChoice
     secondChoice = userChoice.secondChoice
@@ -204,21 +226,6 @@ def allocateSamePointUsers(userList, allocationMethod, failedUserList):
             failedUserList.append(user)
     db.session.commit()
     return failedUserList
-
-
-def allocateUniqueNumberToUser(number, user):
-    desiredJerseyNumber = JerseyNumber.query.filter(
-        (JerseyNumber.gender == user.gender) & (JerseyNumber.number == number)).first()
-    desiredJerseyNumber.users.append(user)
-    desiredJerseyNumber.isTaken = True
-    user.jerseyNumber = desiredJerseyNumber
-
-
-def allocateNonUniqueNumberToUser(number, user):
-    desiredJerseyNumber = JerseyNumber.query.filter(
-        (JerseyNumber.gender == user.gender) & (JerseyNumber.number == number)).first()
-    desiredJerseyNumber.users.append(user)
-    user.jerseyNumber = desiredJerseyNumber
 
 def setTaken():
     """scan throug all jersey's and set whichever have users to be taken"""

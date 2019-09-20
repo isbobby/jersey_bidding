@@ -11,6 +11,7 @@ class User(db.Model):
     name = db.Column(db.String(50), nullable=False)
     year = db.Column(db.Integer, nullable=False)
     points = db.Column(db.Integer, nullable=False)
+    wantUniqueNumber = db.Column(db.Boolean, nullable=False)
 
     # Foreign key constraints (only can have one)
     flaskUser_id = db.Column(db.Integer, db.ForeignKey('flaskUser.id'), nullable=False)
