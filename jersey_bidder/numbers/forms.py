@@ -1,6 +1,6 @@
 
 from flask_wtf import FlaskForm
-from wtforms import IntegerField, SubmitField, SelectField
+from wtforms import IntegerField, SubmitField, SelectField, BooleanField
 from wtforms.validators import DataRequired, Email, Length, EqualTo, ValidationError
 from flask_login import current_user
 
@@ -19,6 +19,8 @@ class biddingForm(FlaskForm):
     fourthChoice = SelectField('Fourth Choice', validators=[
                                DataRequired()], coerce=int)
     fifthChoice = SelectField('Fifth Choice', validators=[
+                              DataRequired()], coerce=int)
+    wantUniqueNumber = SelectField('I want my number to be unique.', validators=[
                               DataRequired()], coerce=int)
     submit = SubmitField('Submit my choices')
 

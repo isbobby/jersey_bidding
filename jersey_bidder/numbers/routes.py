@@ -6,8 +6,10 @@ from flask_user import roles_required, current_user
 # local
 from jersey_bidder.models import User, Choice, JerseyNumber
 from jersey_bidder.numbers.forms import biddingForm, chopeNumberForm, allocateForm
+from jersey_bidder.numbers.utils import typeCastFormData
 from jersey_bidder import db
 from jersey_bidder.utils import getUser
+
 
 numbers = Blueprint('numbers', __name__)
 
@@ -56,13 +58,20 @@ def bidNumber():
         JerseyNumber.isTaken == False, JerseyNumber.gender_id == currentUser.gender_id)]
     form.fifthChoice.choices = [(entries.number, entries.number) for entries in JerseyNumber.query.filter(
         JerseyNumber.isTaken == False, JerseyNumber.gender_id == currentUser.gender_id)]
+    form.wantUniqueNumber.choices = [(1,'Yes'),(2,'No')]
 
     # if current user has submitted a choice, redirect to editing page
     if currentUser.choice:
         return redirect(url_for('numbers.editNumber'))
 
+    # fetch the current user's year for further validation, only 2+ years in IHG can choose unique option
+    userYear = getUser(current_user).year
+
     if form.validate_on_submit():
         submitDate = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        #type cast an integer from form into bool, wantUniqueNumber is either True or False (bool)
+        wantUniqueNumber = typeCastFormData(form.wantUniqueNumber.data)
 
         choice = Choice(submitDatetime=submitDate, firstChoice=form.firstChoice.data, secondChoice=form.secondChoice.data,
                         thirdChoice=form.thirdChoice.data, fourthChoice=form.fourthChoice.data, fifthChoice=form.fifthChoice.data,
@@ -74,7 +83,7 @@ def bidNumber():
         successMessage = "Your submission has been registered."
         return render_template('/jersey_bidder/numbers/biddingSuccess.html', successMessage=successMessage)
 
-    return render_template('/jersey_bidder/numbers/biddingPage.html', title='Bidding', form=form)
+    return render_template('/jersey_bidder/numbers/biddingPage.html', title='Bidding', form=form, userYear=userYear)
 
 
 @numbers.route("/bidding/editchoice", methods=['GET', 'POST'])
@@ -96,13 +105,20 @@ def editNumber():
         JerseyNumber.isTaken == False, JerseyNumber.gender_id == currentUser.gender_id)]
     form.fifthChoice.choices = [(entries.number, entries.number) for entries in JerseyNumber.query.filter(
         JerseyNumber.isTaken == False, JerseyNumber.gender_id == currentUser.gender_id)]
+    form.wantUniqueNumber.choices = [(1,'Yes'),(2,'No')]
 
     # fetch current users' previous choice to display on the site
     currentChoice = Choice.query.filter(
         Choice.user_id == currentUser.id).first()
 
+    # fetch the current user's year for further validation
+    userYear = getUser(current_user).year
+
     if form.validate_on_submit():
         submitDate = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        #type cast an integer from form into bool, wantUniqueNumber is either True or False (bool)
+        wantUniqueNumber = typeCastFormData(form.wantUniqueNumber.data)
 
         newChoice = Choice(submitDatetime=submitDate, firstChoice=form.firstChoice.data, secondChoice=form.secondChoice.data,
                            thirdChoice=form.thirdChoice.data, fourthChoice=form.fourthChoice.data, fifthChoice=form.fifthChoice.data,
@@ -116,7 +132,7 @@ def editNumber():
         successMessage = "Your previous submission has been updated"
         return render_template('/jersey_bidder/numbers/biddingSuccess.html', successMessage=successMessage)
 
-    return render_template('/jersey_bidder/numbers/biddingEdit.html', title='Bidding', form=form, currentChoice=currentChoice)
+    return render_template('/jersey_bidder/numbers/biddingEdit.html', title='Bidding', form=form, currentChoice=currentChoice, userYear=userYear)
 
 
 

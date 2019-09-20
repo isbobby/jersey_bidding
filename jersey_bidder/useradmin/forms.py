@@ -15,3 +15,5 @@ class assignNumberForm(FlaskForm):
     assign = SelectField('Availible Numbers', validators=[
         DataRequired()], coerce=int)
     submit = SubmitField('Assign')
+
+

@@ -80,7 +80,23 @@
                 {% else %}
                 {{ form.fifthChoice(class="form-control form-control-lg") }}
                 {% endif %}
-            </div><br>
+            </div>
+            <!-- IMPORTANT: CHANGE CONDITION HERE BASE ON SMC INPUT -->
+            {% if userYear > 1 %}
+            <div class="form-grop">
+                <br>{{ form.wantUniqueNumber.label(class="form-control-label") }}<br>
+                {% if form.wantUniqueNumber.errors %}
+                {{ form.wantUniqueNumber(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.wantUniqueNumber.errors %}
+                    <span> {{ error }} </span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.wantUniqueNumber(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            {% endif %}
         </fieldset>
         <div class="form-grop">
             <br>{{ form.submit(class="w3-button")}}
