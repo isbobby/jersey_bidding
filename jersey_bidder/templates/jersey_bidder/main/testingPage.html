@@ -1,0 +1,7 @@
+
+{% block content %}
+{% for user in userlist %}
+{{ user.roles }}
+{{ user.id }}
+{% endfor %}
+{% endblock content%}

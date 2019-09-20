@@ -22,7 +22,7 @@ def login():
             return redirect(next_page) if next_page else redirect(url_for('main.home'))
         else:
             flash('Login Unsuccessful, Please Check room number and password', 'danger')
-    return render_template('login.html', title='Login', form=form)
+    return render_template('/jersey_bidder/user/login.html', title='Login', form=form)
 
 @user.route("/logout")
 @login_required
@@ -34,4 +34,4 @@ def logout():
 @login_required
 def checkresult():
     user = getUser(current_user)
-    return render_template("checkResult.html", user=user)
+    return render_template("/jersey_bidder/user/checkResult.html", user=user)

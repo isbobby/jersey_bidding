@@ -13,25 +13,22 @@ numbers = Blueprint('numbers', __name__)
 
 
 @numbers.route("/preference", methods=['GET', 'POST'])
-@roles_required('Bidder')
 def showNumber():
     currentUser = getUser(current_user)
     numbers = JerseyNumber.query.filter(
         JerseyNumber.gender_id == currentUser.gender_id)
-    return render_template('prefViewAll.html', title='Preference Page', numbers=numbers)
+    return render_template('/jersey_bidder/numbers/prefViewAll.html', title='Preference Page', numbers=numbers)
 
 
 @numbers.route("/preference/<int:jerseyNumber_id>", methods=['GET', 'POST'])
-@roles_required('Bidder')
 def showSingleNumber(jerseyNumber_id):
     number = JerseyNumber.query.get_or_404(jerseyNumber_id)
     interestedUsers = User.query.filter(
         User.preference_id == number.id and User.gender_id == number.gender_id).all()
-    return render_template('prefViewSingleNumber.html', title='Preference Page', number=number, interestedUsers=interestedUsers)
+    return render_template('/jersey_bidder/numbers/prefViewSingleNumber.html', title='Preference Page', number=number, interestedUsers=interestedUsers)
 
 
 @numbers.route("/preference/chope/<int:jerseyNumber_id>", methods=['GET', 'POST'])
-@roles_required('Bidder')
 def chopeSingleNumber(jerseyNumber_id):
     number = JerseyNumber.query.get_or_404(jerseyNumber_id)
     newNumber = number = JerseyNumber.query.get_or_404(jerseyNumber_id)
@@ -39,7 +36,7 @@ def chopeSingleNumber(jerseyNumber_id):
     currentUser.preference_id = newNumber.id
     db.session.commit()
 
-    return render_template('prefChopeNumber.html', title='Chope', newNumber=newNumber)
+    return render_template('/jersey_bidder/numbers/prefChopeNumber.html', title='Chope', newNumber=newNumber)
 
 
 @numbers.route("/bidding", methods=['GET', 'POST'])
@@ -75,9 +72,9 @@ def bidNumber():
         db.session.commit()
 
         successMessage = "Your submission has been registered."
-        return render_template('biddingSuccess.html', successMessage=successMessage)
+        return render_template('/jersey_bidder/numbers/biddingSuccess.html', successMessage=successMessage)
 
-    return render_template('biddingPage.html', title='Bidding', form=form)
+    return render_template('/jersey_bidder/numbers/biddingPage.html', title='Bidding', form=form)
 
 
 @numbers.route("/bidding/editchoice", methods=['GET', 'POST'])
@@ -117,9 +114,9 @@ def editNumber():
         db.session.commit()
 
         successMessage = "Your previous submission has been updated"
-        return render_template('biddingSuccess.html', successMessage=successMessage)
+        return render_template('/jersey_bidder/numbers/biddingSuccess.html', successMessage=successMessage)
 
-    return render_template('biddingEdit.html', title='Bidding', form=form, currentChoice=currentChoice)
+    return render_template('/jersey_bidder/numbers/biddingEdit.html', title='Bidding', form=form, currentChoice=currentChoice)
 
 
 
