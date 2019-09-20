@@ -40,7 +40,8 @@
   <div class="w3-top">
     <div class="w3-bar w3-yellow w3-card w3-left-align w3-large">
       <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-amber"
-        href="javascript:myFunction();" onclick="myFunctionShow()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+        href="javascript:myFunction();" onclick="myFunctionShow()" title="Toggle Navigation Menu"><i
+          class="fa fa-bars"></i></a>
       <a href="{{ url_for('main.home') }}"
         class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Home</a>
       {% if current_user.is_authenticated %}
@@ -62,17 +63,20 @@
 
     <!-- Navbar on small screens -->
     <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
-      <a href="{{ url_for('main.home') }}" class="w3-bar-item w3-button w3-padding-large w3-amber">Home</a>
-      <a href="{{ url_for('useradmin.adminHome')}}"
-        class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Admin</a>
-      <a href="{{ url_for('numbers.showNumber')}}"
-        class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Indicate Preference</a>
-      <a href="{{ url_for('numbers.bidNumber')}}"
-        class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Bid</a>
-      <a href="{{ url_for('users.checkresult')}}"
-        class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Check Result</a>
-      <a href="{{ url_for('users.logout')}}"
-        class="w3-bar-item  w3-button w3-hide-small w3-padding-large w3-hover-white">Logout</a>
+      <div class="w3-bar-item">
+        <a href="{{ url_for('main.home') }}" class="w3-button ">Home</a>
+        {% if current_user.is_authenticated %}
+        {% if current_user.is_admin() %}
+        <a href="{{ url_for('useradmin.adminHome')}}" class="w3-button">Admin</a>
+        {% else %}
+        <a href="{{ url_for('numbers.showNumber')}}" class="w3-button">Indicate Preference</a>
+        <a href="{{ url_for('numbers.bidNumber')}}" class="w3-button">Bid</a>
+        <a href="{{ url_for('users.checkresult')}}" class="w3-button">Check
+          Result</a>
+        {% endif %}
+        <a href="{{ url_for('users.logout')}}" class="w3-button w3-padding-large">Logout</a>
+        {% endif %}
+      </div>
     </div>
   </div>
 
