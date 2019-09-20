@@ -10,4 +10,5 @@
 .jb-margin-center {margin: 0 auto;}
 .jb-icon-size-60 {font-size: 600px;}
 .jb-icon-1 { width: 100px; height: 100px; }
-.jb-text-justify {text-align: justify; text-justify: inter-word;}  
+.jb-text-justify {text-align: justify; text-justify: inter-word;}
+.jb-header { background-image: url( ../containerBG.png )}  
