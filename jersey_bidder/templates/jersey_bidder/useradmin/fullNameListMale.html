@@ -1,43 +1,48 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class="w3-container w3-light-grey w3-center w3-opacity w3-padding-32">
-        <h2>
-            <br>List of all male users
-        </h2>
+        <h3>
+            <br>List of all users (Male)
+        </h3>
 </div>
-<div class="w3-container w3-white w3-center w3-opacity w3-padding-32">
-        <table class="w3-table jb-table-width-70 jb-margin-center">
-            <tr>
-                <th>Number</th>
-                <th>Name</th>
-                <th>Year</th>
-                <th>Room Number</th>
-                <th>Sports</th>
-                <th>Points</th>
-                <th>Choices</th>
+<div class="w3-container w3-white w3-center w3-opacity w3-padding-16 jb-table-width-70 jb-margin-center">
+        <table class="w3-table">
+            <tr class="jb-table-header jb-table-border">
+                <th class="jb-table-border">Name</th>
+                <th class="jb-table-border">IHG Years</th>
+                <th class="jb-table-border">Points</th>
+                <th class="jb-table-border">Sports</th>
+                <th class="jb-table-border">Choices</th>
+                <th class="jb-table-border">Number</th>
+                <th class="jb-table-border">Unique Number Preference</th>
             </tr>
             {% for user in users %}
-            <tr>
-                <td>{{ user.jerseyNumber.number }}</td>
+            <tr class="jb-table-border">
                 <td>{{ user.name }}</td>
                 <td>{{ user.year }}</td>
-                <td>{{ user.roomNumber }}</td>
+                <td>{{ user.points }}</td>
                 <td>
                     {% for sport in user.sports %}
                     {{ sport.sportName }}
                     {% endfor %}
                 </td>
-                <td>{{ user.points }}</td>
                 <td>
-                    {{user.choice.firstChoice}}
-                    {{user.choice.secondChoice}}
-                    {{user.choice.thirdChoice}}
-                    {{user.choice.fourthChoice}}
-                    {{user.choice.fifthChoice}}
+                    {{ user.choice.firstChoice }}
+                    {{ user.choice.secondChoice }}
+                    {{ user.choice.thirdChoice }}
+                    {{ user.choice.fourthChoice }}
+                    {{ user.choice.fifthChoice }}
+                </td>
+                <td>{{ user.jerseyNumber.number }}</td>
+                <td>
+                {% if user.wantUniqueNumber %}
+                    Wants unique number
+                {% else %}
+                    Agrees to share
+                {% endif %}
                 </td>
             </tr>
             {% endfor %}
         </table>
-    </div>
     </div>
 {% endblock content %}

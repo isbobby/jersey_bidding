@@ -72,6 +72,8 @@ def bidNumber():
 
         #type cast an integer from form into bool, wantUniqueNumber is either True or False (bool)
         wantUniqueNumber = typeCastFormData(form.wantUniqueNumber.data)
+        #update the user's "wantUniqueNumber" accordingly
+        getUser(current_user).wantUniqueNumber = wantUniqueNumber
 
         choice = Choice(submitDatetime=submitDate, firstChoice=form.firstChoice.data, secondChoice=form.secondChoice.data,
                         thirdChoice=form.thirdChoice.data, fourthChoice=form.fourthChoice.data, fifthChoice=form.fifthChoice.data,
@@ -107,22 +109,27 @@ def editNumber():
         JerseyNumber.isTaken == False, JerseyNumber.gender_id == currentUser.gender_id)]
     form.wantUniqueNumber.choices = [(1,'Yes'),(2,'No')]
 
-    # fetch current users' previous choice to display on the site
+    # fetch current users' previous choice and unique preference to display on the site 
     currentChoice = Choice.query.filter(
         Choice.user_id == currentUser.id).first()
 
     # fetch the current user's year for further validation
     userYear = getUser(current_user).year
+    wantUniqueNumber = getUser(current_user).wantUniqueNumber
 
     if form.validate_on_submit():
         submitDate = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         #type cast an integer from form into bool, wantUniqueNumber is either True or False (bool)
         wantUniqueNumber = typeCastFormData(form.wantUniqueNumber.data)
+        #update the user's "wantUniqueNumber" accordingly
+        getUser(current_user).wantUniqueNumber = wantUniqueNumber
 
         newChoice = Choice(submitDatetime=submitDate, firstChoice=form.firstChoice.data, secondChoice=form.secondChoice.data,
                            thirdChoice=form.thirdChoice.data, fourthChoice=form.fourthChoice.data, fifthChoice=form.fifthChoice.data,
                            user_id=currentUser.id)
+
+
 
         # remove the previous submission and commit the latest one
         db.session.delete(currentChoice)
@@ -132,7 +139,7 @@ def editNumber():
         successMessage = "Your previous submission has been updated"
         return render_template('/jersey_bidder/numbers/biddingSuccess.html', successMessage=successMessage)
 
-    return render_template('/jersey_bidder/numbers/biddingEdit.html', title='Bidding', form=form, currentChoice=currentChoice, userYear=userYear)
+    return render_template('/jersey_bidder/numbers/biddingEdit.html', title='Bidding', form=form, currentChoice=currentChoice, userYear=userYear, wantUniqueNumber=wantUniqueNumber)
 
 
 

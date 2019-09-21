@@ -2,28 +2,29 @@
 {% block content %}
 <div class="w3-container w3-light-grey w3-center w3-opacity w3-padding-32">
     <h4>
-        <br>Chosen Number: {{ number.number }} 
+        <br><br>Chosen Number: {{ number.number }}
     </h4>
 </div>
 
-<div class="w3-container w3-white w3-center w3-opacity w3-padding-16 jb-table-width-70 jb-margin-center">
-    <h3>
-        Users who are currently interested in this number.
-    </h3>
-    <table class="w3-table ">
+<div class="w3-container w3-white w3-center w3-opacity w3-padding-16 jb-table-width-80 jb-margin-center">
+    <h4>
+        <br>Eusoffians who are currently interested in this number.
+    </h4>
+    <br>
+    <table class="w3-table">
         <tr>
-            <th>Name</th>
-            <th>Year</th>
-            <th>Points</th>
-            <th>Sports</th>
+            <th class="jb-table-header jb-table-border">Name</th>
+            <th class="jb-table-header jb-table-border">Years of IHG played</th>
+            <th class="jb-table-header jb-table-border">Points</th>
+            <th class="jb-table-header jb-table-border">Sports</th>
         </tr>
 
         {% for user in interestedUsers %}
         <tr>
-            <td>{{user.name}}</td>
-            <td>{{user.year}}</td>
-            <td>{{user.points}}</td>
-            <td>
+            <td class="jb-table-border-bottom">{{user.name}}</td>
+            <td class="jb-table-border-bottom">{{user.year}}</td>
+            <td class="jb-table-border-bottom">{{user.points}}</td>
+            <td class="jb-table-border-bottom">
                 {% if user.sports %}
                 {% for sport in user.sports %}
                 {{ sport.sportName }}
@@ -32,14 +33,16 @@
                 -
                 {% endif %}
             </td>
+            <td>
+            </td>
         </tr>
         {% endfor %}
     </table>
 </div>
-
+<br>
 <form method="POST" action="">
     <div class="w3-container w3-white w3-center w3-opacity">
-        <a href="{{url_for('numbers.chopeSingleNumber', jerseyNumber_id=number.id)}}" class="w3-button">Click me to Chope this
+        <a href="{{url_for('numbers.chopeSingleNumber', jerseyNumber_id=number.id)}}" class="jb-button">Chope
             number!</a>
     </div>
 </form>

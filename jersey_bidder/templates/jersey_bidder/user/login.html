@@ -18,7 +18,9 @@
                                 {% endfor %}
                             </div>
                             {% else %}
-                            {{ form.userName(class="form-control form-control-lg") }}
+                            <div class="jb-element-width-50 jb-margin-center">
+                                {{ form.userName(class="form-control form-control-lg") }}
+                            </div>
                             {% endif %}
                         </div><br>
                         <div class="form-grop">
@@ -31,12 +33,16 @@
                                 {% endfor %}
                             </div>
                             {% else %}
-                            {{ form.password(class="form-control form-control-lg") }}
+                            <div class="jb-element-width-50 jb-margin-center">
+                                {{ form.password(class="form-control form-control-lg") }}
+                            </div>
                             {% endif %}
                         </div><br>
                     </fieldset>
-                    <div class="form-grop">
-                        <br>{{ form.submit(class="w3-button w3-border-sand")}}
+                    <div class="">
+                        <div class="">
+                        {{ form.submit(class="jb-button")}}
+                        </div>
                     </div>
                 </form>
             </div>

@@ -36,6 +36,10 @@ def loadRealData(app):
             elif (currentGenderName == "female"):
                 currentGender_id = 2
 
+            currentWantUniqueNumber = False
+            if currentYear >= 2:
+                currentWantUniqueNumber = True
+
             currentUsername = entry[str(mapping_headers["username"])]
             currentPassword = entry[str(mapping_headers["password"])]
 
@@ -45,7 +49,7 @@ def loadRealData(app):
             currentFlaskUser.roles.append(bidderRole)
 
             currentUser = User(name = currentName, roomNumber = currentRoomNumber, year = currentYear, 
-                    points = currentPoints, gender_id = currentGender_id, flaskUser=currentFlaskUser)
+                    points = currentPoints, gender_id = currentGender_id, flaskUser=currentFlaskUser, wantUniqueNumber=currentWantUniqueNumber)
             
             # add user sports
             currentUserSportList = []

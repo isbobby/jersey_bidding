@@ -6,9 +6,9 @@
 3,Susan,B210,Female,B210,password,Yes,Tennis,       Frisbee;                Basketball         
 3,John,A412,Male,A412,password,Yes,Swimming,Frisbee; Basketball
 3,Benedict,A414,Male,A414,password,Yes,Floorball,Frisbee; Basketball
-4,Mary,C215,Female,C215,password,No,,Soccer
-4,Celine,A101,Female,A101,password,No,,Soccer
-4,Faith,A102,Female,A102,password,No,,Soccer
-4,Cass,A103,Female,A103,password,No,,Soccer
+4,Mary,C215,Female,C215,password,Yes,Swimming,Soccer; Squash; Basketball
+4,Celine,A101,Female,A101,password,Yes,Swimming,Floorball; Handball
+4,Faith,A102,Female,A102,password,Yes,Swimming,Frisbee
+4,Cass,A103,Female,A103,password,No,Swimming,Squash
 4,Sharlene,A104,Female,A104,password,No,,Soccer
 4,Huilin,A105,Female,A105,password,No,,Soccer

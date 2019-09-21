@@ -19,12 +19,14 @@ useradmin = Blueprint('useradmin', __name__)
 
 
 @useradmin.route("/useradmin/home", methods=['GET', 'POST'])
+@login_required
 @roles_required('Admin')
 def adminHome():
     return render_template('/jersey_bidder/useradmin/adminHome.html')
 
 
 @useradmin.route("/useradmin/allocate", methods=['GET', 'POST'])
+@login_required
 @roles_required('Admin')
 def adminAllocate():
     form = allocateForm()
@@ -55,40 +57,56 @@ def adminAllocate():
         allUsersInYear = User.query.filter(User.year == form.yearToAllocate.data).all()
         return render_template('/jersey_bidder/useradmin/allocateSuccess.html', successMessage=successMessage, allUsersInYear=allUsersInYear)
 
-    return render_template('/jersey_bidder/useradmin/allocatePage.html', form=form)
+    message = 'Choose a year to allocate'
+    return render_template('/jersey_bidder/useradmin/SelectYear.html', message=message, form=form)
 
-
-@useradmin.route("/useradmin/checkresult/male", methods=['GET', 'POST'])
-@roles_required('Admin')
-def fullResultMale():
-    list = generateMaleList()
-    return render_template('/jersey_bidder/useradmin/fullResultMale.html', list=list)
-
-
-@useradmin.route("/useradmin/checkresult/female", methods=['GET', 'POST'])
-@roles_required('Admin')
-def fullResultFemale():
-    list = generateFemaleList()
-    return render_template('/jersey_bidder/useradmin/fullResultFemale.html', list=list)
-
-
-@useradmin.route("/useradmin/checkresult/malebyyear/<int:year_id>", methods=['GET', 'POST'])
+@useradmin.route("/useradmin/checkresult/malebyyear", methods=['GET','POST'])
 @login_required
-def showMaleByYear(year_id):
-    usersByYear = User.query.filter(
-        (User.year == year_id) & (User.gender_id == 1)).all()
-    return render_template('/jersey_bidder/useradmin/showMaleResultByYear.html', usersByYear=usersByYear, year_id=year_id)
-
-
-@useradmin.route("/useradmin/checkresult/femalebyyear/<int:year_id>", methods=['GET', 'POST'])
 @roles_required('Admin')
-def showFemaleByYear(year_id):
-    usersByYear = User.query.filter(
-        (User.year == year_id) & (User.gender_id == 2)).all()
-    return render_template('/jersey_bidder/useradmin/showFemaleResultByYear.html', usersByYear=usersByYear, year_id=year_id)
+def chooseYearToShowMale():
+    form = allocateForm()
+    form.yearToAllocate.choices = [(0, 0), (1, 1), (2, 2), (3, "3+")]
 
+    if form.validate_on_submit():
+        year = form.yearToAllocate.data
+
+        return redirect(url_for('useradmin.showMaleByYear', year=year))
+
+    message = 'Choose a year to display (male bidders)'
+    return render_template('/jersey_bidder/useradmin/SelectYear.html', message=message, form=form)
+
+@useradmin.route("/useradmin/checkresult/malebyyear/chosenyear=<int:year>", methods=['GET', 'POST'])
+@login_required
+@roles_required('Admin')
+def showMaleByYear(year):
+    usersByYear = User.query.filter(
+        (User.year == year) & (User.gender_id == 1)).all()
+    return render_template('/jersey_bidder/useradmin/showMaleResultByYear.html', usersByYear=usersByYear, year=year)
+
+@useradmin.route("/useradmin/checkresult/femalebyyear", methods=['GET','POST'])
+@login_required
+@roles_required('Admin')
+def chooseYearToShowFemale():
+    form = allocateForm()
+    form.yearToAllocate.choices = [(0, 0), (1, 1), (2, 2), (3, "3+")]
+
+    if form.validate_on_submit():
+        year = form.yearToAllocate.data
+
+        return redirect(url_for('useradmin.showFemaleByYear', year=year))
+
+    message = 'Choose a year to display (female bidders)'
+    return render_template('/jersey_bidder/useradmin/SelectYear.html', message=message, form=form)
+
+@useradmin.route("/useradmin/checkresult/femalebyyear/chosenyear=<int:year>", methods=['GET', 'POST'])
+@login_required
+def showFemaleByYear(year):
+    usersByYear = User.query.filter(
+        (User.year == year) & (User.gender_id == 2)).all()
+    return render_template('/jersey_bidder/useradmin/showFemaleResultByYear.html', usersByYear=usersByYear, year=year)
 
 @useradmin.route("/useradmin/checkresult/fullmalelist", methods=['GET', 'POST'])
+@login_required
 @roles_required('Admin')
 def getAllMaleUsers():
     users = User.query.filter(User.gender_id == 1).all()
@@ -96,6 +114,7 @@ def getAllMaleUsers():
 
 
 @useradmin.route("/useradmin/checkresult/fullfemalelist", methods=['GET', 'POST'])
+@login_required
 @roles_required('Admin')
 def getAllFemaleUsers():
     users = User.query.filter(User.gender_id == 2).all()
@@ -103,24 +122,26 @@ def getAllFemaleUsers():
 
 
 @useradmin.route("/useradmin/checkresult/conflict/male", methods=['GET', 'POST'])
+@login_required
 @roles_required('Admin')
 def getConflictMale():
     conflictUsers = User.query.filter(
         (User.gender_id == 1) & (User.jerseyNumber_id == None)).all()
 
-    return render_template('/jersey_bidder/useradmin/maleConflictUser.html', conflictUsers=conflictUsers)
+    return render_template('/jersey_bidder/useradmin/conflictUser.html', conflictUsers=conflictUsers, gender='male')
 
 
 @useradmin.route("/useradmin/checkresult/conflict/female", methods=['GET', 'POST'])
+@login_required
 @roles_required('Admin')
 def getConflictFemale():
     conflictUsers = User.query.filter(
         (User.gender_id == 2) & (User.jerseyNumber_id == None)).all()
 
-    return render_template('/jersey_bidder/useradmin/femaleConflictUser.html', conflictUsers=conflictUsers)
-
+    return render_template('/jersey_bidder/useradmin/conflictUser.html', conflictUsers=conflictUsers)
 
 @useradmin.route("/useradmin/adminassign/<int:user_id>", methods=['GET', 'POST'])
+@login_required
 @roles_required('Admin')
 def adminAssign(user_id):
     user = User.query.filter(User.id == user_id).first()
@@ -142,7 +163,23 @@ def adminAssign(user_id):
 
     return render_template('/jersey_bidder/useradmin/allocateSingleUser.html', user=user, listOfAvailNumbers=listOfAvailNumbers, form=form)
 
+@useradmin.route("/useradmin/deactivatebyyear", methods=['GET', 'POST'])
+@login_required
+@roles_required('Admin')
+def chooseYearToDeactivate():
+    form = allocateForm()
+    form.yearToAllocate.choices = [(0, 0), (1, 1), (2, 2), (3, "3+")]
+
+    if form.validate_on_submit():
+        year = form.yearToAllocate.data
+        return redirect(url_for('useradmin.deactivateByYear', year=year))
+
+    message = 'Choose a year to deactivate'
+    return render_template('/jersey_bidder/useradmin/SelectYear.html', message=message, form=form)
+
 @useradmin.route("/jersey_bidder//useradmin/deactivate/<int:year>", methods=['GET', 'POST'])
+@login_required
+@roles_required('Admin')
 def deactivateByYear(year):
     #deactivate users by year
     rawUsers = User.query.filter(User.year==year).all()
@@ -162,6 +199,21 @@ def deactivateByYear(year):
     
     successMessage = "All year " + str(year) + " users have been deactivated. They can no longer submit bidding requests and edit their previous submissions." 
     return render_template('/jersey_bidder/useradmin/adminChangeAuthByYear.html', rawUsers=rawUsers, userlist=userlist, successMessage=successMessage)
+
+@useradmin.route("/useradmin/activatebyyear", methods=['GET', 'POST'])
+@login_required
+@roles_required('Admin')
+def chooseYearToActivate():
+    form = allocateForm()
+    form.yearToAllocate.choices = [(0, 0), (1, 1), (2, 2), (3, "3+")]
+
+    if form.validate_on_submit():
+        year = form.yearToAllocate.data
+        return redirect(url_for('useradmin.activateByYear', year=year))
+
+    message = 'Choose a year to activate'
+    return render_template('/jersey_bidder/useradmin/SelectYear.html', message=message, form=form)
+    
 
 @useradmin.route("/useradmin/activate/<int:year>", methods=['GET', 'POST'])
 def activateByYear(year):

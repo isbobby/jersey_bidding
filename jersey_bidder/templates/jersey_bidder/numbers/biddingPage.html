@@ -1,17 +1,14 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="w3-container w3-light-grey w3-center w3-opacity w3-padding-64">
-    <h4>
-        <br>You can choose your top 5 number choices here,
-        <br>Please choose discretely and avoid highly contested numbers.
+<div class="w3-container w3-light-grey w3-center w3-opacity w3-padding-32">
+    <h4 class="w3-text-black">
+        <br>
+        <br>Select Your Top 5 Choices
+        <br>
     </h4>
-</div>
-
-<div class="w3-container w3-white w3-center w3-opacity">
     <form method="POST" action="">
-        {{ form.hidden_tag() }}
-        <fieldset class="form-grop">
-            <div class="form-grop">
+        <div class="jb-grid-container-choices jb-table-width-80 jb-margin-center">
+            <div class="form-grop jb-grid-item-choices">
                 <br>{{ form.firstChoice.label(class="form-control-label") }}<br>
                 {% if form.firstChoice.errors %}
                 {{ form.firstChoice(class="form-control form-control-lg is-invalid") }}
@@ -21,10 +18,13 @@
                     {% endfor %}
                 </div>
                 {% else %}
-                {{ form.firstChoice(class="form-control form-control-lg") }}
+                <div class="jb-table-width-50 jb-margin-center">
+                    {{ form.firstChoice(class="form-control form-control-lg") }}
+                </div>
                 {% endif %}
             </div>
-            <div class="form-grop">
+
+            <div class="form-grop jb-grid-item-choices">
                 <br>{{ form.secondChoice.label(class="form-control-label") }}<br>
                 {% if form.secondChoice.errors %}
                 {{ form.secondChoice(class="form-control form-control-lg is-invalid") }}
@@ -34,10 +34,13 @@
                     {% endfor %}
                 </div>
                 {% else %}
-                {{ form.secondChoice(class="form-control form-control-lg") }}
+                <div class="jb-table-width-50 jb-margin-center">
+                    {{ form.secondChoice(class="form-control form-control-lg") }}
+                </div>
                 {% endif %}
             </div>
-            <div class="form-grop">
+
+            <div class="form-grop jb-grid-item-choices">
                 <br>{{ form.thirdChoice.label(class="form-control-label") }}<br>
                 {% if form.thirdChoice.errors %}
                 {{ form.thirdChoice(class="form-control form-control-lg is-invalid") }}
@@ -47,10 +50,13 @@
                     {% endfor %}
                 </div>
                 {% else %}
-                {{ form.thirdChoice(class="form-control form-control-lg") }}
+                <div class="jb-table-width-50 jb-margin-center">
+                    {{ form.thirdChoice(class="form-control form-control-lg") }}
+                </div>
                 {% endif %}
             </div>
-            <div class="form-grop">
+
+            <div class="form-grop jb-grid-item-choices">
                 <br>{{ form.fourthChoice.label(class="form-control-label") }}<br>
                 {% if form.fourthChoice.errors %}
                 {{ form.fourthChoice(class="form-control form-control-lg is-invalid") }}
@@ -60,10 +66,14 @@
                     {% endfor %}
                 </div>
                 {% else %}
-                {{ form.fourthChoice(class="form-control form-control-lg") }}
+                <div class="jb-table-width-50 jb-margin-center">
+                    {{ form.fourthChoice(class="form-control form-control-lg") }}
+                </div>
                 {% endif %}
             </div>
-            <div class="form-grop">
+
+
+            <div class="form-grop jb-grid-item-choices">
                 <br>{{ form.fifthChoice.label(class="form-control-label") }}<br>
                 {% if form.fifthChoice.errors %}
                 {{ form.fifthChoice(class="form-control form-control-lg is-invalid") }}
@@ -73,10 +83,15 @@
                     {% endfor %}
                 </div>
                 {% else %}
-                {{ form.fifthChoice(class="form-control form-control-lg") }}
+                <div class="jb-table-width-50 jb-margin-center">
+                    {{ form.fifthChoice(class="form-control form-control-lg") }}
+                </div>
+                <br>
                 {% endif %}
             </div>
-            <!-- IMPORTANT: CHANGE CONDITION HERE BASE ON SMC INPUT -->
+        </div>
+        {{ form.hidden_tag() }}
+        <div class="form-grop">
             {% if userYear > 1 %}
             <div class="form-grop">
                 <br>{{ form.wantUniqueNumber.label(class="form-control-label") }}<br>
@@ -88,14 +103,17 @@
                     {% endfor %}
                 </div>
                 {% else %}
+            </div>
+            <div class="jb-table-width-50 jb-margin-center">
                 {{ form.wantUniqueNumber(class="form-control form-control-lg") }}
-                {% endif %}
-            </div><br>
+            </div>
             {% endif %}
-        </fieldset>
-        <div class="form-grop">
-            <br>{{ form.submit(class="w3-button")}}
+        </div><br>
+        {% endif %}
+        <div class="form-group">
+            {{ form.submit(class="w3-button jb-button")}}
         </div>
     </form>
+</div>
 </div>
 {% endblock content%}

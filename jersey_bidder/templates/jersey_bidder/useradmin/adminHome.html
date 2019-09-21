@@ -10,62 +10,26 @@
 <div class="w3-bar w3-light-grey w3-card w3-centered w3-large w3-padding-32">
     <a href="{{ url_for('useradmin.adminAllocate') }}"
         class="w3-bar-item w3-button w3-hide-small w3-padding-large">Allocate by year</a>
-    <a href="{{ url_for('useradmin.fullResultMale')}}"
-        class="w3-bar-item w3-button w3-hide-small w3-padding-large">Check for male results</a>
-    <a href="{{ url_for('useradmin.fullResultFemale')}}"
-        class="w3-bar-item w3-button w3-hide-small w3-padding-large">Check for female results</a>
-</div>
-<div class="w3-bar w3-white w3-card w3-centered w3-large w3-padding-32">
-    <a href="{{url_for('useradmin.showMaleByYear', year_id=1)}}"
-        class="w3-bar-item w3-button w3-hide-small w3-padding-large">Year 1 Male User</a>
-    <a href="{{url_for('useradmin.showMaleByYear', year_id=2)}}"
-        class="w3-bar-item w3-button w3-hide-small w3-padding-large">Year 2 Male User</a>
-    <a href="{{url_for('useradmin.showMaleByYear', year_id=3)}}"
-        class="w3-bar-item w3-button w3-hide-small w3-padding-large">Year 3 Male User</a>
-    <a href="{{url_for('useradmin.showMaleByYear', year_id=4)}}"
-        class="w3-bar-item w3-button w3-hide-small w3-padding-large">Year 4 Male User</a>
-    <a href="{{ url_for('useradmin.getAllMaleUsers') }}"
-        class="w3-bar-item w3-button w3-hide-small w3-padding-large">All
-        Male User</a>
-</div>
-<div class="w3-bar w3-light-grey w3-card w3-centered w3-large w3-padding-32">
-    <a href="{{url_for('useradmin.showFemaleByYear', year_id=1)}}"
-        class="w3-bar-item w3-button w3-hide-small w3-padding-large">Year 1 Female User</a>
-    <a href="{{url_for('useradmin.showFemaleByYear', year_id=2)}}"
-        class="w3-bar-item w3-button w3-hide-small w3-padding-large">Year 2 Female User</a>
-    <a href="{{url_for('useradmin.showFemaleByYear', year_id=3)}}"
-        class="w3-bar-item w3-button w3-hide-small w3-padding-large">Year 3 Female User</a>
-    <a href="{{url_for('useradmin.showFemaleByYear', year_id=4)}}"
-        class="w3-bar-item w3-button w3-hide-small w3-padding-large">Year 4 Female User</a>
-    <a href="{{ url_for('useradmin.getAllFemaleUsers')}}"
-        class="w3-bar-item w3-button w3-hide-small w3-padding-large">All Female User</a>
-</div>
-<div class="w3-bar w3-white w3-card w3-centered w3-large w3-padding-32">
-    <a href="{{url_for('useradmin.getConflictMale')}}"
+    <a href="{{url_for('useradmin.chooseYearToActivate')}}"
+        class="w3-bar-item w3-button w3-hide-small w3-padding-large">Activate Users</a>
+    <a href="{{url_for('useradmin.chooseYearToDeactivate')}}"
+        class="w3-bar-item w3-button w3-hide-small w3-padding-large">Deactivate Users</a>
+    <a href="{{url_for('useradmin.checkActiveUsers')}}"
+        class="w3-bar-item w3-button w3-hide-small w3-padding-large">Check Current Active Users</a>
+        <a href="{{url_for('useradmin.getConflictMale')}}"
         class="w3-bar-item w3-button w3-hide-small w3-padding-large">Conflicts (Male)</a>
     <a href="{{url_for('useradmin.getConflictFemale', year_id=1)}}"
         class="w3-bar-item w3-button w3-hide-small w3-padding-large">Conflicts (Female)</a>
 </div>
-<div class="w3-bar w3-light-grey w3-card w3-centered w3-large w3-padding-32">
-    <a href="{{url_for('useradmin.deactivateByYear', year=1)}}"
-        class="w3-bar-item w3-button w3-hide-small w3-padding-large">Remove Year 1 Bidder</a>
-    <a href="{{url_for('useradmin.deactivateByYear', year=2)}}"
-        class="w3-bar-item w3-button w3-hide-small w3-padding-large">Remove Year 2 Bidder</a>
-    <a href="{{url_for('useradmin.deactivateByYear', year=3)}}"
-        class="w3-bar-item w3-button w3-hide-small w3-padding-large">Remove Year 3 Bidder</a>
-    <a href="{{url_for('useradmin.deactivateByYear', year=4)}}"
-        class="w3-bar-item w3-button w3-hide-small w3-padding-large">Remove Year 4 Bidder</a>
-    <a href="{{url_for('useradmin.checkActiveUsers')}}"
-        class="w3-bar-item w3-button w3-hide-small w3-padding-large">Check Current Active Users</a>
-</div>
 <div class="w3-bar w3-white w3-card w3-centered w3-large w3-padding-32">
-    <a href="{{url_for('useradmin.activateByYear', year=1)}}"
-        class="w3-bar-item w3-button w3-hide-small w3-padding-large">Activate Year 1 Bidder</a>
-    <a href="{{url_for('useradmin.activateByYear', year=2)}}"
-        class="w3-bar-item w3-button w3-hide-small w3-padding-large">Activate Year 2 Bidder</a>
-    <a href="{{url_for('useradmin.activateByYear', year=3)}}"
-        class="w3-bar-item w3-button w3-hide-small w3-padding-large">Activate Year 3 Bidder</a>
-    <a href="{{url_for('useradmin.activateByYear', year=4)}}"
-        class="w3-bar-item w3-button w3-hide-small w3-padding-large">Activate Year 4 Bidder</a>
+    <a href="{{url_for('useradmin.chooseYearToShowMale')}}"
+        class="w3-bar-item w3-button w3-hide-small w3-padding-large">Display Male Bidders By Year</a>
+    <a href="{{ url_for('useradmin.getAllMaleUsers') }}"
+        class="w3-bar-item w3-button w3-hide-small w3-padding-large">All
+        Male User</a>
+    <a href="{{url_for('useradmin.chooseYearToShowFemale')}}"
+        class="w3-bar-item w3-button w3-hide-small w3-padding-large">Display Female Bidders By Year</a>
+    <a href="{{ url_for('useradmin.getAllFemaleUsers')}}"
+        class="w3-bar-item w3-button w3-hide-small w3-padding-large">All Female User</a>
 </div>
 {% endblock content %}
