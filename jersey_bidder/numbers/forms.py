@@ -9,7 +9,7 @@ class chopeNumberForm(FlaskForm):
     submit = SubmitField('I want this number')
 
 
-class biddingForm(FlaskForm):
+class biddingFormSenior(FlaskForm):
     firstChoice = SelectField('First Choice', validators=[
                               DataRequired()], coerce=int)
     secondChoice = SelectField('Second Choice', validators=[
@@ -21,6 +21,19 @@ class biddingForm(FlaskForm):
     fifthChoice = SelectField('Fifth Choice', validators=[
                               DataRequired()], coerce=int)
     wantUniqueNumber = SelectField('I want my number to be unique.',  coerce=int)
+    submit = SubmitField('Submit my choices')
+
+class biddingFormJunior(FlaskForm):
+    firstChoice = SelectField('First Choice', validators=[
+                              DataRequired()], coerce=int)
+    secondChoice = SelectField('Second Choice', validators=[
+                               DataRequired()], coerce=int)
+    thirdChoice = SelectField('Third Choice', validators=[
+                              DataRequired()], coerce=int)
+    fourthChoice = SelectField('Fourth Choice', validators=[
+                               DataRequired()], coerce=int)
+    fifthChoice = SelectField('Fifth Choice', validators=[
+                              DataRequired()], coerce=int)
     submit = SubmitField('Submit my choices')
 
 class allocateForm(FlaskForm):

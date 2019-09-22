@@ -5,7 +5,7 @@ from flask_user import roles_required, current_user
 
 # local
 from jersey_bidder.models import User, Choice, JerseyNumber
-from jersey_bidder.numbers.forms import biddingForm, chopeNumberForm, allocateForm
+from jersey_bidder.numbers.forms import biddingFormSenior, chopeNumberForm, allocateForm, biddingFormJunior
 from jersey_bidder.numbers.utils import typeCastFormData
 from jersey_bidder import db
 from jersey_bidder.utils import getUser
@@ -40,14 +40,24 @@ def chopeSingleNumber(jerseyNumber_id):
 
     return render_template('/jersey_bidder/numbers/prefChopeNumber.html', title='Chope', newNumber=newNumber)
 
-
-@numbers.route("/bidding", methods=['GET', 'POST'])
+@numbers.route("/bidder/choice", methods=['GET','POST'])
 @roles_required('Bidder')
-def bidNumber():
+def routeYearToBid():
+    currentUser = getUser(current_user)
+    if currentUser.year > 1:
+        return redirect(url_for('numbers.bidNumberSenior'))
+    else:
+        return redirect(url_for('numbers.bidNumberJunior'))
+
+
+@numbers.route("/bidding/senior", methods=['GET', 'POST'])
+@roles_required('Bidder')
+def bidNumberSenior():
 
     # initialize form and populate choices
-    form = biddingForm()
+    form = biddingFormSenior()
     currentUser = getUser(current_user)
+    
     form.firstChoice.choices = [(entries.number, entries.number) for entries in JerseyNumber.query.filter(
         JerseyNumber.isTaken == False, JerseyNumber.gender_id == currentUser.gender_id)]
     form.secondChoice.choices = [(entries.number, entries.number) for entries in JerseyNumber.query.filter(
@@ -62,7 +72,7 @@ def bidNumber():
 
     # if current user has submitted a choice, redirect to editing page
     if currentUser.choice:
-        return redirect(url_for('numbers.editNumber'))
+        return redirect(url_for('numbers.editNumberSenior')) 
 
     # fetch the current user's year for further validation, only 2+ years in IHG can choose unique option
     userYear = getUser(current_user).year
@@ -85,18 +95,59 @@ def bidNumber():
         successMessage = "Your submission has been registered."
         return render_template('/jersey_bidder/numbers/biddingSuccess.html', successMessage=successMessage)
 
-    return render_template('/jersey_bidder/numbers/biddingPage.html', title='Bidding', form=form, userYear=userYear)
+    return render_template('/jersey_bidder/numbers/biddingPageSenior.html', title='Bidding', form=form, userYear=userYear)
 
-
-@numbers.route("/bidding/editchoice", methods=['GET', 'POST'])
+@numbers.route("/bidding/junior", methods=['GET', 'POST'])
 @roles_required('Bidder')
-def editNumber():
+def bidNumberJunior():
+
+    # initialize form and populate choices
+    form = biddingFormJunior()
+    currentUser = getUser(current_user)
+    
+    form.firstChoice.choices = [(entries.number, entries.number) for entries in JerseyNumber.query.filter(
+        JerseyNumber.isTaken == False, JerseyNumber.gender_id == currentUser.gender_id)]
+    form.secondChoice.choices = [(entries.number, entries.number) for entries in JerseyNumber.query.filter(
+        JerseyNumber.isTaken == False, JerseyNumber.gender_id == currentUser.gender_id)]
+    form.thirdChoice.choices = [(entries.number, entries.number) for entries in JerseyNumber.query.filter(
+        JerseyNumber.isTaken == False, JerseyNumber.gender_id == currentUser.gender_id)]
+    form.fourthChoice.choices = [(entries.number, entries.number) for entries in JerseyNumber.query.filter(
+        JerseyNumber.isTaken == False, JerseyNumber.gender_id == currentUser.gender_id)]
+    form.fifthChoice.choices = [(entries.number, entries.number) for entries in JerseyNumber.query.filter(
+        JerseyNumber.isTaken == False, JerseyNumber.gender_id == currentUser.gender_id)]
+    # if current user has submitted a choice, redirect to editing page
+    if currentUser.choice:
+        return redirect(url_for('numbers.editNumberJunior'))
+
+    # fetch the current user's year for further validation, only 2+ years in IHG can choose unique option
+    userYear = getUser(current_user).year
+
+    if form.validate_on_submit():
+        submitDate = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        choice = Choice(submitDatetime=submitDate, firstChoice=form.firstChoice.data, secondChoice=form.secondChoice.data,
+                        thirdChoice=form.thirdChoice.data, fourthChoice=form.fourthChoice.data, fifthChoice=form.fifthChoice.data,
+                        user_id=currentUser.id)
+
+        db.session.add(choice)
+        db.session.commit()
+
+        successMessage = "Your submission has been registered."
+        return render_template('/jersey_bidder/numbers/biddingSuccess.html', successMessage=successMessage)
+
+    return render_template('/jersey_bidder/numbers/biddingPageJunior.html', title='Bidding', form=form, userYear=userYear)
+
+
+
+@numbers.route("/bidding/editchoice/senior", methods=['GET', 'POST'])
+@roles_required('Bidder')
+def editNumberSenior():
 
     # get User Model from FlaskUser
     currentUser = getUser(current_user)
 
     # initialize form and populate choices
-    form = biddingForm()
+    form = biddingFormSenior()
     form.firstChoice.choices = [(entries.number, entries.number) for entries in JerseyNumber.query.filter(
         JerseyNumber.isTaken == False, JerseyNumber.gender_id == currentUser.gender_id)]
     form.secondChoice.choices = [(entries.number, entries.number) for entries in JerseyNumber.query.filter(
@@ -139,7 +190,52 @@ def editNumber():
         successMessage = "Your previous submission has been updated"
         return render_template('/jersey_bidder/numbers/biddingSuccess.html', successMessage=successMessage)
 
-    return render_template('/jersey_bidder/numbers/biddingEdit.html', title='Bidding', form=form, currentChoice=currentChoice, userYear=userYear, wantUniqueNumber=wantUniqueNumber)
+    return render_template('/jersey_bidder/numbers/biddingEditSenior.html', title='Bidding', form=form, currentChoice=currentChoice, userYear=userYear, wantUniqueNumber=wantUniqueNumber)
 
+@numbers.route("/bidding/editchoice/junior", methods=['GET', 'POST'])
+@roles_required('Bidder')
+def editNumberJunior():
+
+    # get User Model from FlaskUser
+    currentUser = getUser(current_user)
+
+    # initialize form and populate choices
+    form = biddingFormJunior()
+    form.firstChoice.choices = [(entries.number, entries.number) for entries in JerseyNumber.query.filter(
+        JerseyNumber.isTaken == False, JerseyNumber.gender_id == currentUser.gender_id)]
+    form.secondChoice.choices = [(entries.number, entries.number) for entries in JerseyNumber.query.filter(
+        JerseyNumber.isTaken == False, JerseyNumber.gender_id == currentUser.gender_id)]
+    form.thirdChoice.choices = [(entries.number, entries.number) for entries in JerseyNumber.query.filter(
+        JerseyNumber.isTaken == False, JerseyNumber.gender_id == currentUser.gender_id)]
+    form.fourthChoice.choices = [(entries.number, entries.number) for entries in JerseyNumber.query.filter(
+        JerseyNumber.isTaken == False, JerseyNumber.gender_id == currentUser.gender_id)]
+    form.fifthChoice.choices = [(entries.number, entries.number) for entries in JerseyNumber.query.filter(
+        JerseyNumber.isTaken == False, JerseyNumber.gender_id == currentUser.gender_id)]
+
+    # fetch current users' previous choice and unique preference to display on the site 
+    currentChoice = Choice.query.filter(
+        Choice.user_id == currentUser.id).first()
+
+    # fetch the current user's year for further validation
+    userYear = getUser(current_user).year
+
+    if form.validate_on_submit():
+        submitDate = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        newChoice = Choice(submitDatetime=submitDate, firstChoice=form.firstChoice.data, secondChoice=form.secondChoice.data,
+                           thirdChoice=form.thirdChoice.data, fourthChoice=form.fourthChoice.data, fifthChoice=form.fifthChoice.data,
+                           user_id=currentUser.id)
+
+
+
+        # remove the previous submission and commit the latest one
+        db.session.delete(currentChoice)
+        db.session.add(newChoice)
+        db.session.commit()
+
+        successMessage = "Your previous submission has been updated"
+        return render_template('/jersey_bidder/numbers/biddingSuccess.html', successMessage=successMessage)
+
+    return render_template('/jersey_bidder/numbers/biddingEditJunior.html', title='Bidding', form=form, currentChoice=currentChoice, userYear=userYear)
 
 
