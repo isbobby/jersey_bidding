@@ -23,7 +23,7 @@ def create_app(config_class=Config):
     user_manager = UserManager(app, db, FlaskUser)
 
     #initialize admin
-    admin = Admin(app, name='JerseyBidding', template_mode='bootstrap3')
+    # admin = Admin(app, name='JerseyBidding', template_mode='bootstrap3')
     
     #import the routes as classes and register these blueprints into the flask app
     from jersey_bidder.main.routes import main
@@ -37,15 +37,15 @@ def create_app(config_class=Config):
     app.register_blueprint(useradmin)
 
     #initialize admin view pages so we can view things in the admin interface
-    admin.add_view(ModelView(User, db.session))
-    admin.add_view(ModelView(Choice, db.session))
-    admin.add_view(ModelView(JerseyNumber, db.session))
-    admin.add_view(ModelView(Gender, db.session))
-    admin.add_view(ModelView(UserSports, db.session))
-    admin.add_view(ModelView(Sport, db.session))
-    admin.add_view(ModelView(FlaskUser, db.session))
-    admin.add_view(ModelView(Role, db.session))
-    admin.add_view(ModelView(FlaskUserRoles, db.session))
+    # admin.add_view(ModelView(User, db.session))
+    # admin.add_view(ModelView(Choice, db.session))
+    # admin.add_view(ModelView(JerseyNumber, db.session))
+    # admin.add_view(ModelView(Gender, db.session))
+    # admin.add_view(ModelView(UserSports, db.session))
+    # admin.add_view(ModelView(Sport, db.session))
+    # admin.add_view(ModelView(FlaskUser, db.session))
+    # admin.add_view(ModelView(Role, db.session))
+    # admin.add_view(ModelView(FlaskUserRoles, db.session))
 
 
     return app
