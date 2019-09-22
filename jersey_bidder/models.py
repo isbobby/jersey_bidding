@@ -47,6 +47,9 @@ class FlaskUser(db.Model, UserMixin):
 
     email = db.Column(db.String(100), nullable=True)
 
+    def getUser(self):
+        return User.query.filter(User.flaskUser_id == self.id).first()
+
     # User authentication information
     username = db.Column(db.String(50), nullable=False, unique=True)
     password = db.Column(db.String(255), nullable=False, server_default='')

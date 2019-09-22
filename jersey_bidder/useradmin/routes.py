@@ -80,7 +80,7 @@ def chooseYearToShowMale():
 @roles_required('Admin')
 def showMaleByYear(year):
     usersByYear = User.query.filter(
-        (User.year == year) & (User.gender_id == 1)).all()
+        (User.year == year) & (User.gender_id == 1)).order_by(User.years.desc(), User.points.desc()).all()
     return render_template('/jersey_bidder/useradmin/showMaleResultByYear.html', usersByYear=usersByYear, year=year)
 
 @useradmin.route("/useradmin/checkresult/femalebyyear", methods=['GET','POST'])
@@ -102,14 +102,14 @@ def chooseYearToShowFemale():
 @login_required
 def showFemaleByYear(year):
     usersByYear = User.query.filter(
-        (User.year == year) & (User.gender_id == 2)).all()
+        (User.year == year) & (User.gender_id == 2)).order_by(User.year.desc(), User.points.desc()).all()
     return render_template('/jersey_bidder/useradmin/showFemaleResultByYear.html', usersByYear=usersByYear, year=year)
 
 @useradmin.route("/useradmin/checkresult/fullmalelist", methods=['GET', 'POST'])
 @login_required
 @roles_required('Admin')
 def getAllMaleUsers():
-    users = User.query.filter(User.gender_id == 1).all()
+    users = User.query.filter(User.gender_id == 1).order_by(User.year.desc(), User.points.desc()).all()
     return render_template('/jersey_bidder/useradmin/fullNameListMale.html', users=users)
 
 
@@ -117,7 +117,7 @@ def getAllMaleUsers():
 @login_required
 @roles_required('Admin')
 def getAllFemaleUsers():
-    users = User.query.filter(User.gender_id == 2).all()
+    users = User.query.filter(User.gender_id == 2).order_by(User.year.desc(), User.points.desc()).all()
     return render_template('/jersey_bidder/useradmin/fullNameListFemale.html', users=users)
 
 

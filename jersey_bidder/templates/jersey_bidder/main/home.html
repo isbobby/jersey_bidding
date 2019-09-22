@@ -6,68 +6,19 @@
 
 {% block content %}
 <!-- Header -->
-<header class="w3-container w3-light-grey w3-center" style="padding:100px 16px">
-<header class="jb-header" style="padding:125px 16px">
+<div class="jb-main-cover-background">
+<header class="w3-container jb-main-cover-content jb-header w3-center w3-padding-276">
+  <div class="">
   {% if current_user.is_authenticated %}
   <h1 class="w3-margin w3-jumbo">Welcome!</h1>
-  <h3>Please read through the Bidding Rules below carefully before bidding, good luck!</h3>
+  <h3>Jersey Bidding Exercise 19/20</h3>
   </button>
   {% else %}
-  <h1 class="w3-margin w3-jumbo">Jersey Bidding 19/20</h1>
-  <button class="jb-button w3-padding-large w3-large w3-margin-top">
-    <a class="jb-disable-link" href="{{ url_for('users.login') }}">Login</a>
-  </button>
+  <h1 class="w3-margin w3-jumbo ">Jersey Bidding 19/20</h1>
+    <h1 class="jb-disable-link"><a href="{{ url_for('users.login') }}">Login</a></h1>
   {% endif %}
+</div>
+</div>
 </header>
 </header> 
-{% if current_user.is_authenticated %}
-<!-- First Grid -->
-<div class="w3-row-padding w3-padding-64 w3-container">
-  <div class="w3-content">
-    <div class="jb-text-justify">
-      <h1>In Eusoff Hall, we will try to preserve the uniqueness of jersey number as much as possible</h1>
-    </div>
-  </div>
-</div>
-<!-- Second Grid -->
-<div class="w3-row-padding w3-light-grey w3-padding-64 w3-container">
-  <div class="w3-content">
-    <h2></h2>
-  </div>
-  <div class="w3-content jb-text-justify">
-    <h1>Rules governing bidding priorities</h1>
-    <br>
-    <h2>Priorities to bid for Jersey Numbers are determined by the following factors:</h2>
-    <h4><br>1. All Eusoffians will be grouped according to number of years he or she has participated in IHG</h4>
-    <p>This is the first determining factor - seniors will be given higher priorities over juniors in choosing numbers
-      and seniors will be given a number before the juniors.</p>
-
-    <h4><br>2. Within the same batch, priority points will then be awarded</h4>
-    <li>Number of sports an Eusoffian is participating in after the first cut - 1 point per sport</li>
-    <li>Leadership position (if any) held in Eusoff sports team - 2 points</li>
-    <li>If the Eusoffian is representing teamNUS - 2 points</li>
-
-    <h4><br>3. If there are still ties, the Eusoffians with the same priority points will be randomly sorted</h4>
-  </div>
-</div>
-
-<!-- third Grid -->
-<div class="w3-row-padding w3-padding-32 w3-container">
-  <div class="w3-content">
-    <div class="jb-text-justify">
-      <h3 class="jb-text-justify">Under the preference page, you can see which numbers are popular.
-        You can also indicate your preference to de-conflict with other Eusoffians.</h3><br>
-      <h3>Take note, indication of prefernce is not an official bidding request.</h3>
-    </div>
-  </div>
-</div>
-
-<div class="w3-row-padding w3-light-grey w3-padding-32 w3-container">
-  <div class="w3-content jb-text-justify">
-    <div class="">
-      <h3>Once you have decicded, go to the bid page to submit your top 5 choices.</h3>
-    </div>
-  </div>
-</div>
-{% endif %}
 {% endblock content %}
