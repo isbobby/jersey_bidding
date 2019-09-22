@@ -150,7 +150,7 @@ def getConflictMale():
 @roles_required('Admin')
 def getConflictFemale():
     conflictUsers = User.query.filter(
-        (User.gender_id == 2) & (User.jerseyNumber_id == None) % (User.choice != None)).all()
+        (User.gender_id == 2) & (User.jerseyNumber_id == None) & (User.choice != None)).all()
 
     return render_template('/jersey_bidder/useradmin/conflictUser.html', conflictUsers=conflictUsers, gender='female')
 

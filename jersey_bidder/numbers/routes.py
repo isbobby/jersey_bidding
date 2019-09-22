@@ -18,7 +18,8 @@ numbers = Blueprint('numbers', __name__)
 def showNumber():
     currentUser = getUser(current_user)
     numbers = JerseyNumber.query.filter(
-        JerseyNumber.gender_id == currentUser.gender_id)
+        JerseyNumber.gender_id == currentUser.gender_id).order_by(JerseyNumber.number).all()
+        
     return render_template('/jersey_bidder/numbers/prefViewAll.html', title='Preference Page', numbers=numbers)
 
 
