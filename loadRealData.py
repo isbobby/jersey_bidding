@@ -65,18 +65,18 @@ def loadRealData(app):
         db.session.commit()
 
         #alter below code to your own testing for choices
-        for i in range(502):
-            currentDatetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            currentFirstChoice = random.randint(1, 99)
-            currentSecondChoice = random.randint(1, 99)
-            currentThirdChoice = random.randint(1, 99)
-            currentFourthChoice = random.randint(1, 99)
-            currentFifthChoice = random.randint(1, 99)
-            currentChoice = Choice(submitDatetime = currentDatetime, firstChoice = currentFirstChoice, 
-                secondChoice = currentSecondChoice, thirdChoice = currentThirdChoice, fourthChoice = currentFourthChoice, fifthChoice = currentFifthChoice,
-                user_id = i + 1)
-            db.session.add(currentChoice)
-        db.session.commit()
+        # for i in range(502):
+        #     currentDatetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        #     currentFirstChoice = random.randint(1, 99)
+        #     currentSecondChoice = random.randint(1, 99)
+        #     currentThirdChoice = random.randint(1, 99)
+        #     currentFourthChoice = random.randint(1, 99)
+        #     currentFifthChoice = random.randint(1, 99)
+        #     currentChoice = Choice(submitDatetime = currentDatetime, firstChoice = currentFirstChoice, 
+        #         secondChoice = currentSecondChoice, thirdChoice = currentThirdChoice, fourthChoice = currentFourthChoice, fifthChoice = currentFifthChoice,
+        #         user_id = i + 1)
+        #     db.session.add(currentChoice)
+        # db.session.commit()
 
 if __name__ == "__main__":
     loadRealData(create_app())
