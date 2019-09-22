@@ -30,8 +30,8 @@ def logout():
     logout_user()
     return redirect(url_for('main.home'))
 
-@user.route("/checkresult")
+""" @user.route("/checkresult")
 @login_required
 def checkresult():
     user = getUser(current_user)
-    return render_template("/jersey_bidder/user/checkResult.html", user=user)
+    return render_template("/jersey_bidder/user/checkResult.html", user=user) """

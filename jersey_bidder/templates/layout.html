@@ -59,8 +59,8 @@
         class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Indicate Preference</a>
       <a href="{{ url_for('numbers.routeYearToBid')}}"
         class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Bid</a>
-      <a href="{{ url_for('users.checkresult')}}"
-        class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Check Result</a>
+<!--       <a href="{{ url_for('users.checkresult')}}"
+        class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Check Result</a> -->
       {% endif %}
       <a href="{{ url_for('users.logout')}}"
         class="w3-bar-item  w3-button w3-hide-small w3-padding-large w3-hover-white">Logout</a>
@@ -84,8 +84,8 @@
         {% else %}
         <a href="{{ url_for('numbers.showNumber')}}" class="w3-button">Indicate Preference</a>
         <a href="{{ url_for('numbers.routeYearToBid')}}" class="w3-button">Bid</a>
-        <a href="{{ url_for('users.checkresult')}}" class="w3-button">Check
-          Result</a>
+<!--         <a href="{{ url_for('users.checkresult')}}" class="w3-button">Check
+          Result</a> -->
         {% endif %}
         <a href="{{ url_for('users.logout')}}" class="w3-button w3-padding-large">Logout</a>
         {% endif %}
