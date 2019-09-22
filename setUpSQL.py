@@ -31,6 +31,12 @@ def setUp(app):
         hackerAdmin = Admin(name='The Master', flaskUser=flaskUserHacker)
         db.session.add(hackerAdmin)
 
+        # Create Admin Account For SMC
+        flaskUserSMC = FlaskUser(email='SMC@gmail.com', username='eusoffSMC', password='ydraxan3rg')
+        flaskUserSMC.roles.append(admin)
+        smcAdmin = Admin(name='SMC Admin', flaskUser=flaskUserSMC)
+        db.session.add(smcAdmin) 
+
         #add Gender
         male = Gender(genderName = "Male")
         female = Gender(genderName = "Female")
