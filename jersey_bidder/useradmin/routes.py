@@ -113,7 +113,7 @@ def showFemaleByYear(year):
     if year > 2:
         year = getHighestYear()
         while year > 3:
-            usersByYear.extend(User.query.filter((User.year == year) & (User.gender_id == 1)).order_by(User.year.desc(), User.points.desc()).all())
+            usersByYear.extend(User.query.filter((User.year == year) & (User.gender_id == 2)).order_by(User.year.desc(), User.points.desc()).all())
             year = year - 1
 
     usersByYear.extend(User.query.filter((User.year == year) & (User.gender_id == 1)).order_by(User.year.desc(), User.points.desc()).all())
