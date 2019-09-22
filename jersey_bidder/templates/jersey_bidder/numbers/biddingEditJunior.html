@@ -1,0 +1,111 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="w3-container w3-light-grey w3-center w3-opacity w3-padding-32">
+    <h4 class="w3-text-black">
+        <br>
+        <br>
+        <h4>My Previous Choices</h4>
+    </h4>
+    <div class="jb-grid-container-choices jb-table-width-80 jb-margin-center">
+        <div class="jb-grid-item-choices jb-margin-top-bottom-20">First Choice <br>{{ currentChoice.firstChoice }}</div>
+        <div class="jb-grid-item-choices jb-margin-top-bottom-20">Second Choice <br> {{ currentChoice.secondChoice }}
+        </div>
+        <div class="jb-grid-item-choices jb-margin-top-bottom-20">Third Choice <br>{{ currentChoice.thirdChoice }}</div>
+        <div class="jb-grid-item-choices jb-margin-top-bottom-20">Fourth Choice <br> {{ currentChoice.fourthChoice }}
+        </div>
+        <div class="jb-grid-item-choices jb-margin-top-bottom-20">Fifth Choice <br> {{ currentChoice.fifthChoice }}
+        </div>
+    </div>
+    <h4>My New Choices</h4>
+    <form method="POST" action="">
+        <div class="jb-grid-container-choices jb-table-width-80 jb-margin-center">
+            <div class="form-grop jb-grid-item-choices">
+                <br>New {{ form.firstChoice.label(class="form-control-label") }}<br>
+                {% if form.firstChoice.errors %}
+                {{ form.firstChoice(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.firstChoice.errors %}
+                    <span> {{ error }} </span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="jb-table-width-50 jb-margin-center">
+                    {{ form.firstChoice(class="form-control form-control-lg") }}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="form-grop jb-grid-item-choices">
+                <br>New {{ form.secondChoice.label(class="form-control-label") }}<br>
+                {% if form.secondChoice.errors %}
+                {{ form.secondChoice(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.secondChoice.errors %}
+                    <span> {{ error }} </span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="jb-table-width-50 jb-margin-center">
+                    {{ form.secondChoice(class="form-control form-control-lg") }}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="form-grop jb-grid-item-choices">
+                <br>New {{ form.thirdChoice.label(class="form-control-label") }}<br>
+                {% if form.thirdChoice.errors %}
+                {{ form.thirdChoice(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.thirdChoice.errors %}
+                    <span> {{ error }} </span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="jb-table-width-50 jb-margin-center">
+                    {{ form.thirdChoice(class="form-control form-control-lg") }}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="form-grop jb-grid-item-choices">
+                <br>New {{ form.fourthChoice.label(class="form-control-label") }}<br>
+                {% if form.fourthChoice.errors %}
+                {{ form.fourthChoice(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.fourthChoice.errors %}
+                    <span> {{ error }} </span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="jb-table-width-50 jb-margin-center">
+                    {{ form.fourthChoice(class="form-control form-control-lg") }}
+                </div>
+                {% endif %}
+            </div>
+
+
+            <div class="form-grop jb-grid-item-choices">
+                <br>New {{ form.fifthChoice.label(class="form-control-label") }}<br>
+                {% if form.fifthChoice.errors %}
+                {{ form.fifthChoice(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.fifthChoice.errors %}
+                    <span> {{ error }} </span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="jb-table-width-50 jb-margin-center">
+                    {{ form.fifthChoice(class="form-control form-control-lg") }}
+                </div>
+                <br>
+                {% endif %}
+            </div>
+        </div>
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.submit(class="w3-button jb-button")}}
+        </div>
+    </form>
+</div>
+</div>
+{% endblock content%}
