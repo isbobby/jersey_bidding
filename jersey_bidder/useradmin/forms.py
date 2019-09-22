@@ -4,7 +4,6 @@ from wtforms import IntegerField, SubmitField, SelectField
 from wtforms.validators import DataRequired, Email, Length, EqualTo, ValidationError, InputRequired
 from flask_login import current_user
 
-
 class allocateForm(FlaskForm):
     yearToAllocate = SelectField('Year To Allocate', validators=[
                                  InputRequired()], coerce=int)

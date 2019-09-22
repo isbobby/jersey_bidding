@@ -103,7 +103,7 @@ def chooseYearToShowFemale():
         return redirect(url_for('useradmin.showFemaleByYear', year=year))
 
     message = 'Choose a year to display (female bidders)'
-    return render_template('/jersey_bidder/useradmin/SelectYear.html', message=message, form=form)
+    return render_template('/jersey_bidder/useradmin/selectYear.html', message=message, form=form)
 
 @useradmin.route("/useradmin/checkresult/femalebyyear/chosenyear=<int:year>", methods=['GET', 'POST'])
 @login_required
@@ -140,7 +140,7 @@ def getAllFemaleUsers():
 @roles_required('Admin')
 def getConflictMale():
     conflictUsers = User.query.filter(
-        (User.gender_id == 1) & (User.jerseyNumber_id == None)).all()
+        (User.gender_id == 1) & (User.jerseyNumber_id == None) &()).all()
 
     return render_template('/jersey_bidder/useradmin/conflictUser.html', conflictUsers=conflictUsers, gender='male')
 
