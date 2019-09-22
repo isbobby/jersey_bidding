@@ -76,6 +76,8 @@
     <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
       <div class="w3-bar-item">
         <a href="{{ url_for('main.home') }}" class="w3-button ">Home</a>
+        <a href="{{ url_for('main.faq') }}"
+        class="w3-button">FAQ</a>
         {% if current_user.is_authenticated %}
         {% if current_user.is_admin() %}
         <a href="{{ url_for('useradmin.adminHome')}}" class="w3-button">Admin</a>
