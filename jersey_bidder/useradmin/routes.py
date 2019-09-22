@@ -140,7 +140,7 @@ def getAllFemaleUsers():
 @roles_required('Admin')
 def getConflictMale():
     conflictUsers = User.query.filter(
-        (User.gender_id == 1) & (User.jerseyNumber_id == None) &()).all()
+        (User.gender_id == 1) & (User.jerseyNumber_id == None) & (User.choice != None)).all()
 
     return render_template('/jersey_bidder/useradmin/conflictUser.html', conflictUsers=conflictUsers, gender='male')
 
@@ -150,7 +150,15 @@ def getConflictMale():
 @roles_required('Admin')
 def getConflictFemale():
     conflictUsers = User.query.filter(
-        (User.gender_id == 2) & (User.jerseyNumber_id == None)).all()
+        (User.gender_id == 2) & (User.jerseyNumber_id == None) % (User.choice != None)).all()
+
+    return render_template('/jersey_bidder/useradmin/conflictUser.html', conflictUsers=conflictUsers, gender='female')
+
+@useradmin.route("/useradmin/checkresult/conflict/all", methods=['GET', 'POST'])
+@login_required
+@roles_required('Admin')
+def getConflictAll():
+    conflictUsers = User.query.filter(User.jerseyNumber_id == None).all()
 
     return render_template('/jersey_bidder/useradmin/conflictUser.html', conflictUsers=conflictUsers)
 

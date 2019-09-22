@@ -16,10 +16,12 @@
         class="w3-bar-item w3-button w3-hide-small w3-padding-large">Deactivate Users</a>
     <a href="{{url_for('useradmin.checkActiveUsers')}}"
         class="w3-bar-item w3-button w3-hide-small w3-padding-large">Check Current Active Users</a>
-        <a href="{{url_for('useradmin.getConflictMale')}}"
+    <a href="{{url_for('useradmin.getConflictMale')}}"
         class="w3-bar-item w3-button w3-hide-small w3-padding-large">Conflicts (Male)</a>
-    <a href="{{url_for('useradmin.getConflictFemale', year_id=1)}}"
+    <a href="{{url_for('useradmin.getConflictFemale')}}"
         class="w3-bar-item w3-button w3-hide-small w3-padding-large">Conflicts (Female)</a>
+    <a href="{{url_for('useradmin.getConflictAll')}}"
+        class="w3-bar-item w3-button w3-hide-small w3-padding-large">Conflicts (All)</a>
 </div>
 <div class="w3-bar w3-white w3-card w3-centered w3-large w3-padding-32">
     <a href="{{url_for('useradmin.chooseYearToShowMale')}}"

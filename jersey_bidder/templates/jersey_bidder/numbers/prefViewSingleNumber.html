@@ -15,7 +15,6 @@
         <tr>
             <th class="jb-table-header jb-table-border">Name</th>
             <th class="jb-table-header jb-table-border">Years of IHG played</th>
-            <th class="jb-table-header jb-table-border">Points</th>
             <th class="jb-table-header jb-table-border">Sports</th>
         </tr>
 
@@ -23,7 +22,6 @@
         <tr>
             <td class="jb-table-border-bottom">{{user.name}}</td>
             <td class="jb-table-border-bottom">{{user.year}}</td>
-            <td class="jb-table-border-bottom">{{user.points}}</td>
             <td class="jb-table-border-bottom">
                 {% if user.sports %}
                 {% for sport in user.sports %}
