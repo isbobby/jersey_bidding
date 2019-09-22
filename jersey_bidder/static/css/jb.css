@@ -1,17 +1,23 @@
 .grid-container {display: inline-grid;}
 .jb-font-size-60pts {font-size: 60px}
-.jb-grid-container {display:grid; grid-template-columns: auto auto auto auto auto auto auto auto auto auto; padding:10px;grid-gap:5px}    
+.jb-grid-container {display:grid; grid-template-columns: auto auto auto auto auto; padding:10px;grid-gap:5px}    
 .jb-grid-item {font-size: 30px;text-align: center; border: 1px solid black; color:black;  border-collapse: collapse;} .jb-grid-item:hover {background-color:rgb(41, 41, 41); color:white; text-decoration: none;}
 .jb-disable-link {text-decoration: none;}
 .jb-padding-left-32 { padding-left:32px; }
 .jb-padding-left-16 { padding-left:16px; }
-.jb-padding-right-32 { padding-right:32px;}
-.jb-margin-left-16 { margin-left:16px; }
-.jb-margin-left-32 { margin-left:32px; }
+.jb-padding-right-32 { padding-right:32px!important}
+.jb-margin-left-16 { margin-left:16px!important }
+.jb-margin-left-32 { margin-left:32px!important }
 .jb-margin-left-64 { margin-left:64px; }
 .jb-margin-left-128 { margin-left:128px; }
 .jb-margin-top-32 { margin-top:32px; }
 .jb-margin-top-128 { margin-top:128px; }
+
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    jb-margin-left-64 { margin-left:0px; }
+  }
+
 .jb-left-16 {left:16px;}
 .jb-table-width-90 { width: 90%; }
 .jb-table-width-80 { width: 80%; }
@@ -33,7 +39,7 @@
 .jb-element-width-30 {width:30%;}
 .jb-button {background-color: white; border: 1px solid #555555; border-radius:4px; color: black; padding: 16px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; -webkit-transition-duration: 0.4s; /* Safari */ transition-duration: 0.4s; cursor: pointer;}
 .jb-button:hover {background-color: #555555; color: white;}
-.jb-grid-container-choices {display:grid; grid-template-columns: auto auto auto auto auto; padding:10px;grid-gap:5px}
+.jb-grid-container-choices {display:grid; grid-template-columns: auto auto auto auto auto; padding:5px;grid-gap:2px}
 .jb-grid-item-choices {font-size: 15px;text-align: center; border: 1px solid black; color:black;  border-collapse: collapse;}
 .jb-align-right {position: absolute; right:0px;}
 .jb-align-left {position: absolute; left:0px;}

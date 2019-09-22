@@ -6,8 +6,8 @@
     </h4>
 </div>
 
-<div class="w3-container w3-white w3-center w3-opacity w3-padding-32">
-    <div class="jb-grid-container jb-table-width-80 jb-margin-center">
+<div class="w3-container w3-white w3-opacity">
+    <div class="jb-grid-container jb-table-width-80 jb-margin-center w3-padding-32">
         {% for number in numbers %}
         <a class="jb-disable-link" href="{{ url_for('numbers.showSingleNumber', jerseyNumber_id=number.id) }}">
             <div class="jb-grid-item jb-margin-top-bottom-20">{{ number.number}}</div>
