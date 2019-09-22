@@ -45,15 +45,16 @@ mapping_headers = {
     "gender": "Gender",
     "is_captain": "Are you Captain of a Sport",
     "representing_sports_ivp": "Have you represented NUS (SUNIG/IVP) in the following sports:",
-    "sports_currently_in": "Sports you are currently in (after latest cut)",
+    "sports_currently_in": "Sports you are currently in (after latest cut, separate by ;)",
     "email": "Email Address"
 }
 
 # list includes IVP / external sports
-sports = {"aquathlon", "badminton", "basketball", "biathlon", "cross country", "floorball", "frisbee", "handball", "lifesaving", "netball", "road relay", "sepak takraw", "soccer", "softball", "squash", "swimming", "table tennis", "tennis", "touch rugby", "track", "triathlon", "volleyball", "water polo"}
+sports = {"aquathlon", "badminton", "basketball", "biathlon", "cross country", "floorball", "frisbee", "handball", "lifesaving", "netball", "road relay", "sepak takraw", "soccer", "softball", "squash", "swimming", "swim", "table tennis", "tennis", "touch rugby", "track", "triathlon", "volleyball", "water polo", "takraw"}
 
 
 def yes_no(string):
+    string = string.lower()
     answer = "yes"
     if (difflib.SequenceMatcher(None, answer, string).ratio() > 0.7):
         return 1
@@ -88,7 +89,7 @@ def calculate_points_subroutine(iter, the_column, the_set):
 # calculates the final points .. takes into consideration .. the possible
 # since a player is a captain of atmost 1 team .. consider yes / no
 def calculate_points():
-    data_frame = pd.read_csv("MockSMC_input.csv")
+    data_frame = pd.read_csv("SMC_BrendaInput.csv")
     is_captain_column = data_frame[str(mapping_headers["is_captain"])]
     is_captain_column = is_captain_column.str.lower()
     is_captain_column = is_captain_column.str.strip()

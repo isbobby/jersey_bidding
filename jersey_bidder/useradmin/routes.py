@@ -10,7 +10,7 @@ from jersey_bidder.useradmin.forms import allocateForm, assignNumberForm
 from jersey_bidder import db
 from jersey_bidder.utils import getFlaskUser, getFlaskUserRole
 from jersey_bidder.useradmin.utils import allocateByYear, generateMaleList, generateFemaleList, splitMaleAndFemale, \
-        availNumbers, allocateNonUniqueNumberToUser, allocateUniqueNumberToUser, getStatsForYear
+        availNumbers, allocateNonUniqueNumberToUser, allocateUniqueNumberToUser, getStatsForYear, getHighestYear
 from jersey_bidder.useradmin.CustomAllocationExceptions import AllocationError
 from jersey_bidder.useradmin.outputUtils import create_userpassword_csv
 
@@ -79,8 +79,15 @@ def chooseYearToShowMale():
 @login_required
 @roles_required('Admin')
 def showMaleByYear(year):
-    usersByYear = User.query.filter(
-        (User.year == year) & (User.gender_id == 1)).order_by(User.years.desc(), User.points.desc()).all()
+    usersByYear = []
+
+    if year > 2:
+        year = getHighestYear()
+        while year > 3:
+            usersByYear.extend(User.query.filter((User.year == year) & (User.gender_id == 1)).order_by(User.year.desc(), User.points.desc()).all())
+            year = year - 1
+
+    usersByYear.extend(User.query.filter((User.year == year) & (User.gender_id == 1)).order_by(User.year.desc(), User.points.desc()).all())
     return render_template('/jersey_bidder/useradmin/showMaleResultByYear.html', usersByYear=usersByYear, year=year)
 
 @useradmin.route("/useradmin/checkresult/femalebyyear", methods=['GET','POST'])
@@ -101,8 +108,15 @@ def chooseYearToShowFemale():
 @useradmin.route("/useradmin/checkresult/femalebyyear/chosenyear=<int:year>", methods=['GET', 'POST'])
 @login_required
 def showFemaleByYear(year):
-    usersByYear = User.query.filter(
-        (User.year == year) & (User.gender_id == 2)).order_by(User.year.desc(), User.points.desc()).all()
+    usersByYear = []
+
+    if year > 2:
+        year = getHighestYear()
+        while year > 3:
+            usersByYear.extend(User.query.filter((User.year == year) & (User.gender_id == 1)).order_by(User.year.desc(), User.points.desc()).all())
+            year = year - 1
+
+    usersByYear.extend(User.query.filter((User.year == year) & (User.gender_id == 1)).order_by(User.year.desc(), User.points.desc()).all())
     return render_template('/jersey_bidder/useradmin/showFemaleResultByYear.html', usersByYear=usersByYear, year=year)
 
 @useradmin.route("/useradmin/checkresult/fullmalelist", methods=['GET', 'POST'])
@@ -182,7 +196,15 @@ def chooseYearToDeactivate():
 @roles_required('Admin')
 def deactivateByYear(year):
     #deactivate users by year
-    rawUsers = User.query.filter(User.year==year).all()
+    rawUsers = []
+
+    if year > 2:
+        year = getHighestYear()
+        while year > 3:
+            rawUsers.extend(User.query.filter(User.year==year).all())
+            year = year - 1
+
+    rawUsers.extend(User.query.filter(User.year==year).all())
     userlist = []
     bidderRole = Role.query.filter(Role.name == "Bidder").first()
 
@@ -218,7 +240,15 @@ def chooseYearToActivate():
 @useradmin.route("/useradmin/activate/<int:year>", methods=['GET', 'POST'])
 def activateByYear(year):
     #deactivate users by year
-    rawUsers = User.query.filter(User.year==year).all()
+    rawUsers = []
+
+    if year > 2:
+        year = getHighestYear()
+        while year > 3:
+            rawUsers.extend(User.query.filter(User.year==year).all())
+            year = year - 1
+
+    rawUsers.extend(User.query.filter(User.year==year).all())
     userlist = []
     bidderRole = Role.query.filter(Role.name == "Bidder").first()
 
@@ -245,19 +275,3 @@ def checkActiveUsers():
             activeUsers.append(user)
     
     return render_template('/jersey_bidder/useradmin/adminShowActiveUsers.html', activeUsers=activeUsers)
-
-
-@useradmin.route("/useradmin/generatePasswordCSV", methods=['GET'])
-@roles_required('Admin')
-def getUserPassWordList():
-    data = User.query.order_by(User.roomNumber).all()
-    (file_basename, server_path, file_size) = create_userpassword_csv(data)
-    return 
-    # return_file = open(server_path+file_basename, 'r')
-    # response = make_response(return_file,200)
-    # response.headers['Content-Description'] = 'File Transfer'
-    # response.headers['Cache-Control'] = 'no-cache'
-    # response.headers['Content-Type'] = 'text/csv'
-    # response.headers['Content-Disposition'] = 'attachment; filename=%s' % file_basename
-    # response.headers['Content-Length'] = file_size
-    # return response
