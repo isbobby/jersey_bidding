@@ -89,7 +89,7 @@ def calculate_points_subroutine(iter, the_column, the_set):
 # calculates the final points .. takes into consideration .. the possible
 # since a player is a captain of atmost 1 team .. consider yes / no
 def calculate_points():
-    data_frame = pd.read_csv("SMC_BrendaInput.csv")
+    data_frame = pd.read_csv("SMC_FINAL_INPUT.csv")
     is_captain_column = data_frame[str(mapping_headers["is_captain"])]
     is_captain_column = is_captain_column.str.lower()
     is_captain_column = is_captain_column.str.strip()
