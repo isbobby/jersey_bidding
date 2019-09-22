@@ -58,7 +58,7 @@ def adminAllocate():
         return render_template('/jersey_bidder/useradmin/allocateSuccess.html', successMessage=successMessage, allUsersInYear=allUsersInYear)
 
     message = 'Choose a year to allocate'
-    return render_template('/jersey_bidder/useradmin/SelectYear.html', message=message, form=form)
+    return render_template('/jersey_bidder/useradmin/selectYear.html', message=message, form=form)
 
 @useradmin.route("/useradmin/checkresult/malebyyear", methods=['GET','POST'])
 @login_required
@@ -73,7 +73,7 @@ def chooseYearToShowMale():
         return redirect(url_for('useradmin.showMaleByYear', year=year))
 
     message = 'Choose a year to display (male bidders)'
-    return render_template('/jersey_bidder/useradmin/SelectYear.html', message=message, form=form)
+    return render_template('/jersey_bidder/useradmin/selectYear.html', message=message, form=form)
 
 @useradmin.route("/useradmin/checkresult/malebyyear/chosenyear=<int:year>", methods=['GET', 'POST'])
 @login_required
@@ -189,7 +189,7 @@ def chooseYearToDeactivate():
         return redirect(url_for('useradmin.deactivateByYear', year=year))
 
     message = 'Choose a year to deactivate'
-    return render_template('/jersey_bidder/useradmin/SelectYear.html', message=message, form=form)
+    return render_template('/jersey_bidder/useradmin/selectYear.html', message=message, form=form)
 
 @useradmin.route("/jersey_bidder//useradmin/deactivate/<int:year>", methods=['GET', 'POST'])
 @login_required
@@ -234,7 +234,7 @@ def chooseYearToActivate():
         return redirect(url_for('useradmin.activateByYear', year=year))
 
     message = 'Choose a year to activate'
-    return render_template('/jersey_bidder/useradmin/SelectYear.html', message=message, form=form)
+    return render_template('/jersey_bidder/useradmin/selectYear.html', message=message, form=form)
     
 
 @useradmin.route("/useradmin/activate/<int:year>", methods=['GET', 'POST'])
