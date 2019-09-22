@@ -102,12 +102,12 @@ def setUp(app):
         db.session.add(Volleyball_Female)
 
         #add jersey numbers
-        for i in range(200):
+        for i in range(198):
             currentGender = male
-            currentNumber = i
-            if i > 99:
+            currentNumber = i + 1
+            if currentNumber > 99:
                 currentGender = female
-                currentNumber = currentNumber - 100
+                currentNumber = currentNumber - 99
             currentJersey = JerseyNumber(number = currentNumber, isTaken = False, gender = currentGender) 
             db.session.add(currentJersey)
 
