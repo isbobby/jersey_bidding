@@ -4,6 +4,7 @@ import pandas as pd;
 from utils import randomStringDigits;
 from jersey_bidder import create_app, db, models
 from jersey_bidder.models import *
+import random
 
 mapping_headers = {
     "year": "Years of IHG",
@@ -12,7 +13,7 @@ mapping_headers = {
     "gender": "Gender",
     "is_captain": "Are you Captain of a Sport",
     "representing_sports_ivp": "Have you represented NUS (SUNIG/IVP) in the following sports:",
-    "sports_currently_in": "Sports you are currently in (after latest cut)",
+    "sports_currently_in": "Sports you are currently in (after latest cut, separate by ;)",
     "total_points": "total_points",
     "email": "Email Address",
     "password": "Password",
@@ -31,9 +32,9 @@ def loadRealData(app):
             currentPoints = int(entry[str(mapping_headers["total_points"])])
             currentGender_id = 0
             currentGenderName = entry[str(mapping_headers["gender"])].strip().lower()
-            if (currentGenderName == "male"):
+            if (currentGenderName == "m"):
                 currentGender_id = 1
-            elif (currentGenderName == "female"):
+            elif (currentGenderName == "f"):
                 currentGender_id = 2
 
             currentWantUniqueNumber = False
@@ -45,8 +46,6 @@ def loadRealData(app):
 
             # create flaskUser First with Bidder Role
             currentFlaskUser = FlaskUser(username=currentUsername, password=currentPassword)
-            bidderRole = Role.query.filter(Role.name == "Bidder").first()
-            currentFlaskUser.roles.append(bidderRole)
 
             currentUser = User(name = currentName, roomNumber = currentRoomNumber, year = currentYear, 
                     points = currentPoints, gender_id = currentGender_id, flaskUser=currentFlaskUser, wantUniqueNumber=currentWantUniqueNumber)
@@ -58,26 +57,26 @@ def loadRealData(app):
                 currentUser_SportName = currentUser_SportName.strip()
                 sport_ToAdd = Sport.query.filter((Sport.gender_id == 3) | (Sport.gender_id == currentGender_id)) \
                         .filter(Sport.sportName == currentUser_SportName).first()
-                currentUser.sports.append(sport_ToAdd)
+                if sport_ToAdd:
+                    currentUser.sports.append(sport_ToAdd)
 
             db.session.add(currentUser)
 
         db.session.commit()
 
         #alter below code to your own testing for choices
-        # for i in range(6):
-        #     currentDatetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        #     currentChoice = Choice(submitDatetime = currentDatetime, firstChoice = 1, secondChoice = 2, thirdChoice = 3, fourthChoice = 4, fifthChoice = 5,
-        #         user_id = i + 1)
-        #     db.session.add(currentChoice)
-        # db.session.commit()
-
-        # for i in range(6):
-        #     currentDatetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        #     currentChoice = Choice(submitDatetime = currentDatetime, firstChoice = 6, secondChoice = 7, thirdChoice = 8, fourthChoice = 9, fifthChoice = 10,
-        #         user_id = i + 7)
-        #     db.session.add(currentChoice)
-        # db.session.commit()
+        for i in range(502):
+            currentDatetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            currentFirstChoice = random.randint(1, 99)
+            currentSecondChoice = random.randint(1, 99)
+            currentThirdChoice = random.randint(1, 99)
+            currentFourthChoice = random.randint(1, 99)
+            currentFifthChoice = random.randint(1, 99)
+            currentChoice = Choice(submitDatetime = currentDatetime, firstChoice = currentFirstChoice, 
+                secondChoice = currentSecondChoice, thirdChoice = currentThirdChoice, fourthChoice = currentFourthChoice, fifthChoice = currentFifthChoice,
+                user_id = i + 1)
+            db.session.add(currentChoice)
+        db.session.commit()
 
 if __name__ == "__main__":
     loadRealData(create_app())

@@ -20,8 +20,7 @@ class biddingForm(FlaskForm):
                                DataRequired()], coerce=int)
     fifthChoice = SelectField('Fifth Choice', validators=[
                               DataRequired()], coerce=int)
-    wantUniqueNumber = SelectField('I want my number to be unique.', validators=[
-                              DataRequired()], coerce=int)
+    wantUniqueNumber = SelectField('I want my number to be unique.',  coerce=int)
     submit = SubmitField('Submit my choices')
 
 class allocateForm(FlaskForm):
