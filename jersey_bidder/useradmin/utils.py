@@ -281,6 +281,7 @@ def allocateByYear(currentYear):
 
     failedUserList.extend(allocateYearUnit(currentYear))
 
+    # missing curentYear == 2
     if currentYear == 3:
         setTaken()
 
